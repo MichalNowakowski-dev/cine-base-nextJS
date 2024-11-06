@@ -2,13 +2,19 @@
 
 import { GoSearch } from "react-icons/go";
 
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search({
+  placeholder,
+  className,
+}: {
+  placeholder: string;
+  className: string;
+}) {
   function handleSearch(term: string) {
     console.log(term);
   }
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0 w-[80%]">
+    <div className={`relative flex flex-1 flex-shrink-0 w-[80%] ${className}`}>
       <input
         className="peer block w-full rounded-full py-[9px] pl-10 text-sm placeholder:text-gray-500 text-black outline-none"
         placeholder={placeholder}

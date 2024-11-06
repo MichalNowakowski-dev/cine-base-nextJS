@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -10,7 +11,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "fade-red-to-black":
-          "linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(15,15,15,1) 81%, rgba(229,0,0,0.5578606442577031) 100%)",
+          "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(229,0,0,0.7) 100%)",
         "fade-to-dark":
           "linear-gradient(to bottom, rgba(20, 20, 20, 0), #141414)",
       },
@@ -31,6 +32,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents }) {
+      addComponents({
+        ".no-scrollbar": {
+          "scrollbar-width": "none" /* Firefox */,
+        },
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none" /* Chrome, Safari, Edge */,
+        },
+      });
+    }),
+  ],
 };
 export default config;

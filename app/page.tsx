@@ -1,26 +1,51 @@
 import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
 import Search from "./ui/Search";
+import { Suspense } from "react";
+import { MediaScrollListSkeleton } from "./ui/skeletons";
+import MediaListContainer from "./ui/MediaListContainer";
+import MediaListSwitch from "./ui/MediaListSwitch";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main>
-      <header className="h-[50vh] w-screen absolute top-0">
-        <div className="absolute top-0, left-0 h-full w-full bg-fade-to-dark"></div>
+    <>
+      <header className="h-[50vh] w-full relative flex flex-col items-center justify-center mb-5 after:content-[''] after:absolute after:inset-0 after:bg-fade-to-dark">
         <Image
+          className=" object-cover h-full absolute top-0 left-0 -z-10"
           src={HeaderImgDesktop}
           alt="Hero image"
-          style={{ objectFit: "cover", height: "100%" }}
         />
-        <section className="flex flex-col gap-y-10 items-center absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-full">
-          <div className="text-center">
+        <section className="flex flex-col gap-y-10 items-center w-full">
+          <div className="text-center z-10">
             <h1>CineBase</h1>
             <p>Odkryj świat filmu w jednym miejscu!</p>
           </div>
-          <Search placeholder="Wpisz szukaną frazę..." />
+          <Search
+            className="z-10 max-w-screen-xl"
+            placeholder="Wpisz szukaną frazę..."
+          />
         </section>
       </header>
-      <section className="px-4"></section>
-    </main>
+      <main className=" xl:max-w-screen-xl mx-auto">
+        <section className="px-4">
+          <Suspense fallback={<MediaScrollListSkeleton />}>
+            <MediaListContainer
+              mediaType="movie"
+              category="popular"
+              label="Popularne"
+            />
+          </Suspense>
+        </section>
+        <section className="px-4">
+          <Suspense fallback={<MediaScrollListSkeleton />}>
+            <MediaListContainer
+              mediaType="movie"
+              category="top_rated"
+              label="Najlepiej oceniane"
+            />
+          </Suspense>
+        </section>
+      </main>
+    </>
   );
 }
