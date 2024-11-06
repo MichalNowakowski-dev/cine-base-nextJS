@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>Contact</main>;
+  return <main className="h-[200vh]">Contact</main>;
 }

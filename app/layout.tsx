@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body
-        className={`${roboto.variable} ${montserrat.variable} antialiased xl:max-w-screen-xl mx-auto px-4`}
+        className={`${roboto.variable} ${montserrat.variable} antialiased xl:max-w-screen-xl mx-auto`}
       >
         <Navigation />
         {children}
