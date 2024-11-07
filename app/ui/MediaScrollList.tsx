@@ -17,7 +17,6 @@ export default function MediaScrollList({
 
   const moveMediaList = (direction: string) => {
     if (listRef.current) {
-      console.log(listRef.current);
       if (direction === "left") {
         listRef.current.scrollLeft -= listRef.current.offsetWidth;
       } else {

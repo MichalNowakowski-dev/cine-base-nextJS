@@ -26,16 +26,39 @@ export default async function Home() {
         </section>
       </header>
       <main className=" xl:max-w-screen-xl mx-auto">
-        <section className="px-4">
-          <Suspense fallback={<MediaScrollListSkeleton />}>
-            <MediaListContainer category="popular" label="Popularne" />
-          </Suspense>
-        </section>
-        <section className="px-4">
+        <section className="px-4 mb-8">
           <Suspense fallback={<MediaScrollListSkeleton />}>
             <MediaListContainer
-              category="top_rated"
+              mediaCategory="top_rated"
               label="Najlepiej oceniane"
+              switchNames={["Filmy", "Seriale"]}
+            />
+          </Suspense>
+        </section>
+        <section className="px-4 mb-8">
+          <Suspense fallback={<MediaScrollListSkeleton />}>
+            <MediaListContainer
+              mediaCategory="popular"
+              label="Popularne"
+              switchNames={["Filmy", "Seriale"]}
+            />
+          </Suspense>
+        </section>
+        <section className="px-4 mb-8">
+          <Suspense fallback={<MediaScrollListSkeleton />}>
+            <MediaListContainer
+              seriesCategories={["airing_today", "on_the_air"]}
+              label="Serialowe premiery"
+              switchNames={["Teraz", "Wkrótce"]}
+            />
+          </Suspense>
+        </section>
+        <section className="px-4 mb-8">
+          <Suspense fallback={<MediaScrollListSkeleton />}>
+            <MediaListContainer
+              movieCategories={["now_playing", "upcoming"]}
+              label="W kinach"
+              switchNames={["Teraz", "Wkrótce"]}
             />
           </Suspense>
         </section>

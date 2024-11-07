@@ -3,40 +3,35 @@
 import { useState } from "react";
 import MediaListSwitch from "./MediaListSwitch";
 import MediaScrollList from "./MediaScrollList";
-import { MediaCategory, MediaItem, MediaType } from "../lib/types";
+import {
+  MediaCategory,
+  MediaItem,
+  MediaType,
+  MovieCategory,
+  SeriesCategory,
+} from "../lib/types";
 
 type Props = {
-  movieList: MediaItem[];
-  seriesList: MediaItem[];
-  category: MediaCategory;
+  list1: MediaItem[];
+  list2: MediaItem[];
+  switchNames: [string, string];
   label: string;
+  categories: [string, string];
 };
 
 export default function MediaListController({
-  movieList,
-  seriesList,
-  category,
+  list1,
+  list2,
+  switchNames,
   label,
+  categories,
 }: Props) {
-  const [currentMediaType, setCurrentMediaType] = useState<MediaType>("movie");
-  const [listToDisplay, setListToDisplay] = useState<MediaItem[]>(movieList);
+  const [currentCategory, setCurrentCategory] = useState(categories[0]);
+  const [listToDisplay, setListToDisplay] = useState<MediaItem[]>(list1);
 
-  function handleSwitch(media: MediaType) {
-    setListToDisplay(media === "movie" ? movieList : seriesList);
-    setCurrentMediaType(media);
-  }
-
-  let categoryLabel_1, categoryLabel_2;
-  switch (category) {
-    case "popular":
-    case "top_rated":
-      categoryLabel_1 = "Filmy";
-      categoryLabel_2 = "Seriale";
-      break;
-    default:
-      categoryLabel_1 = "Filmy";
-      categoryLabel_2 = "Seriale";
-      break;
+  function handleSwitch(category: string) {
+    setListToDisplay(category === categories[0] ? list1 : list2);
+    setCurrentCategory(category);
   }
 
   // Wybór listy do wyświetlenia w zależności od wybranego typu mediów
@@ -46,12 +41,12 @@ export default function MediaListController({
       <header className="flex justify-between items-center mb-4">
         <h2 className="text-xl">{label}</h2>
         <MediaListSwitch
-          categoryLabel_1={categoryLabel_1}
-          categoryLabel_2={categoryLabel_2}
+          switchNames={switchNames}
+          switchCategories={categories}
           onSwitch={handleSwitch}
         />
       </header>
-      <MediaScrollList mediaType={currentMediaType} list={listToDisplay} />
+      <MediaScrollList mediaType={currentCategory} list={listToDisplay} />
     </>
   );
 }

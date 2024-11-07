@@ -1,27 +1,78 @@
-import { fetchMediaList } from "../lib/data";
+import { fetchMediaList, fetchMovieList, fetchSeriesList } from "../lib/data";
+import { MediaCategory, MovieCategory, SeriesCategory } from "../lib/types";
 import MediaListController from "./MediaListController";
 
 export default async function MediaListContainer({
-  category,
+  mediaCategory,
+
   label,
+  movieCategories,
+  seriesCategories,
+  switchNames,
 }: {
-  category: "top_rated" | "popular";
+  mediaCategory?: MediaCategory;
+  movieCategories?: [MovieCategory, MovieCategory];
+  seriesCategories?: [SeriesCategory, SeriesCategory];
+
   label: string;
+  switchNames: [string, string];
 }) {
-  // const moviesList: MediaItem[] = (await fetchMediaList("movie", category)).results;
-  // const seriesList: MediaItem[] = (await fetchMediaList("tv", category)).results;
+  if (mediaCategory) {
+    const [moviesList, seriesList] = await Promise.all([
+      await fetchMediaList("movie", mediaCategory),
+      await fetchMediaList("tv", mediaCategory),
+    ]);
 
-  const [moviesList, seriesList] = await Promise.all([
-    await fetchMediaList("movie", category),
-    await fetchMediaList("tv", category),
-  ]);
+    return (
+      <MediaListController
+        categories={["movie", "tv"]}
+        list1={moviesList.results}
+        list2={seriesList.results}
+        switchNames={switchNames}
+        label={label}
+      />
+    );
+  }
 
-  return (
-    <MediaListController
-      movieList={moviesList.results}
-      seriesList={seriesList.results}
-      category={category}
-      label={label}
-    />
-  );
+  if (movieCategories) {
+    const [list1, list2] = await Promise.all([
+      await fetchMovieList(movieCategories[0]),
+      await fetchMovieList(movieCategories[1]),
+    ]);
+
+    return (
+      <MediaListController
+        categories={movieCategories}
+        list1={list1.results}
+        list2={list2.results}
+        switchNames={switchNames}
+        label={label}
+      />
+    );
+  }
+  if (seriesCategories) {
+    const [list1, list2] = await Promise.all([
+      await fetchSeriesList(seriesCategories[0]),
+      await fetchSeriesList(seriesCategories[1]),
+    ]);
+
+    return (
+      <MediaListController
+        categories={seriesCategories}
+        list1={list1.results}
+        list2={list2.results}
+        switchNames={switchNames}
+        label={label}
+      />
+    );
+  }
+
+  // return (
+  //   <MediaListController
+  //     movieList={moviesList.results}
+  //     seriesList={seriesList.results}
+  //     category={category}
+  //     label={label}
+  //   />
+  // );
 }
