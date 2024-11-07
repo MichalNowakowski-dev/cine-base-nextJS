@@ -1,48 +1,27 @@
 import { fetchMediaList } from "../lib/data";
-import { MediaItem } from "../lib/types";
-import MediaListSwitch from "./MediaListSwitch";
-import MediaScrollList from "./MediaScrollList";
+import MediaListController from "./MediaListController";
 
 export default async function MediaListContainer({
-  mediaType,
   category,
   label,
 }: {
-  mediaType: string;
-  category: "top_rated" | "popular" | "trending";
+  category: "top_rated" | "popular";
   label: string;
 }) {
-  const mediaList: MediaItem[] = (await fetchMediaList(mediaType, category))
-    .results;
-  let category1;
-  let category2;
+  // const moviesList: MediaItem[] = (await fetchMediaList("movie", category)).results;
+  // const seriesList: MediaItem[] = (await fetchMediaList("tv", category)).results;
 
-  switch (category) {
-    case "popular":
-      category1 = "Filmy";
-      category2 = "Seriale";
-      break;
-    case "top_rated":
-      category1 = "Filmy";
-      category2 = "Seriale";
-      break;
-    case "trending":
-      category1 = "Dziś";
-      category2 = "Tydzień";
-      break;
+  const [moviesList, seriesList] = await Promise.all([
+    await fetchMediaList("movie", category),
+    await fetchMediaList("tv", category),
+  ]);
 
-    default:
-      category1 = "Filmy";
-      category2 = "Seriale";
-      break;
-  }
   return (
-    <>
-      <header className="flex justify-between items-center mb-4">
-        <h2 className="text-xl">{label}</h2>
-        <MediaListSwitch category1={category1} category2={category2} />
-      </header>
-      <MediaScrollList mediaType={mediaType} list={mediaList} />
-    </>
+    <MediaListController
+      movieList={moviesList.results}
+      seriesList={seriesList.results}
+      category={category}
+      label={label}
+    />
   );
 }

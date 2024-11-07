@@ -4,7 +4,6 @@ import Search from "./ui/Search";
 import { Suspense } from "react";
 import { MediaScrollListSkeleton } from "./ui/skeletons";
 import MediaListContainer from "./ui/MediaListContainer";
-import MediaListSwitch from "./ui/MediaListSwitch";
 
 export default async function Home() {
   return (
@@ -29,17 +28,12 @@ export default async function Home() {
       <main className=" xl:max-w-screen-xl mx-auto">
         <section className="px-4">
           <Suspense fallback={<MediaScrollListSkeleton />}>
-            <MediaListContainer
-              mediaType="movie"
-              category="popular"
-              label="Popularne"
-            />
+            <MediaListContainer category="popular" label="Popularne" />
           </Suspense>
         </section>
         <section className="px-4">
           <Suspense fallback={<MediaScrollListSkeleton />}>
             <MediaListContainer
-              mediaType="movie"
               category="top_rated"
               label="Najlepiej oceniane"
             />

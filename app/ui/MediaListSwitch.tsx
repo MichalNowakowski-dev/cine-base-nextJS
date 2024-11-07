@@ -1,39 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { MediaType } from "../lib/types";
 
 export default function MediaListSwitch({
-  category1,
-  category2,
+  categoryLabel_1,
+  categoryLabel_2,
+  onSwitch,
 }: {
-  category1: string;
-  category2: string;
+  categoryLabel_1: string;
+  categoryLabel_2: string;
+  onSwitch: (media: MediaType) => void;
 }) {
-  const [activeCategory, setActiveCategory] = useState(category1);
+  const [activeCategory, setActiveCategory] = useState("movie");
+
+  const handleSwitch = (mediaType: MediaType) => {
+    onSwitch(mediaType);
+    setActiveCategory(mediaType);
+  };
 
   return (
     <div className="flex justify-center items-center bg-white border-none rounded-full p-1 min-w-32 w-48 max-w-80">
       <button
-        onClick={() => setActiveCategory(category1)}
-        name={category1}
+        onClick={() => handleSwitch("movie")}
+        name={categoryLabel_1}
         className={`py-1 flex justify-center items-center font-semibold w-1/2 border-none rounded-full whitespace-nowrap transition-all duration-300 ease-linear ${
-          activeCategory === category1
-            ? "bg-fade-red-to-black"
-            : "bg-transparent"
-        } ${activeCategory === category1 ? "text-red-200" : "text-black"}`}
+          activeCategory === "movie" ? "bg-fade-red-to-black" : "bg-transparent"
+        } ${activeCategory === "movie" ? "text-red-200" : "text-black"}`}
       >
-        Filmy
+        {categoryLabel_1}
       </button>
       <button
-        onClick={() => setActiveCategory(category2)}
-        name={category2}
+        onClick={() => handleSwitch("tv")}
+        name={categoryLabel_2}
         className={`py-1 flex justify-center items-center font-semibold w-1/2 border-none rounded-full whitespace-nowrap transition-all duration-300 ease-linear  ${
-          activeCategory === category2
-            ? "bg-fade-red-to-black"
-            : "bg-transparent"
-        } ${activeCategory === category2 ? "text-red-200" : "text-black"}`}
+          activeCategory === "tv" ? "bg-fade-red-to-black" : "bg-transparent"
+        } ${activeCategory === "tv" ? "text-red-200" : "text-black"}`}
       >
-        Seriale
+        {categoryLabel_2}
       </button>
     </div>
   );
