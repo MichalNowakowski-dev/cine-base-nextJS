@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MediaType } from "../lib/types";
+import { MediaType } from "../../lib/types";
 import SwitchButton from "./SwitchButton";
 
 export default function MediaListSwitch({

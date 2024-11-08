@@ -3,6 +3,7 @@ import {
   MediaType,
   MovieCategory,
   SeriesCategory,
+  TimeWindow,
 } from "./types";
 
 export const fetchMediaList = async (
@@ -10,7 +11,6 @@ export const fetchMediaList = async (
   category: MediaCategory
 ) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
     );
@@ -21,9 +21,23 @@ export const fetchMediaList = async (
     throw new Error(`Failed to fetch ${category} ${mediaType} list.`);
   }
 };
+export const fetchTrendingList = async (
+  mediaType: MediaType,
+  timeWindow: TimeWindow
+) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/trending/${mediaType}/${timeWindow}?language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch trending ${mediaType} list.`);
+  }
+};
 export const fetchMovieList = async (category: MovieCategory) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/3/movie/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
     );
@@ -36,7 +50,6 @@ export const fetchMovieList = async (category: MovieCategory) => {
 };
 export const fetchSeriesList = async (category: SeriesCategory) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/3/tv/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
     );

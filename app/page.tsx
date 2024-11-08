@@ -3,7 +3,7 @@ import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
 import Search from "./ui/Search";
 import { Suspense } from "react";
 import { MediaScrollListSkeleton } from "./ui/skeletons";
-import MediaListContainer from "./ui/MediaListContainer";
+import MediaListContainer from "./ui/MediaListCarousel/MediaListContainer";
 
 export default async function Home() {
   return (
@@ -47,9 +47,10 @@ export default async function Home() {
         <section className="px-4 mb-8">
           <Suspense fallback={<MediaScrollListSkeleton />}>
             <MediaListContainer
-              seriesCategories={["airing_today", "on_the_air"]}
-              label="Serialowe premiery"
-              switchNames={["Teraz", "Wkrótce"]}
+              mediaCategory="trending"
+              timeWindow="week"
+              label="Tygodniowe trendy"
+              switchNames={["Filmy", "Seriale"]}
             />
           </Suspense>
         </section>

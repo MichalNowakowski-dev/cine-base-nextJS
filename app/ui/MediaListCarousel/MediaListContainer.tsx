@@ -1,22 +1,49 @@
-import { fetchMediaList, fetchMovieList, fetchSeriesList } from "../lib/data";
-import { MediaCategory, MovieCategory, SeriesCategory } from "../lib/types";
+import {
+  fetchMediaList,
+  fetchMovieList,
+  fetchSeriesList,
+  fetchTrendingList,
+} from "../../lib/data";
+import {
+  MediaCategory,
+  MovieCategory,
+  SeriesCategory,
+  TimeWindow,
+} from "../../lib/types";
 import MediaListController from "./MediaListController";
 
 export default async function MediaListContainer({
   mediaCategory,
-
   label,
   movieCategories,
   seriesCategories,
   switchNames,
+  timeWindow,
 }: {
+  timeWindow?: TimeWindow;
   mediaCategory?: MediaCategory;
   movieCategories?: [MovieCategory, MovieCategory];
   seriesCategories?: [SeriesCategory, SeriesCategory];
-
   label: string;
   switchNames: [string, string];
 }) {
+  if (timeWindow && mediaCategory) {
+    const [moviesList, seriesList] = await Promise.all([
+      await fetchTrendingList("movie", timeWindow),
+      await fetchTrendingList("tv", timeWindow),
+    ]);
+
+    return (
+      <MediaListController
+        categories={["movie", "tv"]}
+        list1={moviesList.results}
+        list2={seriesList.results}
+        switchNames={switchNames}
+        label={label}
+      />
+    );
+  }
+
   if (mediaCategory) {
     const [moviesList, seriesList] = await Promise.all([
       await fetchMediaList("movie", mediaCategory),
@@ -66,13 +93,4 @@ export default async function MediaListContainer({
       />
     );
   }
-
-  // return (
-  //   <MediaListController
-  //     movieList={moviesList.results}
-  //     seriesList={seriesList.results}
-  //     category={category}
-  //     label={label}
-  //   />
-  // );
 }

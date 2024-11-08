@@ -9,7 +9,7 @@ import {
   MediaType,
   MovieCategory,
   SeriesCategory,
-} from "../lib/types";
+} from "../../lib/types";
 
 type Props = {
   list1: MediaItem[];
@@ -33,8 +33,6 @@ export default function MediaListController({
     setListToDisplay(category === categories[0] ? list1 : list2);
     setCurrentCategory(category);
   }
-
-  // Wybór listy do wyświetlenia w zależności od wybranego typu mediów
 
   return (
     <>
