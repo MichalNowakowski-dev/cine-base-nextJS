@@ -5,6 +5,7 @@ import { useRef } from "react";
 import MediaListButton from "./MediaListButton";
 import { MediaItem } from "../../lib/types";
 import Link from "next/link";
+import MediaRoundedRating from "../MediaRoundedRating";
 
 export default function MediaScrollList({
   mediaType,
@@ -39,7 +40,7 @@ export default function MediaScrollList({
               // genre_ids,
               title,
               release_date,
-              // vote_average,
+              vote_average,
               name,
               first_air_date,
             }) => (
@@ -56,6 +57,12 @@ export default function MediaScrollList({
                       fill
                       sizes="(max-width: 640px) 125px, (max-width: 768px) 150px, (max-width: 1024px) 175px, (max-width: 1280px) 200px, 225px"
                       quality={100}
+                    />
+                    <MediaRoundedRating
+                      rating={vote_average}
+                      size={40}
+                      strokeWidth={3}
+                      className="top-1 right-1"
                     />
                   </div>
                   <h4 className="break-words text-wrap">{title || name}</h4>
