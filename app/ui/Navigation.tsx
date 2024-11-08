@@ -36,7 +36,7 @@ export default function Navigation() {
   return (
     <nav
       className={`w-full h-20 ${
-        isMobileNavOpen ? "bg-zinc-800" : "bg-[#00000050]"
+        isMobileNavOpen ? "bg-zinc-800" : "bg-background"
       } backdrop-blur-sm md:h-24 fixed flex items-center py-3 z-20`}
     >
       <div className="xl:max-w-screen-xl mx-auto flex justify-between items-center w-full px-3 ">

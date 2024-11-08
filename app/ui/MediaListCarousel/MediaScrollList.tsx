@@ -30,7 +30,7 @@ export default function MediaScrollList({
     <div className="relative">
       <ul
         ref={listRef}
-        className="flex gap-3 w-full max-w-screen-xl overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth"
+        className="flex gap-4 w-full max-w-screen-xl overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth"
       >
         {list &&
           list.map(
