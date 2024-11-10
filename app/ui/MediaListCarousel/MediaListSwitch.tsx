@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { MediaType } from "../../lib/types";
 import SwitchButton from "./SwitchButton";
 
 export default function MediaListSwitch({
@@ -36,15 +35,6 @@ export default function MediaListSwitch({
       >
         {switchNames[1]}
       </SwitchButton>
-      {/* <button
-        onClick={() => handleSwitch("tv")}
-        name={categoryLabel_2}
-        className={`py-1 flex justify-center items-center font-semibold w-1/2 border-none rounded-full whitespace-nowrap transition-all duration-300 ease-linear  ${
-          activeCategory === "tv" ? "bg-fade-red-to-black" : "bg-transparent"
-        } ${activeCategory === "tv" ? "text-red-200" : "text-black"}`}
-      >
-        {categoryLabel_2}
-      </button> */}
     </div>
   );
 }

@@ -5,6 +5,15 @@ export const MediaItemSkeleton = () => (
     <p className="bg-gray-300 h-3 w-1/3 mt-1"></p>
   </li>
 );
+export const MediaContainerSkeleton = () => (
+  <>
+    <header className=" flex justify-between items-center mb-4 animate-pulse ">
+      <h2 className="bg-gray-300 h-7 w-24"></h2>
+      <div className="flex justify-center items-center bg-gray-300 border-none rounded-full p-1 min-w-32 w-48 h-10 animate-pulse"></div>
+    </header>
+    <MediaScrollListSkeleton />
+  </>
+);
 
 export const MediaScrollListSkeleton = () => (
   <div className="overflow-x-auto whitespace-nowrap no-scrollbar">

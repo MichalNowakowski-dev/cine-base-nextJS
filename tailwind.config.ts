@@ -31,6 +31,15 @@ const config: Config = {
         h5: "1.125rem", // 18px
         h6: "1rem", // 16px
       },
+      keyframes: {
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(calc(-100% + 100px))" }, // Dostosuj szerokość `100px` do swoich potrzeb
+        },
+      },
+      animation: {
+        scroll: "scroll 5s linear infinite",
+      },
     },
   },
   plugins: [

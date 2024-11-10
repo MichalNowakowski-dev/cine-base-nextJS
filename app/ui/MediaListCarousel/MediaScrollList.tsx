@@ -6,6 +6,7 @@ import MediaListButton from "./MediaListButton";
 import { MediaItem } from "../../lib/types";
 import Link from "next/link";
 import MediaRoundedRating from "../MediaRoundedRating";
+import { moveMediaList } from "@/app/lib/utils";
 
 export default function MediaScrollList({
   mediaType,
@@ -15,16 +16,6 @@ export default function MediaScrollList({
   list: MediaItem[];
 }) {
   const listRef = useRef<HTMLUListElement | null>(null);
-
-  const moveMediaList = (direction: string) => {
-    if (listRef.current) {
-      if (direction === "left") {
-        listRef.current.scrollLeft -= listRef.current.offsetWidth;
-      } else {
-        listRef.current.scrollLeft += listRef.current.offsetWidth;
-      }
-    }
-  };
 
   return (
     <div className="relative">
@@ -37,7 +28,6 @@ export default function MediaScrollList({
             ({
               id,
               poster_path,
-              // genre_ids,
               title,
               release_date,
               vote_average,
@@ -74,8 +64,14 @@ export default function MediaScrollList({
             )
           )}
       </ul>
-      <MediaListButton direction="left" handleMove={moveMediaList} />
-      <MediaListButton direction="right" handleMove={moveMediaList} />
+      <MediaListButton
+        direction="left"
+        handleMove={() => moveMediaList("left", listRef)}
+      />
+      <MediaListButton
+        direction="right"
+        handleMove={() => moveMediaList("right", listRef)}
+      />
     </div>
   );
 }

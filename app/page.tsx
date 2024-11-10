@@ -2,7 +2,7 @@ import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
 import Search from "./ui/Search";
 import { Suspense } from "react";
-import { MediaScrollListSkeleton } from "./ui/skeletons";
+import { MediaContainerSkeleton } from "./ui/skeletons";
 import MediaListContainer from "./ui/MediaListCarousel/MediaListContainer";
 
 export default async function Home() {
@@ -27,7 +27,7 @@ export default async function Home() {
       </header>
       <main className=" xl:max-w-screen-xl mx-auto">
         <section className="px-4 mb-8">
-          <Suspense fallback={<MediaScrollListSkeleton />}>
+          <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="top_rated"
               label="Najlepiej oceniane"
@@ -36,7 +36,7 @@ export default async function Home() {
           </Suspense>
         </section>
         <section className="px-4 mb-8">
-          <Suspense fallback={<MediaScrollListSkeleton />}>
+          <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="popular"
               label="Popularne"
@@ -45,7 +45,7 @@ export default async function Home() {
           </Suspense>
         </section>
         <section className="px-4 mb-8">
-          <Suspense fallback={<MediaScrollListSkeleton />}>
+          <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="trending"
               timeWindow="week"
@@ -55,7 +55,7 @@ export default async function Home() {
           </Suspense>
         </section>
         <section className="px-4 mb-8">
-          <Suspense fallback={<MediaScrollListSkeleton />}>
+          <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               movieCategories={["now_playing", "upcoming"]}
               label="W kinach"

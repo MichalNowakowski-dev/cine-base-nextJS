@@ -3,13 +3,7 @@
 import { useState } from "react";
 import MediaListSwitch from "./MediaListSwitch";
 import MediaScrollList from "./MediaScrollList";
-import {
-  MediaCategory,
-  MediaItem,
-  MediaType,
-  MovieCategory,
-  SeriesCategory,
-} from "../../lib/types";
+import { MediaItem } from "../../lib/types";
 
 type Props = {
   list1: MediaItem[];
@@ -44,6 +38,7 @@ export default function MediaListController({
           onSwitch={handleSwitch}
         />
       </header>
+
       <MediaScrollList mediaType={currentCategory} list={listToDisplay} />
     </>
   );

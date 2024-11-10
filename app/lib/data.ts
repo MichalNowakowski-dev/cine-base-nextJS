@@ -11,6 +11,11 @@ export const fetchMediaList = async (
   category: MediaCategory
 ) => {
   try {
+    // await new Promise((resolve) =>
+    //   setTimeout(() => {
+    //     resolve("test");
+    //   }, 2000)
+    // );
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
     );
@@ -72,6 +77,19 @@ export const fetchMediaByID = async (mediaId: string, mediaType: MediaType) => {
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to fetch ${mediaType}.`);
+  }
+};
+export const fetchMovieByIDfromOMDB = async (imdbId: string) => {
+  try {
+    const resp = await fetch(
+      `https://www.omdbapi.com/?i=${imdbId}&apikey=${process.env.OMDB_API_key}`
+    );
+    const data = await resp.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie details from OMDB.`);
   }
 };
 
