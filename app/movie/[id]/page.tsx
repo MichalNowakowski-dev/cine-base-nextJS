@@ -18,10 +18,11 @@ import { IoMdAdd } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
-import { FaRegStar, FaMusic } from "react-icons/fa";
+import { FaRegStar, FaScroll } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
+import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
 
 export default async function Page({
   params,
@@ -35,31 +36,30 @@ export default async function Page({
     movieDetails.imdb_id
   );
   const providers = await fetchProviders(id, "movie");
-  const genres = await fetchGenresList();
   const movieCast = await fetchMediaCast(id, "movie");
   const movieRecommendationsList = await fetchRecommendationsList(id, "movie");
-  const movieSimilarList = await fetchSimilarList(id, "movie");
   const videoList = await fetchVideosList(id, "movie");
   const imagesList = await fetchImages(id, "movie");
 
-  function getPersonImagePath(personName: string) {
-    if (personName.includes(",")) {
-      const authorName = personName.split(", ")[0];
-      const [person] = movieCast.crew.filter(
-        (person: any) => person.name === authorName
-      );
-      return person.profile_path;
-    } else {
-      const [person] = movieCast.crew.filter(
-        (person: any) => person.name === personName
-      );
-      return person.profile_path;
-    }
+  function removeSpaces(str: string) {
+    return str.replace(/\s+/g, "");
   }
+
+  function getPersonImagePath(personName: string) {
+    const [person] = movieCast.crew.filter(
+      (person: any) => removeSpaces(person.name) === removeSpaces(personName)
+    );
+    return person ? person.profile_path : false;
+  }
+
+  const styles = {
+    headerSection:
+      "flex flex-col justify-end items-center gap-y-4 h-[70vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_100%),_linear-gradient(to_top,_#141414_0%,_transparent_50%)] mb-6",
+  };
 
   return (
     <main className="min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl ">
-      <section className="flex flex-col justify-end items-center gap-y-4 h-[70vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_100%),_linear-gradient(to_top,_#141414_0%,_transparent_50%)] mb-6">
+      <section className={styles.headerSection}>
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="movie image"
@@ -229,29 +229,31 @@ export default async function Page({
           <section className="mb-5">
             <p className="text-secondary flex gap-1 items-center mb-3">
               {" "}
-              <FaMusic size={20} /> Scenariusz
+              <FaScroll size={20} /> Scenariusz
             </p>
-            <div className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 ">
-              <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
-                <Image
-                  alt="Director image"
-                  src={
-                    movieDetailsFromOmdb.Writer
-                      ? getImgUrl(
-                          "w185",
-                          getPersonImagePath(movieDetailsFromOmdb.Writer)
-                        )
-                      : NoProfilePicture
-                  }
-                  fill
-                  className="object-cover rounded-md"
-                  sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
-                />
-              </div>
-              <p className="flex items-center">
-                {movieDetailsFromOmdb.Director}
-              </p>
-            </div>
+            <ul>
+              {movieDetailsFromOmdb.Writer.split(", ").map((writer: string) => (
+                <li
+                  key={writer}
+                  className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
+                >
+                  <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
+                    <Image
+                      alt="Director image"
+                      src={
+                        writer
+                          ? getImgUrl("w185", getPersonImagePath(writer))
+                          : NoProfilePicture
+                      }
+                      fill
+                      className="object-cover rounded-md"
+                      sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
+                    />
+                  </div>
+                  <p className="flex items-center">{writer}</p>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
@@ -266,6 +268,15 @@ export default async function Page({
               Zwiastuny i ciekawostki
             </h3>
             <VideoModalContainer list={videoList.results} />
+          </section>
+          <section className="mb-5">
+            <h3 className="text-secondary mb-3 flex items-center justify-start gap-1">
+              Rekomendacje
+            </h3>
+            <MediaScrollList
+              mediaType="movie"
+              list={movieRecommendationsList.results}
+            />
           </section>
         </div>
       </section>

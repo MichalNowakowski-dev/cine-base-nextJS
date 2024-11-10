@@ -36,7 +36,7 @@ export default function MediaScrollList({
             }) => (
               <li
                 key={id}
-                className="text-sm min-w-[125px] sm:min-w-[150px] md:min-w-[175px] lg:min-w-[200px] xl:min-w-[225px]"
+                className="text-sm min-w-[100px] sm:min-w-[120px] md:min-w-[140px] lg:min-w-[160px] xl:min-w-[180px]"
               >
                 <Link href={`/${mediaType}/${id}`}>
                   <div className="mb-2 w-full h-auto aspect-[2/3] relative">
@@ -45,7 +45,7 @@ export default function MediaScrollList({
                       src={`${process.env.NEXT_PUBLIC_IMAGES_URL}original${poster_path}`}
                       alt={"Movie image"}
                       fill
-                      sizes="(max-width: 640px) 125px, (max-width: 768px) 150px, (max-width: 1024px) 175px, (max-width: 1280px) 200px, 225px"
+                      sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1280px) 160px, 180px"
                       quality={100}
                     />
                     <MediaRoundedRating
