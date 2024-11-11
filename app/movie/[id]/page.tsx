@@ -3,8 +3,6 @@ import {
   fetchProviders,
   fetchMediaCast,
   fetchRecommendationsList,
-  fetchSimilarList,
-  fetchGenresList,
   fetchVideosList,
   fetchImages,
   fetchMovieByIDfromOMDB,
@@ -23,6 +21,7 @@ import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
 import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
+import CtaButton from "@/app/ui/CtaButton";
 
 export default async function Page({
   params,
@@ -74,10 +73,7 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col gap-3 ">
-          <button className="flex gap-x-1 items-center justify-center bg-red-600 text-white rounded-md py-2 px-4">
-            <FaPlay />
-            Oglądaj
-          </button>
+          <CtaButton>Oglądaj</CtaButton>
           <div className="flex gap-x-3">
             <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
               <FaThumbsUp size={20} />

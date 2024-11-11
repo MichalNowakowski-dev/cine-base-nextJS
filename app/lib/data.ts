@@ -53,6 +53,30 @@ export const fetchMovieList = async (category: MovieCategory) => {
     throw new Error(`Failed to fetch movie ${category} list.`);
   }
 };
+export const fetchMovieListByGenre = async (genreId: string) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=1&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie list by genre.`);
+  }
+};
+export const fetchSeriesListByGenre = async (genreId: string) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=1&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie list by genre.`);
+  }
+};
 export const fetchSeriesList = async (category: SeriesCategory) => {
   try {
     const resp = await fetch(
@@ -82,7 +106,7 @@ export const fetchMediaByID = async (mediaId: string, mediaType: MediaType) => {
 export const fetchMovieByIDfromOMDB = async (imdbId: string) => {
   try {
     const resp = await fetch(
-      `https://www.omdbapi.com/?i=${imdbId}&apikey=${process.env.OMDB_API_key}`
+      `${process.env.NEXT_PUBLIC_OMDB_URL}/?i=${imdbId}&apikey=${process.env.OMDB_API_key}`
     );
     const data = await resp.json();
 
@@ -104,10 +128,10 @@ export const fetchGenresList = async () => {
     const genresMovies = await respMovies.json();
     const genresTV = await respTv.json();
 
-    return [...genresMovies.genres, ...genresTV.genres];
+    return [genresMovies.genres, genresTV.genres];
   } catch (error) {
     console.error(error);
-    throw new Error(`Failed to fetch genres list.`);
+    throw new Error(`Failed to fetch genres lists.`);
   }
 };
 
