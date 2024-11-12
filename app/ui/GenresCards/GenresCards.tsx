@@ -8,7 +8,9 @@ export default function GenresCards({
   className?: string;
 }) {
   return (
-    <ul className={`flex flex-wrap justify-between w-full ${className}`}>
+    <ul
+      className={`flex gap-3 justify-between min-w-full overflow-x-auto md:overflow-hidden  ${className}`}
+    >
       {genreList.map((genre: any) => (
         <GenreCard key={genre.id} genre={genre} />
       ))}

@@ -1,70 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GenresCards from "./GenresCards";
 import GenresCardListButtons from "./GenresCardListButtons";
+
+const GENRES_PER_VIEW = 5;
 
 export default function GenresCardsSection({
   genresList,
 }: {
   genresList: { id: number; name: string; images: string[] }[];
 }) {
-  const GENRES_PER_VIEW = 5;
-  const FADE_ANIMATION_TIME = 0.3;
   const [activePage, setActivePage] = useState(1);
   const [showList, setShowList] = useState(true);
-
-  const [currentList, setCurrentList] = useState(
+  const [isMobile, setIsMobile] = useState(false);
+  const [paginatedList, setPaginatedList] = useState(
     genresList.slice(
       (activePage - 1) * GENRES_PER_VIEW,
       activePage * GENRES_PER_VIEW
     )
   );
 
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 767);
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 767);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const maxPageListNumber = Math.ceil(genresList.length / GENRES_PER_VIEW);
 
   function handleMoveList(direction: string) {
-    if (activePage === 1 && direction === "left") return;
-    if (activePage === maxPageListNumber && direction === "right") return;
+    if (
+      (activePage === 1 && direction === "left") ||
+      (activePage === maxPageListNumber && direction === "right")
+    ) {
+      return;
+    }
     setShowList(false);
-
+    const offset = direction === "right" ? 1 : -1;
     setTimeout(() => {
-      if (direction === "right" && activePage < maxPageListNumber) {
-        setActivePage((prevState) => {
-          const newActivePage = prevState + 1;
-          setCurrentList(
-            genresList.slice(
-              (newActivePage - 1) * GENRES_PER_VIEW,
-              newActivePage * GENRES_PER_VIEW
-            )
-          );
-          setShowList(true);
-          return newActivePage;
-        });
-      } else if (direction === "left" && activePage > 1) {
-        setActivePage((prevState) => {
-          const newActivePage = prevState - 1;
-          setCurrentList(
-            genresList.slice(
-              (newActivePage - 1) * GENRES_PER_VIEW,
-              newActivePage * GENRES_PER_VIEW
-            )
-          );
-          setShowList(true);
-          return newActivePage;
-        });
-      }
-    }, FADE_ANIMATION_TIME * 1000);
+      updatePageAndList(activePage + offset);
+      setShowList(true);
+    }, Number(process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME));
+  }
+
+  function updatePageAndList(newPage: number) {
+    setActivePage(newPage);
+    setPaginatedList(
+      genresList.slice(
+        (newPage - 1) * GENRES_PER_VIEW,
+        newPage * GENRES_PER_VIEW
+      )
+    );
   }
 
   return (
-    <section className="flex flex-wrap gap-6 px-4 mb-8">
+    <>
       <div className="flex items-center justify-between w-full">
-        <header>
+        <header className="text-center md:text-start">
           <h2 className="text-2xl mb-2">
             Eksploruj nasz szeroki wybór kategorii
           </h2>
-          <p className="text-sm text-secondary w-2/3">
+          <p className="text-sm text-secondary md:w-2/3">
             Niezależnie od tego, czy szukasz komedii, która Cię rozśmieszy,
             dramatu, który zmusi Cię do myślenia, czy dokumentu, który pozwoli
             Ci dowiedzieć się czegoś nowego
@@ -78,11 +78,11 @@ export default function GenresCardsSection({
         />
       </div>
       <GenresCards
-        genreList={currentList}
-        className={`transition-opacity duration-500 ${
-          showList ? "opacity-100" : "opacity-0"
-        }`}
+        genreList={isMobile ? genresList : paginatedList}
+        className={`transition-opacity duration-${
+          process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
+        } ${showList ? "opacity-100" : "opacity-0"}`}
       />
-    </section>
+    </>
   );
 }

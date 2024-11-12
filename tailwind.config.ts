@@ -10,6 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
+        "fade-black-to-red": `linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
+                           radial-gradient(circle at top right, rgba(255, 0, 0, 0.3), transparent),
+                           linear-gradient(to bottom, #111, #222)`,
         "fade-red-to-black":
           "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(229,0,0,0.7) 100%)",
         "fade-to-dark":

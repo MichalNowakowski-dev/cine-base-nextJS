@@ -11,8 +11,10 @@ import { moveMediaList } from "@/app/lib/utils";
 export default function MediaScrollList({
   mediaType,
   list,
+  className,
 }: {
   mediaType: string;
+  className?: string;
   list: MediaItem[];
 }) {
   const listRef = useRef<HTMLUListElement | null>(null);
@@ -21,7 +23,7 @@ export default function MediaScrollList({
     <div className="relative">
       <ul
         ref={listRef}
-        className="flex gap-4 w-full max-w-screen-xl overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth"
+        className={`flex gap-4 w-full max-w-screen-xl overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth ${className}`}
       >
         {list &&
           list.map(

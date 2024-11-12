@@ -1,17 +1,12 @@
 import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
-import Search from "./ui/Search";
 import { Suspense } from "react";
 import { MediaContainerSkeleton } from "./ui/skeletons";
 import MediaListContainer from "./ui/MediaListCarousel/MediaListContainer";
-import { fetchGenresList, fetchMovieListByGenre } from "./lib/data";
 import CtaButton from "./ui/CtaButton";
 import Link from "next/link";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import noPoster from "@/public/no-poster-img.webp";
-import GenresCards from "./ui/GenresCards/GenresCards";
-import GenresCardsSection from "./ui/GenresCards/GenresCardsSection";
 import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
+import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
 
 export default async function Home() {
   return (
@@ -39,12 +34,31 @@ export default async function Home() {
           </div>
         </section>
       </header>
-      <main className=" xl:max-w-screen-xl mx-auto">
-        <section className="flex flex-wrap gap-6 px-4 mb-8">
+      <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16">
+        <section className="flex flex-wrap gap-6 px-4">
           <GenresCardsSectionContainer />
         </section>
 
-        <section className="px-4 mb-8">
+        <section className="px-4">
+          <header className="mb-6">
+            <h2 className="mb-4 text-2xl">
+              Zapewniamy możliwość przesyłania strumieniowego na różnych
+              urządzeniach
+            </h2>
+            <p className="text-secondary text-sm">
+              Dzięki CineBase możesz oglądać swoje ulubione filmy i programy
+              telewizyjne zawsze i wszędzie.{" "}
+              <span className=" hidden md:inline">
+                Nasza platforma jest zaprojektowana tak, aby była kompatybilna z
+                szeroką gamą urządzeń, zapewniając, że nigdy nie przegapisz
+                chwili rozrywki.
+              </span>
+            </p>
+          </header>
+          <DeviceCardsList />
+        </section>
+
+        <section className="px-4">
           <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="top_rated"
@@ -53,7 +67,7 @@ export default async function Home() {
             />
           </Suspense>
         </section>
-        <section className="px-4 mb-8">
+        <section className="px-4">
           <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="popular"
@@ -62,7 +76,7 @@ export default async function Home() {
             />
           </Suspense>
         </section>
-        <section className="px-4 mb-8">
+        <section className="px-4">
           <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="trending"
@@ -72,7 +86,7 @@ export default async function Home() {
             />
           </Suspense>
         </section>
-        <section className="px-4 mb-8">
+        <section className="px-4">
           <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               movieCategories={["now_playing", "upcoming"]}

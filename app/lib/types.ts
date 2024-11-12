@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export type MediaItem = {
   id: number;
   poster_path: string;
@@ -44,4 +46,10 @@ export type MediaListContainerProps = {
   seriesCategories?: [SeriesCategory, SeriesCategory];
   label: string;
   switchNames: [string, string];
+};
+
+export type DeviceCardType = {
+  name: string;
+  Icon: IconType;
+  desc: string;
 };

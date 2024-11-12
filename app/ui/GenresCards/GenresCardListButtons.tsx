@@ -11,7 +11,7 @@ export default function GenresCardListButtons({
   maxPageListNumber: number;
 }) {
   return (
-    <div className="px-4 py-2 bg-backgroundFooter rounded-md flex items-center justify-center gap-3 border border-secondary ">
+    <div className="hidden md:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-secondary ">
       <button
         onClick={() => handleMoveList("left")}
         className="p-3 bg-backgroundLight rounded-md flex items-center justify-center"
@@ -24,7 +24,7 @@ export default function GenresCardListButtons({
             key={i}
             className={`h-[3px] bg-secondary rounded-full ${
               activePage === Number(i) + 1
-                ? "bg-red-700 w-4"
+                ? "bg-red-600 w-4"
                 : "bg-secondary w-3"
             } `}
           ></li>
