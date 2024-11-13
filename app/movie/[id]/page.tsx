@@ -73,7 +73,7 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col gap-3 ">
-          <CtaButton>Oglądaj</CtaButton>
+          <CtaButton play>Oglądaj</CtaButton>
           <div className="flex gap-x-3">
             <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
               <FaThumbsUp size={20} />

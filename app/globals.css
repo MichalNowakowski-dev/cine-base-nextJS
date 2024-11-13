@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .border-gradient-bottom::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      #e50000 17%,
+      transparent 100%
+    );
+  }
+}
+
 :root {
   --background: #141414;
   --foreground: #ffffff;
