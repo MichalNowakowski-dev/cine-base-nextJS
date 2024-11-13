@@ -8,6 +8,8 @@ import Link from "next/link";
 import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
 import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
 import AccordionsList from "./ui/Accordions/AccordionsList";
+import SwitchButton from "./ui/MediaListCarousel/SwitchButton";
+import SubscriptionPlan from "./ui/SubscriptionPlan/SubscriptionPlan";
 
 export default async function Home() {
   return (
@@ -59,7 +61,7 @@ export default async function Home() {
           <DeviceCardsList />
         </section>
 
-        <section className="px-4 ">
+        <section className="px-4">
           <div className="flex flex-wrap gap-3 justify-between items-center mb-8">
             <header>
               <h2 className="mb-3 text-h2 ">Często zadawane pytania</h2>
@@ -74,6 +76,10 @@ export default async function Home() {
         </section>
 
         <section className="px-4">
+          <SubscriptionPlan />
+        </section>
+
+        {/* <section className="px-4">
           <Suspense fallback={<MediaContainerSkeleton />}>
             <MediaListContainer
               mediaCategory="top_rated"
@@ -109,7 +115,7 @@ export default async function Home() {
               switchNames={["Teraz", "Wkrótce"]}
             />
           </Suspense>
-        </section>
+        </section> */}
       </main>
     </>
   );

@@ -22,7 +22,7 @@ export default function GenresCardListButtons({
         {Array.from({ length: maxPageListNumber }).map((_, i) => (
           <li
             key={i}
-            className={`h-[3px] bg-secondary rounded-full ${
+            className={`h-[3px] rounded-full ${
               activePage === Number(i) + 1
                 ? "bg-red-600 w-4"
                 : "bg-secondary w-3"

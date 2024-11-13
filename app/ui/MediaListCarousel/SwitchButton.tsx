@@ -14,9 +14,9 @@ export default function SwitchButton({
   return (
     <button
       onClick={handleSwitch}
-      className={`py-1 flex justify-center items-center font-semibold w-1/2 border-none rounded-full whitespace-nowrap transition-all duration-300 ease-linear ${
+      className={`py-2 px-4 flex justify-center items-center font-semibold w-1/2 border-none rounded-full whitespace-nowrap transition-all duration-300 ease-linear ${
         activeCategory === switchCategory
-          ? "bg-fade-red-to-black"
+          ? "bg-fade-black-to-red"
           : "bg-transparent"
       } ${activeCategory === switchCategory ? "text-white" : "text-black"}`}
     >
