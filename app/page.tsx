@@ -7,40 +7,7 @@ import CtaButton from "./ui/CtaButton";
 import Link from "next/link";
 import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
 import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
-import Accordion from "./ui/Accordion";
-
-const accordionData = [
-  {
-    question: "Czym jest CineBase?",
-    answer:
-      "CineBase to usługa przesyłania strumieniowego umożliwiająca oglądanie filmów i programów na żądanie. Możesz również dowiedzieć się paru cennych informacjii o filmach czy serialach.",
-  },
-  {
-    question: "Ile kosztuje korzystanie z CineBase?",
-    answer:
-      "CineBase jest darmowy do przeglądania i eksplorowania informacji o filmach. Jednak niektóre zaawansowane funkcje mogą wymagać subskrypcji lub dodatkowych opłat w przyszłości.",
-  },
-  {
-    question: "Co oferuje CineBase?",
-    answer:
-      "CineBase oferuje ogromną bibliotekę filmów, programów telewizyjnych, dokumentów i ekskluzywnych treści z różnych gatunków, dostępnych na żądanie.",
-  },
-  {
-    question: "Gdzie mogę oglądać CineBase?",
-    answer:
-      "Możesz oglądać CineBase na różnych urządzeniach, w tym smartfonach, tabletach, telewizorach smart TV i komputerach. Po prostu pobierz aplikację lub odwiedź naszą stronę internetową, aby rozpocząć przesyłanie strumieniowe.",
-  },
-  {
-    question: "Jak się zarejestrować w CineBase?",
-    answer:
-      "Rejestracja w CineBase jest prosta. Wystarczy odwiedzić naszą stronę internetową, kliknąć przycisk „Zarejestruj się” i postępować zgodnie z instrukcjami, aby utworzyć konto.",
-  },
-  {
-    question: "Co oznacza okres próbny?",
-    answer:
-      "CineBase oferuje nowym użytkownikom bezpłatny okres próbny, umożliwiający zapoznanie się z platformą i jej treścią przed podjęciem decyzji o wykupieniu subskrypcji.",
-  },
-];
+import AccordionsList from "./ui/Accordions/AccordionsList";
 
 export default async function Home() {
   return (
@@ -103,16 +70,7 @@ export default async function Home() {
             </header>
             <CtaButton>Zadaj pytanie</CtaButton>
           </div>
-          <ul className="md:flex justify-between md:flex-wrap">
-            {accordionData.map(({ question, answer }, i) => (
-              <Accordion
-                key={question}
-                number={"0" + (i + 1)}
-                question={question}
-                answer={answer}
-              />
-            ))}
-          </ul>
+          <AccordionsList />
         </section>
 
         <section className="px-4">

@@ -24,7 +24,7 @@ const Accordion: React.FC<AccordionProps> = ({ number, question, answer }) => {
   }, [isOpen]);
 
   return (
-    <li className="mb-4 relative border-gradient-bottom md:basis-[45%]">
+    <li className="mb-4 relative border-gradient-bottom">
       <button
         className="flex justify-between items-center w-full text-left py-3 px-2"
         onClick={toggleAccordion}
