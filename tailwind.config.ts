@@ -13,6 +13,12 @@ const config: Config = {
         "fade-black-to-red": `linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
                            radial-gradient(circle at top right, rgba(255, 0, 0, 0.3), transparent),
                            linear-gradient(to bottom, #111, #222)`,
+        "fade-top-black-bottom-red": `linear-gradient(to bottom, rgba(15, 15, 15, 0.8) 0%, rgba(20, 15, 15, 0.5) 48%, rgba(20, 15, 15, 0.5) 97%),
+                                  linear-gradient(to bottom, rgba(20, 15, 15, 0.8) 0%, rgba(34, 14, 14, 0.5) 66%, rgba(34, 14, 14, 0.5) 91%),
+                                  linear-gradient(to bottom, rgba(34, 14, 14, 0.8) 0%, rgba(229, 0, 0, 0.5) 100%)`,
+        "fade-black-to-red-cta": `linear-gradient(to right, rgba(15, 15, 15, 0.9) 0%, rgba(20, 15, 15, 0.5) 48%, rgba(20, 15, 15, 0.5) 97%),
+                                  linear-gradient(to right, rgba(20, 15, 15, 0.9) 0%, rgba(34, 14, 14, 0.5) 66%, rgba(34, 14, 14, 0.5) 91%),
+                                  linear-gradient(to right, rgba(34, 14, 14, 0.9) 0%, rgba(229, 0, 0, 0.5) 100%)`,
         "fade-red-to-black":
           "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(229,0,0,0.7) 100%)",
         "fade-to-dark":

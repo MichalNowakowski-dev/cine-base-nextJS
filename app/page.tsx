@@ -1,14 +1,11 @@
 import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
-import { Suspense } from "react";
-import { MediaContainerSkeleton } from "./ui/skeletons";
-import MediaListContainer from "./ui/MediaListCarousel/MediaListContainer";
 import CtaButton from "./ui/CtaButton";
 import Link from "next/link";
 import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
 import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
 import AccordionsList from "./ui/Accordions/AccordionsList";
-import SwitchButton from "./ui/MediaListCarousel/SwitchButton";
+import FreeTrialCta from "./ui/FreeTrialCta";
 import SubscriptionPlan from "./ui/SubscriptionPlan/SubscriptionPlan";
 
 export default async function Home() {
@@ -19,6 +16,7 @@ export default async function Home() {
           className=" object-cover h-full absolute top-0 left-0 -z-10"
           src={HeaderImgDesktop}
           alt="Hero image"
+          priority
         />
         <section className="flex items-end h-full pb-20">
           <div className="text-center z-10 flex flex-col justify-center items-center gap-4">
@@ -37,7 +35,7 @@ export default async function Home() {
           </div>
         </section>
       </header>
-      <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16">
+      <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16 ">
         <section className="flex flex-wrap gap-6 px-4">
           <GenresCardsSectionContainer />
         </section>
@@ -77,6 +75,10 @@ export default async function Home() {
 
         <section className="px-4">
           <SubscriptionPlan />
+        </section>
+
+        <section className="px-4 mb-16">
+          <FreeTrialCta />
         </section>
 
         {/* <section className="px-4">
