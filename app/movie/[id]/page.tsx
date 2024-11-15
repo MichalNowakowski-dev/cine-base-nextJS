@@ -21,7 +21,7 @@ import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
 import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
-import CtaButton from "@/app/ui/CtaButton";
+import CtaButton from "@/app/ui/CtaLink";
 
 export default async function Page({
   params,

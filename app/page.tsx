@@ -1,12 +1,11 @@
 import Image from "next/image";
-import HeaderImgDesktop from "@/public/HeroOriginal.jpg";
-import CtaButton from "./ui/CtaButton";
-import Link from "next/link";
+import HeaderImgDesktop from "@/public/HeroImageCineBase.png";
 import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
 import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
 import AccordionsList from "./ui/Accordions/AccordionsList";
 import FreeTrialCta from "./ui/FreeTrialCta";
 import SubscriptionPlan from "./ui/SubscriptionPlan/SubscriptionPlan";
+import CtaLink from "./ui/CtaLink";
 
 export default async function Home() {
   return (
@@ -18,20 +17,24 @@ export default async function Home() {
           alt="Hero image"
           priority
         />
-        <section className="flex items-end h-full pb-20">
+        <section className="flex items-center h-full ">
           <div className="text-center z-10 flex flex-col justify-center items-center gap-4">
-            <h1>CineBase</h1>
-            <p className="text-sm text-secondary w-2/3">
+            <h1
+              className="text-5xl uppercase tracking-wider text-center 
+           [text-shadow:0_0_10px_rgba(102,204,255,0.8),0_0_20px_rgba(102,204,255,0.6),0_0_30px_rgba(102,204,255,0.4)]"
+            >
+              CineBase
+            </h1>
+            <p
+              className="text-lg bg-gradient-to-r from-blue-400 via-pink-400 to-purple-500 
+           text-transparent bg-clip-text w-2/3 [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] mb-5"
+            >
               CineBase to najlepsze doświadczenie streamingowe do oglądania
               ulubionych filmów i programów na żądanie, w dowolnym czasie i
-              miejscu. Dzięki CineBase możesz cieszyć się szeroką gamą treści, w
-              tym najnowszymi hitami, klasycznymi filmami, popularnymi serialami
-              i nie tylko. Możesz również tworzyć własne listy obserwowanych,
-              dzięki czemu łatwo znajdziesz treści, które chcesz obejrzeć.
+              miejscu
             </p>
-            <Link href={"/sign-in"}>
-              <CtaButton>Zacznij oglądać</CtaButton>
-            </Link>
+
+            <CtaLink href={"/sign-in"}>Zacznij oglądać</CtaLink>
           </div>
         </section>
       </header>
@@ -68,7 +71,7 @@ export default async function Home() {
                 znaleźć odpowiedzi na najczęstsze pytania dotyczące CineBase.
               </p>
             </header>
-            <CtaButton>Zadaj pytanie</CtaButton>
+            <CtaLink href="/support">Zadaj pytanie</CtaLink>
           </div>
           <AccordionsList />
         </section>
