@@ -60,14 +60,19 @@ export default function VideoCarousel({
         })}
       </ul>
 
-      <MediaListButton
-        direction="left"
-        handleMove={() => moveMediaList("left", listRef)}
-      />
-      <MediaListButton
-        direction="right"
-        handleMove={() => moveMediaList("right", listRef)}
-      />
+      {list.length > 3 && (
+        <>
+          {" "}
+          <MediaListButton
+            direction="left"
+            handleMove={() => moveMediaList("left", listRef)}
+          />
+          <MediaListButton
+            direction="right"
+            handleMove={() => moveMediaList("right", listRef)}
+          />
+        </>
+      )}
     </div>
   );
 }

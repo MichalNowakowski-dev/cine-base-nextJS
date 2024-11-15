@@ -33,6 +33,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         primary: "#E50000",
         secondary: "#999999",
+        borderPrimary: "#262626",
       },
       fontSize: {
         h1: "2.25rem", // 36px

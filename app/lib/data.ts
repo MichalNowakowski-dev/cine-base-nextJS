@@ -116,6 +116,35 @@ export const fetchMovieByIDfromOMDB = async (imdbId: string) => {
     throw new Error(`Failed to fetch movie details from OMDB.`);
   }
 };
+export const fetchSeriesByTitlefromOMDB = async (title: string) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_OMDB_URL}/?t=${title}&apikey=${process.env.OMDB_API_key}`
+    );
+    const data = await resp.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie details from OMDB.`);
+  }
+};
+export const getSeasonDetails = async (
+  seriesID: number,
+  seasonNumber: number
+) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/tv/${seriesID}/season/${seasonNumber}?language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie details from OMDB.`);
+  }
+};
 
 export const fetchGenresList = async () => {
   try {

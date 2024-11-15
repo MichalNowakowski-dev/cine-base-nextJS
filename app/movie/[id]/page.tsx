@@ -22,6 +22,7 @@ import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
 import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
 import CtaButton from "@/app/ui/CtaLink";
+import CtaLink from "@/app/ui/CtaLink";
 
 export default async function Page({
   params,
@@ -73,7 +74,9 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col gap-3 ">
-          <CtaButton play>Oglądaj</CtaButton>
+          <CtaLink href="/subscription" play>
+            Oglądaj
+          </CtaLink>
           <div className="flex gap-x-3">
             <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
               <FaThumbsUp size={20} />
@@ -205,7 +208,7 @@ export default async function Page({
                 <Image
                   alt="Director image"
                   src={
-                    movieDetailsFromOmdb.Director
+                    getPersonImagePath(movieDetailsFromOmdb.Director)
                       ? getImgUrl(
                           "w185",
                           getPersonImagePath(movieDetailsFromOmdb.Director)
@@ -237,7 +240,7 @@ export default async function Page({
                     <Image
                       alt="Director image"
                       src={
-                        writer
+                        getPersonImagePath(writer)
                           ? getImgUrl("w185", getPersonImagePath(writer))
                           : NoProfilePicture
                       }

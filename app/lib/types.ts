@@ -53,3 +53,14 @@ export type DeviceCardType = {
   Icon: IconType;
   desc: string;
 };
+
+export type SeasonItemType = {
+  id: number;
+  air_date: string;
+  episode_count: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+};
