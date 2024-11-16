@@ -86,25 +86,28 @@ export default async function Page({
           <h1 className="text-center">{seriesDetails.name}</h1>
           <p className=" text-secondary ">{seriesDetails.tagline}</p>
         </header>
-        <div className="z-10 mb-14 flex flex-col gap-3 ">
+        <div className="z-10 mb-14 flex flex-col lg:flex-row gap-3 ">
           <CtaLink href="/subscription" play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500 group">
               <FaThumbsUp size={20} />
+              <div className="absolute left-1/2 -bottom-2 transform -translate-x-1/2 -translate-y-full bg-gray-600 text-white text-sm rounded py-1 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-100 delay-500 ">
+                Dodaj do ulubionych
+              </div>
             </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-yellow-500">
               <IoMdAdd size={20} />
             </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-red-500">
               <FaRegHeart size={20} />
             </button>
           </div>
         </div>
       </section>
       <section className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="p-7 bg-backgroundLight rounded-md md:col-span-2 border border-borderPrimary">
+        <div className="p-4 bg-backgroundLight rounded-md md:col-span-2 border border-borderPrimary">
           <h2 className="text-h2 mb-5">Sezony i odcinki</h2>
           <ul className="flex flex-wrap gap-5">
             {seriesDetails.seasons?.map((season: any, i: number) => {

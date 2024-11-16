@@ -36,14 +36,14 @@ export default function Navigation() {
   return (
     <nav
       className={`w-full h-20 ${
-        isMobileNavOpen ? "bg-zinc-800" : "bg-[#00000070]"
+        isMobileNavOpen ? "bg-transparent" : "bg-[#00000070]"
       } backdrop-blur-sm md:h-24 fixed flex items-center py-3 z-20`}
     >
       <div className="xl:max-w-screen-xl mx-auto flex justify-between items-center w-full px-3 ">
         <Link href={"/"} className="w-[17vw] max-w-28">
           <Image src={Logo} alt="CineBase Logo image" />
         </Link>
-        <ul className="hidden md:flex gap-2 border-2 border-gray-600 bg-black p-2 rounded-md">
+        <ul className="hidden md:flex gap-2 border-2 border-gray-600  p-2 rounded-md">
           {navItems.map(({ label, href }) => (
             <li
               className={`${
@@ -75,14 +75,14 @@ export default function Navigation() {
           )}
         </button>
         {isMobileNavOpen && (
-          <ul className="absolute top-20 left-0 w-full h-screen text-center bg-zinc-800">
+          <ul className="absolute top-20 left-0 w-full text-center bg-black/90">
             {navItems.map(({ label, href }) => (
               <li
                 className={`${
                   pathname === href
                     ? "text-white bg-backgroundLight"
-                    : "text-secondary bg-none"
-                } px-3 py-2 rounded-md mb-5`}
+                    : "text-white bg-none"
+                } px-3 py-5 border-t`}
                 key={label}
               >
                 <Link className={``} href={href}>

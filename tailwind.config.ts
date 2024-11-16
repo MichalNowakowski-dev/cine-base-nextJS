@@ -22,7 +22,7 @@ const config: Config = {
         "fade-red-to-black":
           "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(229,0,0,0.7) 100%)",
         "fade-to-dark":
-          "linear-gradient(to bottom, rgba(20, 20, 20, 0), #141414)",
+          "linear-gradient(to bottom, rgba(20, 20, 20, 0)50%,  #141414)",
         "fadeout-bottom":
           "linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #1A1A1A 100%)",
       },

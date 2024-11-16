@@ -26,8 +26,8 @@ export default async function Home() {
               CineBase
             </h1>
             <p
-              className="text-lg bg-gradient-to-r from-blue-400 via-pink-400 to-purple-500 
-           text-transparent bg-clip-text w-2/3 [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] mb-5"
+              className="text-lg bg-gradient-to-r from-blue-300 via-pink-300 to-purple-400 
+           text-transparent bg-clip-text w-2/3  mb-5"
             >
               CineBase to najlepsze doświadczenie streamingowe do oglądania
               ulubionych filmów i programów na żądanie, w dowolnym czasie i
