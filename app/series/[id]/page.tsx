@@ -12,7 +12,7 @@ import {
 import NoProfilePicture from "@/public/no-profile-img.png";
 
 import Image from "next/image";
-import { FaThumbsUp, FaRegHeart, FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate } from "react-icons/pi";
@@ -23,8 +23,8 @@ import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
 import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
 import CtaLink from "@/app/ui/CtaLink";
-import { SeasonItemType } from "@/app/lib/types";
 import SeasonItem from "@/app/ui/SeasonItem";
+import ImageModal from "@/app/ui/ImageModal";
 
 export default async function Page({
   params,
@@ -230,11 +230,11 @@ export default async function Page({
                 {providers?.results?.PL?.flatrate?.map((item: any) => (
                   <li key={item.provider_id}>
                     <Image
-                      className="rounded-md"
-                      height={40}
-                      width={40}
+                      className="rounded-md w-10 h-10 md:w-16  md:h-16"
+                      height={100}
+                      width={100}
                       alt="provider logo"
-                      src={getImgUrl("w45", item.logo_path)}
+                      src={getImgUrl("original", item.logo_path)}
                     />
                   </li>
                 ))}
@@ -268,6 +268,21 @@ export default async function Page({
               list={seriesRecommendationsList.results}
             />
           </section>
+        </div>
+        <div className="p-7 bg-backgroundLight rounded-md md:col-start-3 border border-borderPrimary">
+          <h3 className="text-secondary mb-4">Tła</h3>
+          <ul className="flex flex-wrap gap-4">
+            {imagesList.backdrops.slice(0, 16).map((img: any) => (
+              <li className=" hover:cursor-pointer" key={img.file_path}>
+                <ImageModal
+                  altText="backdrop image"
+                  imageUrl={getImgUrl("original", img.file_path)}
+                  height={img.height}
+                  width={img.width}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </main>

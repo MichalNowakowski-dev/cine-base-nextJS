@@ -23,6 +23,7 @@ import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
 import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
 import CtaButton from "@/app/ui/CtaLink";
 import CtaLink from "@/app/ui/CtaLink";
+import ImageModal from "@/app/ui/ImageModal";
 
 export default async function Page({
   params,
@@ -277,6 +278,21 @@ export default async function Page({
               list={movieRecommendationsList.results}
             />
           </section>
+        </div>
+        <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">
+          <h3 className="text-secondary mb-4">Tła</h3>
+          <ul className="flex flex-wrap gap-2">
+            {imagesList.backdrops.slice(0, 16).map((img: any) => (
+              <li className=" hover:cursor-pointer" key={img.file_path}>
+                <ImageModal
+                  altText="backdrop image"
+                  imageUrl={getImgUrl("original", img.file_path)}
+                  height={img.height}
+                  width={img.width}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </main>
