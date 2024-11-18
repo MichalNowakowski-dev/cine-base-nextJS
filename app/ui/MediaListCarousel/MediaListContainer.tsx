@@ -1,79 +1,72 @@
-import {
-  fetchMediaList,
-  fetchMovieList,
-  fetchSeriesList,
-  fetchTrendingList,
-} from "../../lib/data";
+import { fetchMediaList, fetchTrendingList } from "../../lib/data";
 import {
   MediaCategory,
   MediaListContainerProps,
-  MovieCategory,
-  SeriesCategory,
+  MediaType,
   TimeWindow,
 } from "../../lib/types";
 import MediaListController from "./MediaListController";
 
 async function fetchMediaData(
-  mediaCategory?: MediaCategory,
-  movieCategories?: [MovieCategory, MovieCategory],
-  seriesCategories?: [SeriesCategory, SeriesCategory],
+  mediaType: MediaType,
+  mediaCategory: MediaCategory,
   timeWindow?: TimeWindow
 ) {
-  if (timeWindow && mediaCategory) {
-    return await Promise.all([
-      fetchTrendingList("movie", timeWindow),
-      fetchTrendingList("tv", timeWindow),
-    ]);
-  }
+  let page = 1;
+  let list;
 
-  if (mediaCategory) {
-    return await Promise.all([
-      fetchMediaList("movie", mediaCategory),
-      fetchMediaList("tv", mediaCategory),
-    ]);
-  }
+  try {
+    if (timeWindow && mediaCategory) {
+      list = await fetchTrendingList(mediaType, timeWindow, page);
+    }
+    list = await fetchMediaList(mediaType, mediaCategory, page);
+    const filteredList = Array.isArray(list?.results)
+      ? list.results.filter((media: any) => media.vote_count > 300)
+      : [];
+    let fullList = [...filteredList];
 
-  if (movieCategories) {
-    return await Promise.all([
-      fetchMovieList(movieCategories[0]),
-      fetchMovieList(movieCategories[1]),
-    ]);
-  }
+    while (fullList.length < 20) {
+      if (timeWindow && mediaCategory) {
+        list = await fetchTrendingList(mediaType, timeWindow, ++page);
+      } else {
+        list = await fetchMediaList(mediaType, mediaCategory, ++page);
+      }
 
-  if (seriesCategories) {
-    return await Promise.all([
-      fetchSeriesList(seriesCategories[0]),
-      fetchSeriesList(seriesCategories[1]),
-    ]);
-  }
+      const filteredList = Array.isArray(list?.results)
+        ? list.results.filter((media: any) => media.vote_count > 300)
+        : [];
 
-  throw new Error("No valid categories provided");
+      if (filteredList.length === 0) {
+        console.warn("No more results to fetch, exiting loop.");
+        break;
+      }
+
+      fullList = [...fullList, ...filteredList.slice(0, 20 - fullList.length)];
+    }
+
+    return fullList;
+  } catch (error) {
+    console.error("Error creating full list:", error);
+    return [];
+  }
 }
 
 export default async function MediaListContainer({
   mediaCategory,
-  label,
-  movieCategories,
-  seriesCategories,
-  switchNames,
+  mediaType,
   timeWindow,
+  children,
+  itemsPerViewNumber,
 }: MediaListContainerProps) {
-  const [list1, list2] = await fetchMediaData(
-    mediaCategory,
-    movieCategories,
-    seriesCategories,
-    timeWindow
-  );
-
-  const categories = movieCategories || seriesCategories || ["movie", "tv"];
+  const list = await fetchMediaData(mediaType, mediaCategory, timeWindow);
 
   return (
     <MediaListController
-      categories={categories}
-      list1={list1.results}
-      list2={list2.results}
-      switchNames={switchNames}
-      label={label}
-    />
+      itemsPerViewNumber={itemsPerViewNumber}
+      list={list}
+      mediaType={mediaType}
+    >
+      {children}
+    </MediaListController>
   );
 }

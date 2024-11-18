@@ -1,4 +1,5 @@
 import GenreCard from "./GenreCard";
+import { v4 as uuidv4 } from "uuid";
 
 export default function GenresCards({
   genreList,
@@ -9,10 +10,10 @@ export default function GenresCards({
 }) {
   return (
     <ul
-      className={`flex gap-3 justify-between min-w-full overflow-x-auto md:overflow-hidden  ${className}`}
+      className={`flex gap-3 justify-between min-w-full overflow-x-auto no-scrollbar lg:overflow-hidden ${className}`}
     >
       {genreList.map((genre: any) => (
-        <GenreCard key={genre.id} genre={genre} />
+        <GenreCard key={uuidv4()} genre={genre} />
       ))}
     </ul>
   );

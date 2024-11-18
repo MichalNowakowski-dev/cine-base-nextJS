@@ -18,6 +18,7 @@ async function getGenresWithImages(mediaType: MediaType) {
           ? await fetchMovieListByGenre(genre.id)
           : await fetchSeriesListByGenre(genre.id);
       const images = media.results
+        .filter((media: any) => media.poster_path)
         .slice(0, 4)
         .map((media: any) => media.poster_path);
       return { ...genre, images };
@@ -27,7 +28,17 @@ async function getGenresWithImages(mediaType: MediaType) {
   return genresWithImages;
 }
 
-export default async function GenresCardsSectionContainer() {
-  const genresListWithImages = await getGenresWithImages("movie");
-  return <GenresCardsSection genresList={genresListWithImages} />;
+export default async function GenresCardsSectionContainer({
+  mediaType,
+  children,
+}: {
+  mediaType: MediaType;
+  children: React.ReactNode;
+}) {
+  const genresListWithImages = await getGenresWithImages(mediaType);
+  return (
+    <GenresCardsSection genresList={genresListWithImages}>
+      {children}
+    </GenresCardsSection>
+  );
 }

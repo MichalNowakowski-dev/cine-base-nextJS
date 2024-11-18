@@ -11,10 +11,13 @@ interface Video {
 
 interface VideoModalContainerProps {
   list: Video[];
+
+  children: React.ReactNode;
 }
 
 export default function VideoModalContainer({
   list,
+  children,
 }: VideoModalContainerProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [activeVideo, setActiveVideo] = useState<Video | null>(null);
@@ -45,10 +48,10 @@ export default function VideoModalContainer({
 
   return (
     <div>
-      {/* Karuzela */}
-      <VideoCarousel list={list} handleClick={openModal} />
+      <VideoCarousel list={list} handleClick={openModal}>
+        {children}
+      </VideoCarousel>
 
-      {/* Modal */}
       {isModalOpen && activeVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div ref={modalElement} className="relative w-full max-w-3xl p-4">

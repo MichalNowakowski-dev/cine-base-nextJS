@@ -11,7 +11,7 @@ export default async function FreeTrialCta() {
 
   return (
     <div
-      className={`px-4 py-8 border border-[#262626] rounded-md text-center md:text-left md:flex md:justify-between md:items-center relative overflow-hidden `}
+      className={`px-4 py-12 border border-[#262626] rounded-md text-center md:text-left md:flex md:justify-between md:items-center relative overflow-hidden `}
     >
       <header className="flex flex-wrap gap-4 mb-5 md:basis-2/3">
         <h3 className="text-h3">Zacznij darmowy okres próbny już dziś!</h3>

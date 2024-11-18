@@ -39,8 +39,19 @@ export default async function Home() {
         </section>
       </header>
       <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16 ">
-        <section className="flex flex-wrap gap-6 px-4">
-          <GenresCardsSectionContainer />
+        <section className="px-4">
+          <GenresCardsSectionContainer mediaType="movie">
+            <header>
+              <h2 className="text-2xl mb-2">
+                Eksploruj nasz szeroki wybór kategorii
+              </h2>
+              <p className="text-sm text-secondary md:w-2/3">
+                Niezależnie od tego, czy szukasz komedii, która Cię rozśmieszy,
+                dramatu, który zmusi Cię do myślenia, czy dokumentu, który
+                pozwoli Ci dowiedzieć się czegoś nowego
+              </p>
+            </header>
+          </GenresCardsSectionContainer>
         </section>
 
         <section className="px-4">
@@ -83,44 +94,6 @@ export default async function Home() {
         <section className="px-4 mb-16">
           <FreeTrialCta />
         </section>
-
-        {/* <section className="px-4">
-          <Suspense fallback={<MediaContainerSkeleton />}>
-            <MediaListContainer
-              mediaCategory="top_rated"
-              label="Najlepiej oceniane"
-              switchNames={["Filmy", "Seriale"]}
-            />
-          </Suspense>
-        </section>
-        <section className="px-4">
-          <Suspense fallback={<MediaContainerSkeleton />}>
-            <MediaListContainer
-              mediaCategory="popular"
-              label="Popularne"
-              switchNames={["Filmy", "Seriale"]}
-            />
-          </Suspense>
-        </section>
-        <section className="px-4">
-          <Suspense fallback={<MediaContainerSkeleton />}>
-            <MediaListContainer
-              mediaCategory="trending"
-              timeWindow="week"
-              label="Tygodniowe trendy"
-              switchNames={["Filmy", "Seriale"]}
-            />
-          </Suspense>
-        </section>
-        <section className="px-4">
-          <Suspense fallback={<MediaContainerSkeleton />}>
-            <MediaListContainer
-              movieCategories={["now_playing", "upcoming"]}
-              label="W kinach"
-              switchNames={["Teraz", "Wkrótce"]}
-            />
-          </Suspense>
-        </section> */}
       </main>
     </>
   );

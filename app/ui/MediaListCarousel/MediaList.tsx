@@ -2,13 +2,12 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import MediaListButton from "./MediaListButton";
 import { MediaItem } from "../../lib/types";
 import Link from "next/link";
 import MediaRoundedRating from "../MediaRoundedRating";
-import { moveMediaList } from "@/app/lib/utils";
+import { v4 as uuidv4 } from "uuid";
 
-export default function MediaScrollList({
+export default function MediaList({
   mediaType,
   list,
   className,
@@ -23,7 +22,7 @@ export default function MediaScrollList({
     <div className="relative">
       <ul
         ref={listRef}
-        className={`flex gap-4 w-full max-w-screen-xl overflow-x-auto whitespace-nowrap no-scrollbar scroll-smooth ${className}`}
+        className={`flex gap-2 justify-start min-w-full no-scrollbar overflow-x-auto lg:overflow-hidden ${className}`}
       >
         {list &&
           list.map(
@@ -37,24 +36,20 @@ export default function MediaScrollList({
               first_air_date,
             }) => (
               <li
-                key={id}
-                className="text-sm min-w-[100px] sm:min-w-[120px] md:min-w-[140px] lg:min-w-[160px] xl:min-w-[180px]"
+                key={uuidv4()}
+                className="text-sm bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400 flex-grow max-w-[240px] relative"
               >
-                <Link href={`/${mediaType}/${id}`}>
-                  <div className="mb-2 w-full h-auto aspect-[2/3] relative">
+                <Link
+                  href={`/${mediaType === "movie" ? "movie" : "show"}/${id}`}
+                >
+                  <div className="mb-2">
                     <Image
-                      className="rounded-md object-cover"
+                      className="rounded-md object-cover w-full  min-w-[140px] lg:min-w-[160px] "
                       src={`${process.env.NEXT_PUBLIC_IMAGES_URL}original${poster_path}`}
                       alt={"Movie image"}
-                      fill
-                      sizes="(max-width: 640px) 100px, (max-width: 768px) 120px, (max-width: 1024px) 140px, (max-width: 1280px) 160px, 180px"
+                      width={200}
+                      height={300}
                       quality={100}
-                    />
-                    <MediaRoundedRating
-                      rating={vote_average}
-                      size={40}
-                      strokeWidth={3}
-                      className="top-1 right-1"
                     />
                   </div>
                   <h4 className="break-words text-wrap">{title || name}</h4>
@@ -62,18 +57,15 @@ export default function MediaScrollList({
                     {release_date?.slice(0, 4) || first_air_date?.slice(0, 4)}
                   </p>
                 </Link>
+                <MediaRoundedRating
+                  rating={vote_average}
+                  strokeWidth={3}
+                  className="top-1 right-1 w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10"
+                />
               </li>
             )
           )}
       </ul>
-      <MediaListButton
-        direction="left"
-        handleMove={() => moveMediaList("left", listRef)}
-      />
-      <MediaListButton
-        direction="right"
-        handleMove={() => moveMediaList("right", listRef)}
-      />
     </div>
   );
 }

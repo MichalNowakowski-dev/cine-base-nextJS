@@ -8,16 +8,16 @@ import {
 
 export const fetchMediaList = async (
   mediaType: MediaType,
-  category: MediaCategory
+  category: MediaCategory,
+  page?: number
 ) => {
   try {
-    // await new Promise((resolve) =>
-    //   setTimeout(() => {
-    //     resolve("test");
-    //   }, 2000)
-    // );
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
+      `${
+        process.env.NEXT_PUBLIC_DB_URL
+      }/3/${mediaType}/${category}?language=pl&page=${page || 1}&api_key=${
+        process.env.TMDB_API_KEY
+      }`
     );
     const data = await resp.json();
     return data;
@@ -28,11 +28,16 @@ export const fetchMediaList = async (
 };
 export const fetchTrendingList = async (
   mediaType: MediaType,
-  timeWindow: TimeWindow
+  timeWindow: TimeWindow,
+  page?: number
 ) => {
   try {
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/trending/${mediaType}/${timeWindow}?language=pl&api_key=${process.env.TMDB_API_KEY}`
+      `${
+        process.env.NEXT_PUBLIC_DB_URL
+      }/3/trending/${mediaType}/${timeWindow}?language=pl&page=${
+        page || 1
+      }&api_key=${process.env.TMDB_API_KEY}`
     );
     const data = await resp.json();
     return data;

@@ -11,9 +11,9 @@ import { usePathname } from "next/navigation";
 
 const navItems: { label: string; href: string }[] = [
   { label: "Strona główna", href: "/" },
-  { label: "Filmy & Seriale", href: "/movies&shows" },
+  { label: "Filmy & Seriale", href: "/movies&series" },
   { label: "Pomoc", href: "/support" },
-  { label: "Subskrypcje", href: "/subscriptions" },
+  { label: "Subskrypcje", href: "/plans" },
 ];
 
 export default function Navigation() {
@@ -37,7 +37,7 @@ export default function Navigation() {
     <nav
       className={`w-full h-20 ${
         isMobileNavOpen ? "bg-transparent" : "bg-[#00000070]"
-      } backdrop-blur-sm md:h-24 fixed flex items-center py-3 z-20`}
+      } backdrop-blur-sm md:h-24 fixed flex items-center py-3 z-50`}
     >
       <div className="xl:max-w-screen-xl mx-auto flex justify-between items-center w-full px-3 ">
         <Link href={"/"} className="w-[17vw] max-w-28">

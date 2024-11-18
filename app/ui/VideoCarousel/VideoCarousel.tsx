@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { moveMediaList } from "../../lib/utils";
-import MediaListButton from "../MediaListCarousel/MediaListButton";
+import PaginatedSection from "../PaginatedSection";
+import { usePagination } from "@/app/hooks/usePagination";
+import { useMemo } from "react";
 
 interface Video {
   id: string;
@@ -14,21 +14,44 @@ interface Video {
 interface VideoCarouselProps {
   list: Video[];
   handleClick: (video: Video) => void; // Funkcja obsługująca kliknięcie na wideo
+  children: React.ReactNode;
 }
+const ITEMS_PER_VIEW = 3;
+const MAX_ITEMS = 15;
 
 export default function VideoCarousel({
   list,
   handleClick,
+  children,
 }: VideoCarouselProps) {
-  const listRef = useRef<HTMLUListElement>(null);
+  const slicedList = useMemo(() => list.slice(0, MAX_ITEMS), [list]);
+  const {
+    activePage,
+    maxPageListNumber,
+    paginatedList,
+    isMobile,
+    showList,
+    handleMoveList,
+  } = usePagination(slicedList, ITEMS_PER_VIEW);
+
+  const videoList = isMobile ? slicedList : paginatedList;
 
   return (
-    <div className="relative">
-      <ul
-        ref={listRef}
-        className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth"
+    <>
+      <PaginatedSection
+        activePage={activePage}
+        maxPageListNumber={maxPageListNumber}
+        handleMoveList={handleMoveList}
       >
-        {list.map((video) => {
+        {children}
+      </PaginatedSection>
+
+      <ul
+        className={`flex gap-2 overflow-x-auto no-scrollbar scroll-smooth transition-opacity duration-${
+          process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
+        } ${showList ? "opacity-100" : "opacity-0"} `}
+      >
+        {videoList.map((video) => {
           const thumbnailSrc = `https://img.youtube.com/vi/${video.key}/mqdefault.jpg`;
 
           return (
@@ -46,7 +69,7 @@ export default function VideoCarousel({
                   width={160}
                 />
               </div>
-              <h4 className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full group relative">
+              <h4 className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full text-center group relative">
                 <span
                   className={`inline-block transition-transform duration-300 ${
                     video.name.length > 24 ? "group-hover:animate-scroll" : ""
@@ -59,20 +82,6 @@ export default function VideoCarousel({
           );
         })}
       </ul>
-
-      {list.length > 3 && (
-        <>
-          {" "}
-          <MediaListButton
-            direction="left"
-            handleMove={() => moveMediaList("left", listRef)}
-          />
-          <MediaListButton
-            direction="right"
-            handleMove={() => moveMediaList("right", listRef)}
-          />
-        </>
-      )}
-    </div>
+    </>
   );
 }

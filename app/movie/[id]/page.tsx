@@ -9,9 +9,8 @@ import {
 } from "@/app/lib/data";
 
 import NoProfilePicture from "@/public/no-profile-img.png";
-
 import Image from "next/image";
-import { FaPlay, FaThumbsUp, FaRegHeart } from "react-icons/fa";
+import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
@@ -20,10 +19,11 @@ import { FaRegStar, FaScroll } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
-import MediaScrollList from "@/app/ui/MediaListCarousel/MediaScrollList";
-import CtaButton from "@/app/ui/CtaLink";
+import MediaScrollList from "@/app/ui/MediaListCarousel/MediaList";
 import CtaLink from "@/app/ui/CtaLink";
 import ImageModal from "@/app/ui/ImageModal";
+import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
+import FreeTrialCta from "@/app/ui/FreeTrialCta";
 
 export default async function Page({
   params,
@@ -74,24 +74,24 @@ export default async function Page({
             {movieDetails.tagline}
           </p>
         </header>
-        <div className="z-10 mb-14 flex flex-col gap-3 ">
+        <div className="z-10 mb-14 flex flex-col md:flex-row gap-3 ">
           <CtaLink href="/subscription" play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500 group">
               <FaThumbsUp size={20} />
             </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-yellow-500">
               <IoMdAdd size={20} />
             </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800">
+            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-red-500">
               <FaRegHeart size={20} />
             </button>
           </div>
         </div>
       </section>
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-2">
           <h3 className="text-secondary mb-3">Opis</h3>
           <p className="text-white">{movieDetails.overview}</p>
@@ -258,25 +258,23 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
           <section className="mb-5">
-            <h3 className="text-secondary mb-3 flex items-center justify-start gap-1">
-              Obsada
-            </h3>
-            <CastCarousel list={movieCast.cast} />
+            <CastCarousel list={movieCast.cast}>
+              <h3 className="text-secondary">Obsada</h3>
+            </CastCarousel>
           </section>
           <section className="mb-5">
-            <h3 className="text-secondary mb-3 flex items-center justify-start gap-1">
-              Zwiastuny i ciekawostki
-            </h3>
-            <VideoModalContainer list={videoList.results} />
+            <VideoModalContainer list={videoList.results}>
+              <h3 className="text-secondary">Zwiastuny i ciekawostki</h3>
+            </VideoModalContainer>
           </section>
           <section className="mb-5">
-            <h3 className="text-secondary mb-3 flex items-center justify-start gap-1">
-              Rekomendacje
-            </h3>
-            <MediaScrollList
+            <MediaListController
               mediaType="movie"
               list={movieRecommendationsList.results}
-            />
+              itemsPerViewNumber={4}
+            >
+              <h3 className="text-secondary">Rekomendacje</h3>
+            </MediaListController>
           </section>
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">
@@ -294,6 +292,9 @@ export default async function Page({
             ))}
           </ul>
         </div>
+      </section>
+      <section className="mb-20">
+        <FreeTrialCta />
       </section>
     </main>
   );

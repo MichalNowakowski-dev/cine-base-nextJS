@@ -1,57 +1,49 @@
 "use client";
 
-import { useState } from "react";
-import MediaListSwitch from "./MediaListSwitch";
-import MediaScrollList from "./MediaScrollList";
-import { MediaItem } from "../../lib/types";
+import { MediaItem, MediaType } from "@/app/lib/types";
+import { usePagination } from "../../hooks/usePagination";
+import PaginatedSection from "../PaginatedSection";
+import MediaList from "./MediaList";
 
-type Props = {
-  list1: MediaItem[];
-  list2: MediaItem[];
-  switchNames: [string, string];
-  label: string;
-  categories: [string, string];
-};
+const ITEMS_PER_VIEW = 5;
 
 export default function MediaListController({
-  list1,
-  list2,
-  switchNames,
-  label,
-  categories,
-}: Props) {
-  const [currentCategory, setCurrentCategory] = useState(categories[0]);
-  const [listToDisplay, setListToDisplay] = useState<MediaItem[]>(list1);
-  const [showList, setShowList] = useState(true);
-
-  function handleSwitch(category: string) {
-    setShowList(false);
-
-    setTimeout(() => {
-      setListToDisplay(category === categories[0] ? list1 : list2);
-      setCurrentCategory(category);
-      setShowList(true);
-    }, Number(process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME));
-  }
+  list,
+  mediaType,
+  children,
+  itemsPerViewNumber,
+}: {
+  list: MediaItem[];
+  mediaType: MediaType;
+  children: React.ReactNode;
+  itemsPerViewNumber?: number;
+}) {
+  const {
+    activePage,
+    maxPageListNumber,
+    paginatedList,
+    isMobile,
+    showList,
+    handleMoveList,
+  } = usePagination(list, itemsPerViewNumber || ITEMS_PER_VIEW);
 
   return (
-    <>
-      <header className="flex justify-between items-center mb-4">
-        <h2 className="text-xl">{label}</h2>
-        <MediaListSwitch
-          switchNames={switchNames}
-          switchCategories={categories}
-          onSwitch={handleSwitch}
-        />
-      </header>
+    <div>
+      <PaginatedSection
+        activePage={activePage}
+        maxPageListNumber={maxPageListNumber}
+        handleMoveList={handleMoveList}
+      >
+        {children}
+      </PaginatedSection>
 
-      <MediaScrollList
-        mediaType={currentCategory}
-        list={listToDisplay}
+      <MediaList
+        mediaType={mediaType}
+        list={isMobile ? list : paginatedList}
         className={`transition-opacity duration-${
           process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
         } ${showList ? "opacity-100" : "opacity-0"}`}
       />
-    </>
+    </div>
   );
 }

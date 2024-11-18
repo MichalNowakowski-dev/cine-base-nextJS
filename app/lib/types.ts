@@ -40,12 +40,11 @@ export type ProfileSize = "w45" | "w185" | "h632" | "original";
 export type ImageSize = BackdropSize | LogoSize | PosterSize | ProfileSize;
 
 export type MediaListContainerProps = {
+  mediaCategory: MediaCategory;
+  mediaType: MediaType;
   timeWindow?: TimeWindow;
-  mediaCategory?: MediaCategory;
-  movieCategories?: [MovieCategory, MovieCategory];
-  seriesCategories?: [SeriesCategory, SeriesCategory];
-  label: string;
-  switchNames: [string, string];
+  children: React.ReactNode;
+  itemsPerViewNumber?: number;
 };
 
 export type DeviceCardType = {
