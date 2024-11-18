@@ -1,5 +1,4 @@
 "use client";
-import SwitchButton from "../MediaListCarousel/SwitchButton";
 import SubscriptionPlanCard from "./SubscriptionPlanCard";
 
 const subscriptionPlanData = [
