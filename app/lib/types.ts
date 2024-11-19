@@ -63,3 +63,19 @@ export type SeasonItemType = {
   season_number: number;
   vote_average: number;
 };
+
+export type SubscriptionPlan = {
+  name: string;
+  price: number;
+  content: string;
+  devicesNumber: number;
+  trialPeriod: number;
+  cancelAllowed: string;
+  HDR: string;
+  DolbyAtmos: string;
+  adsFree: string;
+  offlineView: string;
+  familySharing: string;
+};
+
+export type SubscriptionPlanData = Record<string, SubscriptionPlan>;

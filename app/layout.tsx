@@ -5,7 +5,7 @@ import "./globals.css";
 import Footer from "./ui/Footer";
 
 const roboto = Roboto({
-  weight: ["400", "100", "500", "700"],
+  weight: ["400", "100", "300", "500", "700"],
   subsets: ["latin", "latin-ext"],
   variable: "--font-roboto",
   display: "swap",
