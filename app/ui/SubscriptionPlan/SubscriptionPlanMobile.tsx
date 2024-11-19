@@ -46,7 +46,7 @@ export default function SubscriptionPlanMobile({
       <main className="grid grid-cols-2 gap-5 p-6 bg-backgroundFooter rounded-lg border border-borderPrimary font-light">
         <div className="flex flex-col col-start-1">
           <h5 className="text-secondary">Cena</h5>
-          <p>{selectedPlan.price}zł/Miesiąc</p>
+          <p>{selectedPlan.price.monthly}zł/Miesiąc</p>
         </div>
         <div className="flex flex-col col-start-2">
           <h5 className="text-secondary">Okres próbny</h5>

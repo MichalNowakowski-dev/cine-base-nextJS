@@ -65,8 +65,14 @@ export type SeasonItemType = {
 };
 
 export type SubscriptionPlan = {
+  id: string;
+  popular: boolean;
   name: string;
-  price: number;
+  price: {
+    monthly: number;
+    yearly: number;
+  };
+  description: string;
   content: string;
   devicesNumber: number;
   trialPeriod: number;

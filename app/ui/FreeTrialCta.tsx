@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 import { fetchMediaList } from "../lib/data";
 import { getImgUrl } from "../lib/utils";
 import Image from "next/image";
@@ -23,9 +23,12 @@ export default async function FreeTrialCta() {
         </p>
       </header>
 
-      <button className=" px-6 basis-1/2 md:basis-[20%] py-3 bg-primary rounded-md border-[#262626] border">
+      <Link
+        href={`/plans/summary?id=standard&trial=true&price-cycle=monthly`}
+        className=" px-6 basis-1/2 md:basis-[20%] py-3 bg-primary rounded-md border-[#262626] border"
+      >
         Wypróbuj teraz!
-      </button>
+      </Link>
 
       <div className=" absolute w-full h-full top-0 left-0 bg-fade-top-black-bottom-red md:bg-fade-black-to-red-cta -z-10"></div>
 

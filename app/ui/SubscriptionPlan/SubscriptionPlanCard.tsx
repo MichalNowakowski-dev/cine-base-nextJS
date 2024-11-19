@@ -1,7 +1,9 @@
+import Link from "next/link";
 import React from "react";
 
 export default function SubscriptionPlanCard({
   planName,
+  planId,
   priceCycle,
   planDesc,
   planPrice,
@@ -9,27 +11,39 @@ export default function SubscriptionPlanCard({
   planName: string;
   priceCycle: string;
   planDesc: string;
+  planId: string;
   planPrice: { monthly: number; yearly: number };
 }) {
+  // Sprawdzamy czy wartości są poprawne
+  const price = priceCycle === "monthly" ? planPrice.monthly : planPrice.yearly;
+  const priceLabel = priceCycle === "monthly" ? "/miesiąc" : "/rok";
+
+  const buttonClass =
+    "text-center content-center px-6 py-4 border-[#262626] border rounded-md";
+
   return (
     <div className="p-4 bg-backgroundLight border border-[#262626] rounded-md">
       <header className="flex flex-wrap gap-4 mb-5">
         <h3 className="text-h3">{planName}</h3>
         <p>{planDesc}</p>
         <h3 className="text-h3">
-          {priceCycle === "monthly" ? planPrice.monthly : planPrice.yearly}zł
-          <span className="text-sm text-secondary">
-            {priceCycle === "monthly" ? "/miesiąc" : "/rok"}
-          </span>
+          {price}zł
+          <span className="text-sm text-secondary">{priceLabel}</span>
         </h3>
       </header>
       <div className="flex justify-between gap-3">
-        <button className=" px-6 basis-1/2 py-4 bg-backgroundFooter rounded-md border-[#262626] border">
+        <Link
+          href={`plans/summary?id=${planId}&trial=true`}
+          className={`${buttonClass} bg-backgroundFooter`}
+        >
           Okres próbny
-        </button>
-        <button className=" px-4 basis-1/2 py-2 bg-primary rounded-md border-[#262626] border">
+        </Link>
+        <Link
+          href={`plans/summary?id=${planId}&price-cycle=${priceCycle}&trial=false`}
+          className={`${buttonClass} bg-primary`}
+        >
           Wybierz Plan
-        </button>
+        </Link>
       </div>
     </div>
   );

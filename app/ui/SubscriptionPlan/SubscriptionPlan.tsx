@@ -1,40 +1,27 @@
 "use client";
 import SubscriptionPlanCard from "./SubscriptionPlanCard";
-
-const subscriptionPlanData = [
-  {
-    name: "Podstawowy",
-    description:
-      "Ciesz się bogatą biblioteką filmów i programów, zawierającą różnorodne treści, w tym niedawno wydane tytuły",
-    price: {
-      monthly: 19.99,
-      yearly: 199,
-    },
-  },
-  {
-    name: "Standard",
-    description:
-      "Dostęp do szerszego wyboru filmów i programów, w tym większości nowości i ekskluzywnych treści. Ograniczone reklamy",
-    price: {
-      monthly: 24.99,
-      yearly: 250,
-    },
-  },
-  {
-    name: "Premium",
-    description:
-      "Dostęp do najszerszej oferty filmów i programów, w tym wszystkich nowości i opcji oglądania offline. Brak reklam",
-    price: {
-      monthly: 29.99,
-      yearly: 300,
-    },
-  },
-];
+import { plansData } from "@/app/lib/plansData";
+import { SubscriptionPlanData } from "@/app/lib/types";
 
 import React, { useState } from "react";
 
 export default function SubscriptionPlan() {
   const [priceCycle, setPriceCycle] = useState("monthly");
+
+  function renderPlanOptions(obj: SubscriptionPlanData) {
+    return Object.entries(obj).map(([key, plan]) => {
+      return (
+        <SubscriptionPlanCard
+          key={plan.id}
+          planDesc={plan.description}
+          planName={plan.name}
+          planId={plan.id}
+          planPrice={plan.price}
+          priceCycle={priceCycle}
+        />
+      );
+    });
+  }
 
   return (
     <div className="flex flex-wrap gap-8 justify-between items-center mb-8">
@@ -66,15 +53,7 @@ export default function SubscriptionPlan() {
       </div>
 
       <ul className="flex flex-wrap gap-5 md:flex-nowrap">
-        {subscriptionPlanData.map((plan) => (
-          <SubscriptionPlanCard
-            key={plan.name}
-            planDesc={plan.description}
-            planName={plan.name}
-            planPrice={plan.price}
-            priceCycle={priceCycle}
-          />
-        ))}
+        {renderPlanOptions(plansData)}
       </ul>
     </div>
   );
