@@ -7,7 +7,7 @@ export default function SwitchListButtons({
   maxPageListNumber,
   className,
 }: {
-  handleMoveList: (direction: string, directlyTo?: number) => void;
+  handleMoveList: (directlyTo: number) => void;
   activePage: number;
   maxPageListNumber: number;
   className?: string;
@@ -17,7 +17,7 @@ export default function SwitchListButtons({
       className={`hidden lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary  ${className}`}
     >
       <button
-        onClick={() => handleMoveList("left")}
+        onClick={() => handleMoveList(activePage - 1)}
         className="p-3 bg-backgroundLight hover:bg-background rounded-md flex items-center justify-center border border-borderPrimary"
       >
         <FaArrowLeft />
@@ -26,7 +26,7 @@ export default function SwitchListButtons({
         {Array.from({ length: maxPageListNumber }).map((_, i) => (
           <li
             key={i}
-            onClick={() => handleMoveList("direct", Number(i) + 1)}
+            onClick={() => handleMoveList(Number(i) + 1)}
             className={`h-[3px] rounded-full hover:cursor-pointer ${
               activePage === Number(i) + 1
                 ? "bg-red-600 w-4"
@@ -36,7 +36,7 @@ export default function SwitchListButtons({
         ))}
       </ul>
       <button
-        onClick={() => handleMoveList("right")}
+        onClick={() => handleMoveList(activePage + 1)}
         className="p-3 bg-backgroundLight hover:bg-background rounded-md flex items-center justify-center border border-borderPrimary"
       >
         <FaArrowRight />

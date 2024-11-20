@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const footerLinks = [
   { name: "Strona główna", url: "/" },
-  { name: "O nas", url: "/about" },
-  { name: "Kontakt", url: "/contact" },
+  { name: "Plany subskrypcji", url: "/plans" },
+  { name: "Napisz do nas", url: "/support" },
 ];
 
 const footerSocials = [
@@ -19,7 +19,7 @@ const footerSocials = [
 const Footer = () => {
   return (
     <footer className="flex flex-col items-center justify-between w-full min-h-[25vh] bg-backgroundFooter py-8">
-      <ul className="flex justify-between w-[clamp(15rem,80%,300px)] mb-4">
+      <ul className="flex justify-between w-[clamp(15rem,80%,500px)] mb-4">
         {footerLinks.map((link) => (
           <li key={link.name}>
             <Link

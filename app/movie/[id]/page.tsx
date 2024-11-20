@@ -64,9 +64,10 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="movie image"
-          src={getImgUrl("original", movieDetails.backdrop_path)}
-          width={1600}
-          height={900}
+          src={getImgUrl("w1280", movieDetails.backdrop_path)}
+          width={1280}
+          height={720}
+          quality={100}
         />
         <header className="z-10 text-center">
           <h1>{movieDetails.title}</h1>
@@ -75,7 +76,7 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col md:flex-row gap-3 ">
-          <CtaLink href="/subscription" play>
+          <CtaLink href="/plans" play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">

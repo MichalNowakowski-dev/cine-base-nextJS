@@ -42,6 +42,7 @@ const ImageModal = ({
         onClick={openModal}
         width={width}
         height={height}
+        quality={100}
       />
 
       {isOpen && (

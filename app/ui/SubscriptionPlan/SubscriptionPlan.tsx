@@ -52,7 +52,7 @@ export default function SubscriptionPlan() {
         </button>
       </div>
 
-      <ul className="flex flex-wrap gap-5 md:flex-nowrap">
+      <ul className="flex flex-col gap-5 md:flex-row">
         {renderPlanOptions(plansData)}
       </ul>
     </div>

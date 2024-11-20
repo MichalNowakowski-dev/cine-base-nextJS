@@ -82,9 +82,10 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="series image"
-          src={getImgUrl("original", seriesDetails.backdrop_path)}
-          width={1600}
-          height={900}
+          src={getImgUrl("w1280", seriesDetails.backdrop_path)}
+          width={1280}
+          height={720}
+          quality={100}
           priority
         />
         <header className="z-10">
@@ -92,7 +93,7 @@ export default async function Page({
           <p className=" text-secondary ">{seriesDetails.tagline}</p>
         </header>
         <div className="z-10 mb-14 flex flex-col lg:flex-row gap-3 ">
-          <CtaLink href="/subscription" play>
+          <CtaLink href="/plans" play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
@@ -233,10 +234,10 @@ export default async function Page({
                   <li key={item.provider_id}>
                     <Image
                       className="rounded-md w-10 h-10 md:w-16  md:h-16"
-                      height={100}
-                      width={100}
+                      height={154}
+                      width={154}
                       alt="provider logo"
-                      src={getImgUrl("original", item.logo_path)}
+                      src={getImgUrl("w154", item.logo_path)}
                     />
                   </li>
                 ))}
@@ -276,7 +277,7 @@ export default async function Page({
               <li className=" hover:cursor-pointer" key={img.file_path}>
                 <ImageModal
                   altText="backdrop image"
-                  imageUrl={getImgUrl("original", img.file_path)}
+                  imageUrl={getImgUrl("w1280", img.file_path)}
                   height={img.height}
                   width={img.width}
                 />

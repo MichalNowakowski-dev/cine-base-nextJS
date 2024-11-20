@@ -1,4 +1,5 @@
 "use client";
+
 import { useSearchParams, useRouter } from "next/navigation";
 import { plansData } from "@/app/lib/plansData";
 import { HiCloudDownload } from "react-icons/hi";
@@ -10,13 +11,15 @@ import {
   MdBlock,
   MdCancel,
 } from "react-icons/md";
-import BackgroundVideo from "./videoBackground";
+
+import Link from "next/link";
+import Image from "next/image";
+import bg from "@/public/summaryBg-lg.jpg";
 
 export default function SubscriptionSummary() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const plan = searchParams.get("id") || "standard";
-  const trial = searchParams.get("trial") || false;
   const priceCycle = searchParams.get("price-cycle") || "monthly";
 
   const selectedPlan = plansData[plan as keyof typeof plansData];
@@ -31,40 +34,68 @@ export default function SubscriptionSummary() {
     );
   }
 
-  const handleProceedToPayment = async () => {
-    try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
-      const { sessionId } = await res.json();
+  const linkClass = `flex basis-1/2 justify-center items-center text-center px-6 py-3  rounded-lg transition-all duration-300 hover:scale-105`;
 
-      // Przekierowanie do Stripe Checkout
-      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
-    } catch (err) {
-      console.error("Błąd podczas tworzenia sesji płatności:", err);
-    }
-  };
+  const featuresData = [
+    {
+      icon: MdDevices,
+      label: "Liczba urządzeń",
+      value: selectedPlan.devicesNumber,
+      color: "text-blue-500",
+    },
+    {
+      icon: MdFamilyRestroom,
+      label: "Rodzinna subskrypcja",
+      value: selectedPlan.familySharing,
+      color: "text-purple-500",
+    },
+    {
+      icon: HiCloudDownload,
+      label: "Oglądanie offline",
+      value: selectedPlan.offlineView,
+      color: "text-green-500",
+    },
+    {
+      icon: MdHdrOn,
+      label: "HDR",
+      value: selectedPlan.HDR,
+      color: "text-yellow-500",
+    },
+    {
+      icon: FaVolumeUp,
+      label: "Dolby Atmos",
+      value: selectedPlan.DolbyAtmos,
+      color: "text-red-500",
+    },
+    {
+      icon: MdBlock,
+      label: "Brak reklam",
+      value: selectedPlan.adsFree,
+      color: "text-orange-500",
+    },
+    {
+      icon: MdCancel,
+      label: "Możliwość anulowania",
+      value: selectedPlan.cancelAllowed,
+      color: "text-gray-500",
+    },
+  ];
 
   return (
-    <main className="relative min-h-screen mx-auto pt-24 md:pt-28 px-4 overflow-hidden">
-      <BackgroundVideo />
+    <main className="relative min-h-screen mx-auto pt-24 md:pt-28 px-2 md:px-4 overflow-hidden">
+      <Image
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10 "
+        alt="Background image cinema"
+        src={bg}
+        quality={100}
+      />
 
-      <div className="p-6 max-w-4xl mx-auto  bg-opacity-80 rounded-lg ">
-        <h1 className="text-3xl font-bold mb-6 text-center text-primary">
-          Podsumowanie Subskrypcji
-        </h1>
-
-        <div className=" border border-borderPrimary p-6 rounded-lg shadow-md">
+      <div className="py-2 md:p-6 max-w-4xl mx-auto bg-opacity-80 rounded-lg">
+        <div className="border border-borderPrimary p-6 rounded-lg shadow-md bg-black/80">
+          {/* Informacje o planie */}
           <h2 className="text-2xl font-semibold mb-4 text-center">
             Typ planu: {selectedPlan.name}
           </h2>
-
-          <div className="mb-4">
-            <p className="text-secondary">Opis:</p>
-            <p>{selectedPlan.description}</p>
-          </div>
 
           <div className="mb-4">
             <p className="text-secondary">Cena:</p>
@@ -75,95 +106,44 @@ export default function SubscriptionSummary() {
             </p>
           </div>
 
-          <div className="mb-4">
-            <p className="text-secondary">Okres próbny:</p>
-            <p>{selectedPlan.trialPeriod} dni</p>
-          </div>
-
+          {/* Sekcja funkcji */}
           <div className="mb-4">
             <p className="text-secondary">Dostępne funkcje:</p>
             <ul className="space-y-4">
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <MdDevices className="text-blue-500" />
-                  <span>Liczba urządzeń</span>
-                </div>
-                <span className="text-secondary">
-                  {selectedPlan.devicesNumber}
-                </span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <MdFamilyRestroom className="text-purple-500" />
-                  <span>Rodzinna subskrypcja</span>
-                </div>
-                <span className="text-secondary">
-                  {selectedPlan.familySharing}
-                </span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <HiCloudDownload className="text-green-500" />
-                  <span>Oglądanie offline</span>
-                </div>
-                <span className="text-secondary">
-                  {selectedPlan.offlineView}
-                </span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <MdHdrOn className="text-yellow-500" />
-                  <span>HDR</span>
-                </div>
-                <span className="text-secondary">{selectedPlan.HDR}</span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <FaVolumeUp className="text-red-500" />
-                  <span>Dolby Atmos</span>
-                </div>
-                <span className="text-secondary">
-                  {selectedPlan.DolbyAtmos}
-                </span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <MdBlock className="text-orange-500" />
-                  <span>Brak reklam</span>
-                </div>
-                <span className="text-secondary">{selectedPlan.adsFree}</span>
-              </li>
-
-              <li className="flex justify-between">
-                <div className="flex items-center justify-center gap-2">
-                  <MdCancel className="text-gray-500" />
-                  <span>Możliwość anulowania</span>
-                </div>
-                <span className="text-secondary">
-                  {selectedPlan.cancelAllowed}
-                </span>
-              </li>
+              {featuresData.map(({ icon: Icon, label, value, color }) => (
+                <li key={label} className="flex justify-between border-b">
+                  <div className="flex items-center gap-2 ">
+                    <Icon className={color} />
+                    <span>{label}</span>
+                  </div>
+                  <span className="text-secondary">{value}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Sekcja podsumowania */}
+          <div className="border border-borderPrimary p-4 rounded-lg mb-4">
+            <p className="text-sm text-secondary">
+              Wybierając plan{" "}
+              <span className="font-bold">{selectedPlan.name}</span>,
+              otrzymujesz dostęp do wszystkich wyżej wymienionych funkcji bez
+              żadnych ukrytych kosztów.
+            </p>
+          </div>
+
+          {/* Przycisk akcji */}
           <div className="flex gap-4 justify-self-end">
-            <button
+            <Link
+              href={`/plans`}
               onClick={() => router.push(`/plans`)}
-              className="px-6 py-3 bg-backgroundLight text-white rounded-lg transition-all duration-300 hover:scale-105"
+              className={`bg-backgroundLight ${linkClass}`}
             >
               Wróć do wyboru planu
-            </button>
-            <button
-              onClick={handleProceedToPayment}
-              className="px-6 py-3 bg-primary text-white rounded-lg transition-all duration-300 hover:scale-105"
-            >
+            </Link>
+            <Link href={`/payment`} className={`bg-primary ${linkClass}`}>
               Wybierz plan
-            </button>
+            </Link>
           </div>
         </div>
       </div>

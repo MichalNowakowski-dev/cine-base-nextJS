@@ -5,7 +5,7 @@ type PaginatedSectionProps = {
   children: React.ReactNode;
   activePage: number;
   maxPageListNumber: number;
-  handleMoveList: (direction: string) => void;
+  handleMoveList: (directlyTo: number) => void;
 };
 
 export default function PaginatedSection({

@@ -14,7 +14,7 @@ export default function CtaLink({
   return (
     <Link
       href={href}
-      className={`flex gap-x-1 items-center justify-center bg-primary hover:bg-red-800 text-white rounded-md py-3 px-4 ${className}`}
+      className={`flex gap-x-1 items-center justify-center bg-primary hover:bg-red-800 text-white  rounded-md py-3 px-4 ${className}`}
     >
       {play && <FaPlay />}
       {children}

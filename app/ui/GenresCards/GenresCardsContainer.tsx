@@ -37,7 +37,7 @@ export default async function GenresCardsSectionContainer({
 }) {
   const genresListWithImages = await getGenresWithImages(mediaType);
   return (
-    <GenresCardsSection genresList={genresListWithImages}>
+    <GenresCardsSection genresList={genresListWithImages} mediaType={mediaType}>
       {children}
     </GenresCardsSection>
   );

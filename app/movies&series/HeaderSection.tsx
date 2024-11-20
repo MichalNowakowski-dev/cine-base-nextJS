@@ -7,6 +7,7 @@ import { getImgUrl } from "../lib/utils";
 import CtaLink from "../ui/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../ui/SwitchListButtons";
+import { usePagination } from "../hooks/usePagination";
 
 const styles = {
   headerSection:
@@ -14,43 +15,25 @@ const styles = {
 };
 
 export default function HeaderSection({ list }: { list: any }) {
-  const [activeMovieIndex, setActiveMovieIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const { activePage, showList, handleMoveList } = usePagination(list, 1);
 
-  function handleSwitchMovie(direction: string) {
-    if (
-      (activeMovieIndex === 0 && direction === "left") ||
-      (activeMovieIndex === list.length - 1 && direction === "right")
-    ) {
-      return;
-    }
-
-    setIsAnimating(true); // Rozpocznij animację
-    const offset = direction === "right" ? 1 : -1;
-
-    setTimeout(() => {
-      setActiveMovieIndex((prev) => prev + offset);
-      setTimeout(() => setIsAnimating(false), 250); // Zakończ animację
-    }, 250); // Czas animacji dla znikania
-  }
-
-  const { title, name, overview } = list[activeMovieIndex];
+  const { title, name, overview } = list[activePage - 1];
 
   return (
     <section className={styles.headerSection}>
       <Image
         className={`absolute object-cover top-0 left-0 rounded-md -z-10 h-full transition-opacity duration-250 ${
-          isAnimating ? "opacity-0" : "opacity-100"
+          showList ? "opacity-100" : "opacity-0"
         }`}
         alt="movie image"
-        src={getImgUrl("original", list[activeMovieIndex].backdrop_path)}
+        src={getImgUrl("original", list[activePage - 1].backdrop_path)}
         width={1600}
         height={900}
         priority
       />
       <header
         className={`z-10 text-center transition-opacity duration-250 mb-5 ${
-          isAnimating ? "opacity-0" : "opacity-100"
+          showList ? "opacity-100" : "opacity-0"
         }`}
       >
         <h1>{title || name}</h1>
@@ -74,9 +57,9 @@ export default function HeaderSection({ list }: { list: any }) {
       </div>
       <SwitchListButtons
         className="z-20 w-full bg-transparent justify-between border-none mb-10 "
-        activePage={activeMovieIndex + 1}
+        activePage={activePage}
         maxPageListNumber={list.length}
-        handleMoveList={handleSwitchMovie}
+        handleMoveList={handleMoveList}
       />
     </section>
   );

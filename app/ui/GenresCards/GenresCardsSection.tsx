@@ -9,9 +9,11 @@ const GENRES_PER_VIEW = 5;
 export default function GenresCardsSection({
   genresList,
   children,
+  mediaType,
 }: {
   genresList: { id: number; name: string; images: string[] }[];
   children: React.ReactNode;
+  mediaType: string;
 }) {
   const {
     activePage,
@@ -34,6 +36,7 @@ export default function GenresCardsSection({
 
       <GenresCards
         genreList={isMobile ? genresList : paginatedList}
+        mediaType={mediaType}
         className={`transition-opacity duration-${
           process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
         } ${showList ? "opacity-100" : "opacity-0"}`}

@@ -36,6 +36,7 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
               src={getImgUrl("w300", episode.still_path)}
               width={300}
               height={169}
+              quality={100}
               className="rounded-lg border border-borderPrimary aspect-video "
             />
           ) : (

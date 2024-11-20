@@ -25,7 +25,7 @@ export default async function FreeTrialCta() {
 
       <Link
         href={`/plans/summary?id=standard&trial=true&price-cycle=monthly`}
-        className=" px-6 basis-1/2 md:basis-[20%] py-3 bg-primary rounded-md border-[#262626] border"
+        className=" px-6 md:basis-[20%] text-center py-3 bg-primary rounded-md border-[#262626] border"
       >
         Wypróbuj teraz!
       </Link>

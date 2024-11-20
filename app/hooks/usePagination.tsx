@@ -29,24 +29,14 @@ export function usePagination<T>(items: T[], itemsPerPage: number) {
 
   const maxPageListNumber = Math.ceil(items.length / itemsPerPage);
 
-  function handleMoveList(direction: string, directlyTo?: number) {
+  function handleMoveList(directlyTo?: number) {
     if (directlyTo) {
-      setShowList(false);
-      setTimeout(() => {
-        setActivePage(directlyTo);
-        setShowList(true);
-      }, Number(process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME));
-    } else {
-      if (
-        (activePage === 1 && direction === "left") ||
-        (activePage === maxPageListNumber && direction === "right")
-      ) {
+      if (directlyTo < 1 || directlyTo > maxPageListNumber) {
         return;
       }
       setShowList(false);
-      const offset = direction === "right" ? 1 : -1;
       setTimeout(() => {
-        setActivePage((prev) => prev + offset);
+        setActivePage(directlyTo);
         setShowList(true);
       }, Number(process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME));
     }

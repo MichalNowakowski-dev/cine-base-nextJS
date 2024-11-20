@@ -22,12 +22,12 @@ export default function SubscriptionPlanCard({
     "text-center content-center px-6 py-4 border-[#262626] border rounded-md";
 
   return (
-    <div className="p-4 bg-backgroundLight border border-[#262626] rounded-md">
+    <div className="p-4 bg-backgroundLight border border-[#262626] rounded-md basis-1/3">
       <header className="flex flex-wrap gap-4 mb-5">
         <h3 className="text-h3">{planName}</h3>
         <p>{planDesc}</p>
-        <h3 className="text-h3">
-          {price}zł
+        <h3 className="text-h3 w-full">
+          <span>{price}zł</span>
           <span className="text-sm text-secondary">{priceLabel}</span>
         </h3>
       </header>

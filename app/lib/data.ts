@@ -58,10 +58,13 @@ export const fetchMovieList = async (category: MovieCategory) => {
     throw new Error(`Failed to fetch movie ${category} list.`);
   }
 };
-export const fetchMovieListByGenre = async (genreId: string) => {
+export const fetchMovieListByGenre = async (
+  genreId: string,
+  page: number = 1
+) => {
   try {
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=1&api_key=${process.env.TMDB_API_KEY}`
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=${page}&api_key=${process.env.TMDB_API_KEY}`
     );
     const data = await resp.json();
     return data;
@@ -70,10 +73,13 @@ export const fetchMovieListByGenre = async (genreId: string) => {
     throw new Error(`Failed to fetch movie list by genre.`);
   }
 };
-export const fetchSeriesListByGenre = async (genreId: string) => {
+export const fetchSeriesListByGenre = async (
+  genreId: string,
+  page: number = 1
+) => {
   try {
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=1&api_key=${process.env.TMDB_API_KEY}`
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}&api_key=${process.env.TMDB_API_KEY}`
     );
     const data = await resp.json();
     return data;

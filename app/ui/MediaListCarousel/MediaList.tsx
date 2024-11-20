@@ -6,6 +6,7 @@ import { MediaItem } from "../../lib/types";
 import Link from "next/link";
 import MediaRoundedRating from "../MediaRoundedRating";
 import { v4 as uuidv4 } from "uuid";
+import { getImgUrl } from "@/app/lib/utils";
 
 export default function MediaList({
   mediaType,
@@ -44,11 +45,15 @@ export default function MediaList({
                 >
                   <div className="mb-2">
                     <Image
-                      className="rounded-md object-cover w-full  min-w-[140px] lg:min-w-[160px] "
-                      src={`${process.env.NEXT_PUBLIC_IMAGES_URL}original${poster_path}`}
+                      className="rounded-md object-cover w-full min-w-[140px] lg:min-w-[160px] aspect-[2/3] "
+                      src={
+                        poster_path
+                          ? getImgUrl("w342", poster_path)
+                          : "/no-poster-img.webp"
+                      }
                       alt={"Movie image"}
-                      width={200}
-                      height={300}
+                      width={513}
+                      height={342}
                       quality={100}
                     />
                   </div>
