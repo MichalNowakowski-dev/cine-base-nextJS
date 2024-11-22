@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getImgUrl } from "../lib/utils";
 import { v4 as uuid } from "uuid";
 import Link from "next/link";
-import { MediaType } from "../lib/types";
+import { ImageSize, MediaType } from "../lib/types";
 
 type MediaItem = {
   id: number;
@@ -38,7 +38,7 @@ const GenresList = ({ mediaList, mediaType }: GenresListProps) => {
               <Image
                 src={
                   mediaItem.poster_path
-                    ? getImgUrl("w500", mediaItem.poster_path)
+                    ? getImgUrl(ImageSize.POSTER_LARGE, mediaItem.poster_path)
                     : "/no-poster-img.webp"
                 }
                 width={500}

@@ -9,7 +9,7 @@ export default function SubscriptionPlan() {
   const [priceCycle, setPriceCycle] = useState("monthly");
 
   function renderPlanOptions(obj: SubscriptionPlanData) {
-    return Object.entries(obj).map(([key, plan]) => {
+    return Object.values(obj).map((plan) => {
       return (
         <SubscriptionPlanCard
           key={plan.id}

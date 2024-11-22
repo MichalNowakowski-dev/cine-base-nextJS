@@ -8,6 +8,7 @@ import NoProfilePicture from "@/public/no-profile-img.png";
 import PaginatedSection from "./PaginatedSection";
 import { usePagination } from "../hooks/usePagination";
 import { useMemo } from "react";
+import { ImageSize, MediaPerson } from "../lib/types";
 
 const ITEMS_PER_VIEW = 5;
 const MAX_ITEMS = 25;
@@ -46,7 +47,7 @@ export default function CastCarousel({
           process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
         } ${showList ? "opacity-100" : "opacity-0"} `}
       >
-        {castList.map((person: any) => (
+        {castList.map((person: MediaPerson) => (
           <li
             key={person.id + person.profile_path}
             className="flex flex-col flex-shrink-0 cursor-pointer space-y-1"
@@ -59,7 +60,7 @@ export default function CastCarousel({
                 <Image
                   src={
                     person.profile_path
-                      ? getImgUrl("w300", person.profile_path)
+                      ? getImgUrl(ImageSize.PROFILE_MEDIUM, person.profile_path)
                       : NoProfilePicture
                   }
                   alt="person image"

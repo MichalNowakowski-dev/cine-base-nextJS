@@ -1,10 +1,5 @@
 import { fetchMediaList, fetchTrendingList } from "../../lib/data";
-import {
-  MediaCategory,
-  MediaListContainerProps,
-  MediaType,
-  TimeWindow,
-} from "../../lib/types";
+import { MediaCategory, MediaType, TimeWindow } from "../../lib/types";
 import MediaListController from "./MediaListController";
 
 async function fetchMediaData(
@@ -50,6 +45,14 @@ async function fetchMediaData(
     return [];
   }
 }
+
+export type MediaListContainerProps = {
+  mediaCategory: MediaCategory;
+  mediaType: MediaType;
+  timeWindow?: TimeWindow;
+  children: React.ReactNode;
+  itemsPerViewNumber?: number;
+};
 
 export default async function MediaListContainer({
   mediaCategory,

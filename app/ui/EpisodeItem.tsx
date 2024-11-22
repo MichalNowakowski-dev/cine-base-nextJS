@@ -7,16 +7,10 @@ import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Episode, ImageSize } from "../lib/types";
 
 type EpisodeItemProps = {
-  episode: {
-    id: number;
-    still_path: string | null; // Może być `null` w przypadku braku obrazu
-    name: string;
-    overview: string;
-    episode_number: number;
-    runtime: number | null; // Może być `null` w przypadku braku danych runtime
-  };
+  episode: Episode;
 };
 
 export default function EpisodeItem({ episode }: EpisodeItemProps) {
@@ -33,7 +27,7 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
           {episode.still_path ? (
             <Image
               alt="episode poster"
-              src={getImgUrl("w300", episode.still_path)}
+              src={getImgUrl(ImageSize.STILL_LARGE, episode.still_path)}
               width={300}
               height={169}
               quality={100}

@@ -8,13 +8,14 @@ import CtaLink from "../ui/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../ui/SwitchListButtons";
 import { usePagination } from "../hooks/usePagination";
+import { ImageSize, MediaItem } from "../lib/types";
 
 const styles = {
   headerSection:
     "flex flex-col justify-end items-center gap-y-1 h-[50vh] md:h[80vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_70%),_linear-gradient(to_top,_#141414_0%,_transparent_30%)] ",
 };
 
-export default function HeaderSection({ list }: { list: any }) {
+export default function HeaderSection({ list }: { list: MediaItem[] }) {
   const { activePage, showList, handleMoveList } = usePagination(list, 1);
 
   const { title, name, overview } = list[activePage - 1];
@@ -26,7 +27,10 @@ export default function HeaderSection({ list }: { list: any }) {
           showList ? "opacity-100" : "opacity-0"
         }`}
         alt="movie image"
-        src={getImgUrl("original", list[activePage - 1].backdrop_path)}
+        src={getImgUrl(
+          ImageSize.BACKDROP_LARGE,
+          list[activePage - 1].backdrop_path
+        )}
         width={1600}
         height={900}
         priority
@@ -40,7 +44,7 @@ export default function HeaderSection({ list }: { list: any }) {
         <p className="hidden md:block text-white/90 px-20">{overview}</p>
       </header>
       <div className="z-10 mb-14 md:mb-0 flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
-        <CtaLink href="/subscriptions" play className="w-4/5">
+        <CtaLink href="/plans" play className="w-4/5">
           Oglądaj
         </CtaLink>
         <div className="flex gap-x-3 ">

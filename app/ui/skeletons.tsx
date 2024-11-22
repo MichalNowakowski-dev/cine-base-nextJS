@@ -19,7 +19,7 @@ export const GenresCardListButtonsSkeleton = () => (
 );
 export const GenresCardsSkeleton = () => (
   <ul className="flex justify-between w-full">
-    {Array.from({ length: 5 }).map((_, index) => (
+    {Array.from({ length: 5 }).map((_) => (
       <li className="w-[220px] h-[220px] rounded-lg bg-gray-300 animate-pulse"></li>
     ))}
   </ul>

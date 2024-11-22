@@ -1,5 +1,6 @@
 "use client";
 
+import { GenreWithImages, MediaType } from "@/app/lib/types";
 import { usePagination } from "../../hooks/usePagination";
 import PaginatedSection from "../PaginatedSection";
 import GenresCards from "./GenresCards";
@@ -11,9 +12,9 @@ export default function GenresCardsSection({
   children,
   mediaType,
 }: {
-  genresList: { id: number; name: string; images: string[] }[];
+  genresList: GenreWithImages[];
   children: React.ReactNode;
-  mediaType: string;
+  mediaType: MediaType;
 }) {
   const {
     activePage,

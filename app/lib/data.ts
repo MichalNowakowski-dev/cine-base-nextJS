@@ -1,8 +1,8 @@
 import {
+  MediaPerson,
+  Genre,
   MediaCategory,
   MediaType,
-  MovieCategory,
-  SeriesCategory,
   TimeWindow,
 } from "./types";
 
@@ -46,18 +46,7 @@ export const fetchTrendingList = async (
     throw new Error(`Failed to fetch trending ${mediaType} list.`);
   }
 };
-export const fetchMovieList = async (category: MovieCategory) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/movie/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie ${category} list.`);
-  }
-};
+
 export const fetchMovieListByGenre = async (
   genreId: string,
   page: number = 1
@@ -86,18 +75,6 @@ export const fetchSeriesListByGenre = async (
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to fetch movie list by genre.`);
-  }
-};
-export const fetchSeriesList = async (category: SeriesCategory) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/tv/${category}?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie ${category} list.`);
   }
 };
 
@@ -157,7 +134,7 @@ export const getSeasonDetails = async (
   }
 };
 
-export const fetchGenresList = async () => {
+export const fetchGenresList = async (): Promise<[Genre[], Genre[]]> => {
   try {
     const respMovies = await fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/3/genre/movie/list?api_key=${process.env.TMDB_API_KEY}&language=pl`

@@ -29,6 +29,7 @@ import MediaListController from "@/app/ui/MediaListCarousel/MediaListController"
 import { Suspense } from "react";
 import MediaListContainer from "@/app/ui/MediaListCarousel/MediaListContainer";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
+import { ImageSize } from "@/app/lib/types";
 
 export default async function Page({
   params,
@@ -66,7 +67,8 @@ export default async function Page({
 
   function getPersonImagePath(personName: string) {
     const [person] = seriesCast.crew.filter(
-      (person: any) => removeSpaces(person.name) === removeSpaces(personName)
+      (person: { name: string }) =>
+        removeSpaces(person.name) === removeSpaces(personName)
     );
     return person ? person.profile_path : false;
   }
@@ -82,7 +84,7 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="series image"
-          src={getImgUrl("w1280", seriesDetails.backdrop_path)}
+          src={getImgUrl(ImageSize.BACKDROP_LARGE, seriesDetails.backdrop_path)}
           width={1280}
           height={720}
           quality={100}
@@ -113,17 +115,19 @@ export default async function Page({
         <div className="p-4 bg-backgroundLight rounded-md md:col-span-2 border border-borderPrimary">
           <h2 className="text-h2 mb-5">Sezony i odcinki</h2>
           <ul className="flex flex-wrap gap-5">
-            {seriesDetails.seasons?.map((season: any, i: number) => {
-              if (i === 0) return;
+            {seriesDetails.seasons?.map(
+              (season: { id: number; episode_count: number }, i: number) => {
+                if (i === 0) return;
 
-              return (
-                <SeasonItem
-                  key={season.id}
-                  episodeCount={season.episode_count}
-                  seasonData={seasonsData[i - 1]}
-                />
-              );
-            })}
+                return (
+                  <SeasonItem
+                    key={season.id}
+                    episodeCount={season.episode_count}
+                    seasonData={seasonsData[i - 1]}
+                  />
+                );
+              }
+            )}
           </ul>
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-start-3 border border-borderPrimary">
@@ -140,14 +144,16 @@ export default async function Page({
               <PiTranslate size={20} /> Dostępne języki
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {seriesDetails?.spoken_languages?.map((lang: any) => (
-                <li
-                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                  key={lang.name}
-                >
-                  {lang.name}
-                </li>
-              ))}
+              {seriesDetails?.spoken_languages?.map(
+                (lang: { name: string }) => (
+                  <li
+                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                    key={lang.name}
+                  >
+                    {lang.name}
+                  </li>
+                )
+              )}
             </ul>
           </section>
           <section className="mb-5">
@@ -156,19 +162,21 @@ export default async function Page({
               <FaRegStar size={20} /> Oceny
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {seriesDetailsFromOmdb?.Ratings?.map((rating: any) => (
-                <li
-                  className="p-2 bg-background rounded-md border border-zinc-700"
-                  key={rating.Source}
-                >
-                  <p>
-                    {rating.Source.includes("Internet")
-                      ? "IMDb"
-                      : rating.Source}
-                  </p>
-                  <p className="text-primary">{rating.Value}</p>
-                </li>
-              ))}
+              {seriesDetailsFromOmdb?.Ratings?.map(
+                (rating: { Source: string; Value: string }) => (
+                  <li
+                    className="p-2 bg-background rounded-md border border-zinc-700"
+                    key={rating.Source}
+                  >
+                    <p>
+                      {rating.Source.includes("Internet")
+                        ? "IMDb"
+                        : rating.Source}
+                    </p>
+                    <p className="text-primary">{rating.Value}</p>
+                  </li>
+                )
+              )}
             </ul>
           </section>
           <section className="mb-5">
@@ -177,14 +185,16 @@ export default async function Page({
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {seriesDetails?.genres?.map((genre: any) => (
-                <li
-                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                  key={genre.id}
-                >
-                  {genre.name}
-                </li>
-              ))}
+              {seriesDetails?.genres?.map(
+                (genre: { id: number; name: string }) => (
+                  <li
+                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                    key={genre.id}
+                  >
+                    {genre.name}
+                  </li>
+                )
+              )}
             </ul>
           </section>
           {seriesDetailsFromOmdb?.Writer !== "N/A" && (
@@ -205,7 +215,10 @@ export default async function Page({
                           alt="Director image"
                           src={
                             getPersonImagePath(writer)
-                              ? getImgUrl("w185", getPersonImagePath(writer))
+                              ? getImgUrl(
+                                  ImageSize.PROFILE_MEDIUM,
+                                  getPersonImagePath(writer)
+                                )
                               : NoProfilePicture
                           }
                           fill
@@ -230,17 +243,19 @@ export default async function Page({
             <div>
               <h3 className="text-secondary mb-3">Gdzie zobaczyć:</h3>
               <ul className="flex gap-3">
-                {providers?.results?.PL?.flatrate?.map((item: any) => (
-                  <li key={item.provider_id}>
-                    <Image
-                      className="rounded-md w-10 h-10 md:w-16  md:h-16"
-                      height={154}
-                      width={154}
-                      alt="provider logo"
-                      src={getImgUrl("w154", item.logo_path)}
-                    />
-                  </li>
-                ))}
+                {providers?.results?.PL?.flatrate?.map(
+                  (item: { provider_id: number; logo_path: string }) => (
+                    <li key={item.provider_id}>
+                      <Image
+                        className="rounded-md w-10 h-10 md:w-16  md:h-16"
+                        height={154}
+                        width={154}
+                        alt="provider logo"
+                        src={getImgUrl(ImageSize.LOGO_LARGE, item.logo_path)}
+                      />
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           ) : (
@@ -273,16 +288,23 @@ export default async function Page({
         <div className="p-7 bg-backgroundLight rounded-md md:col-start-3 border border-borderPrimary">
           <h3 className="text-secondary mb-4">Tła</h3>
           <ul className="flex flex-wrap gap-4">
-            {imagesList.backdrops.slice(0, 16).map((img: any) => (
-              <li className=" hover:cursor-pointer" key={img.file_path}>
-                <ImageModal
-                  altText="backdrop image"
-                  imageUrl={getImgUrl("w1280", img.file_path)}
-                  height={img.height}
-                  width={img.width}
-                />
-              </li>
-            ))}
+            {imagesList.backdrops
+              .slice(0, 16)
+              .map(
+                (img: { file_path: string; height: number; width: number }) => (
+                  <li className=" hover:cursor-pointer" key={img.file_path}>
+                    <ImageModal
+                      altText="backdrop image"
+                      imageUrl={getImgUrl(
+                        ImageSize.BACKDROP_LARGE,
+                        img.file_path
+                      )}
+                      height={img.height}
+                      width={img.width}
+                    />
+                  </li>
+                )
+              )}
           </ul>
         </div>
       </section>

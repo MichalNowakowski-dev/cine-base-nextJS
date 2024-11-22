@@ -57,7 +57,7 @@ export default function VideoCarousel({
           return (
             <li
               key={video.id}
-              onClick={() => handleClick(video)} // Przekazujemy wybrany element do funkcji handleClick
+              onClick={() => handleClick(video)}
               className="flex flex-col flex-shrink-0 w-[clamp(10rem,20vw,250px)] cursor-pointer space-y-1"
             >
               <div className="relative mb-2">

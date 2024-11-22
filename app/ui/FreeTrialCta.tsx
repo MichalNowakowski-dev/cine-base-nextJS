@@ -2,10 +2,11 @@ import Link from "next/link";
 import { fetchMediaList } from "../lib/data";
 import { getImgUrl } from "../lib/utils";
 import Image from "next/image";
+import { ImageSize, MediaItem } from "../lib/types";
 
 export default async function FreeTrialCta() {
   const movies = await fetchMediaList("movie", "top_rated");
-  const images = await movies.results.map((movie: any) => {
+  const images = await movies.results.map((movie: MediaItem) => {
     return movie.poster_path;
   });
 
@@ -39,7 +40,7 @@ export default async function FreeTrialCta() {
               width={125}
               height={74}
               alt="poster image"
-              src={getImgUrl("w185", path)}
+              src={getImgUrl(ImageSize.POSTER_MEDIUM, path)}
               className="object-cover md:aspect-video"
             />
           </li>

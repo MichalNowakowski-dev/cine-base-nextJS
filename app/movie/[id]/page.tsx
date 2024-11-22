@@ -24,6 +24,7 @@ import CtaLink from "@/app/ui/CtaLink";
 import ImageModal from "@/app/ui/ImageModal";
 import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
+import { ImageSize } from "@/app/lib/types";
 
 export default async function Page({
   params,
@@ -37,18 +38,22 @@ export default async function Page({
     movieDetails.imdb_id
   );
   const providers = await fetchProviders(id, "movie");
-  const movieCast = await fetchMediaCast(id, "movie");
+  const movieMembers = await fetchMediaCast(id, "movie");
   const movieRecommendationsList = await fetchRecommendationsList(id, "movie");
   const videoList = await fetchVideosList(id, "movie");
   const imagesList = await fetchImages(id, "movie");
+
+  const movieCast = movieMembers.cast;
+  const movieCrew = movieMembers.crew;
 
   function removeSpaces(str: string) {
     return str.replace(/\s+/g, "");
   }
 
   function getPersonImagePath(personName: string) {
-    const [person] = movieCast.crew.filter(
-      (person: any) => removeSpaces(person.name) === removeSpaces(personName)
+    const [person] = movieCrew.filter(
+      (person: { name: string }) =>
+        removeSpaces(person.name) === removeSpaces(personName)
     );
     return person ? person.profile_path : false;
   }
@@ -64,7 +69,7 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="movie image"
-          src={getImgUrl("w1280", movieDetails.backdrop_path)}
+          src={getImgUrl(ImageSize.BACKDROP_LARGE, movieDetails.backdrop_path)}
           width={1280}
           height={720}
           quality={100}
@@ -103,33 +108,37 @@ export default async function Page({
               <div className="mb-7">
                 <h3 className="text-secondary mb-3">Gdzie zobaczyć:</h3>
                 <ul className="flex gap-3">
-                  {providers.results?.PL?.flatrate?.map((item: any) => (
-                    <li key={item.provider_id}>
-                      <Image
-                        className="rounded-md"
-                        height={40}
-                        width={40}
-                        alt="provider logo"
-                        src={getImgUrl("w45", item.logo_path)}
-                      />
-                    </li>
-                  ))}
+                  {providers.results?.PL?.flatrate?.map(
+                    (item: { provider_id: number; logo_path: string }) => (
+                      <li key={item.provider_id}>
+                        <Image
+                          className="rounded-md"
+                          height={40}
+                          width={40}
+                          alt="provider logo"
+                          src={getImgUrl(ImageSize.LOGO_SMALL, item.logo_path)}
+                        />
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
               <div>
                 <h3 className="text-secondary mb-3">Gdzie wypożyczyć:</h3>
                 <ul className="flex gap-3">
-                  {providers.results?.PL?.rent?.map((item: any) => (
-                    <li key={item.provider_id}>
-                      <Image
-                        className="rounded-md"
-                        height={40}
-                        width={40}
-                        alt="provider logo"
-                        src={getImgUrl("w45", item.logo_path)}
-                      />
-                    </li>
-                  ))}
+                  {providers.results?.PL?.rent?.map(
+                    (item: { logo_path: string; provider_id: number }) => (
+                      <li key={item.provider_id}>
+                        <Image
+                          className="rounded-md"
+                          height={40}
+                          width={40}
+                          alt="provider logo"
+                          src={getImgUrl(ImageSize.LOGO_SMALL, item.logo_path)}
+                        />
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
             </>
@@ -153,7 +162,7 @@ export default async function Page({
               <PiTranslate size={20} /> Dostępne języki
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails.spoken_languages.map((lang: any) => (
+              {movieDetails.spoken_languages.map((lang: { name: string }) => (
                 <li
                   className="px-2 py-1 bg-background rounded-md border border-zinc-700"
                   key={lang.name}
@@ -169,19 +178,21 @@ export default async function Page({
               <FaRegStar size={20} /> Oceny
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetailsFromOmdb.Ratings.map((rating: any) => (
-                <li
-                  className="p-2 bg-background rounded-md border border-zinc-700"
-                  key={rating.Source}
-                >
-                  <p>
-                    {rating.Source.includes("Internet")
-                      ? "IMDb"
-                      : rating.Source}
-                  </p>
-                  <p className="text-primary">{rating.Value}</p>
-                </li>
-              ))}
+              {movieDetailsFromOmdb.Ratings.map(
+                (rating: { Source: string; Value: string }) => (
+                  <li
+                    className="p-2 bg-background rounded-md border border-zinc-700"
+                    key={rating.Source}
+                  >
+                    <p>
+                      {rating.Source.includes("Internet")
+                        ? "IMDb"
+                        : rating.Source}
+                    </p>
+                    <p className="text-primary">{rating.Value}</p>
+                  </li>
+                )
+              )}
             </ul>
           </section>
           <section className="mb-5">
@@ -190,14 +201,16 @@ export default async function Page({
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails.genres.map((genre: any) => (
-                <li
-                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                  key={genre.id}
-                >
-                  {genre.name}
-                </li>
-              ))}
+              {movieDetails.genres.map(
+                (genre: { id: number; name: String }) => (
+                  <li
+                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                    key={genre.id}
+                  >
+                    {genre.name}
+                  </li>
+                )
+              )}
             </ul>
           </section>
           <section className="mb-5">
@@ -212,7 +225,7 @@ export default async function Page({
                   src={
                     getPersonImagePath(movieDetailsFromOmdb.Director)
                       ? getImgUrl(
-                          "w185",
+                          ImageSize.PROFILE_MEDIUM,
                           getPersonImagePath(movieDetailsFromOmdb.Director)
                         )
                       : NoProfilePicture
@@ -243,7 +256,10 @@ export default async function Page({
                       alt="Director image"
                       src={
                         getPersonImagePath(writer)
-                          ? getImgUrl("w185", getPersonImagePath(writer))
+                          ? getImgUrl(
+                              ImageSize.PROFILE_MEDIUM,
+                              getPersonImagePath(writer)
+                            )
                           : NoProfilePicture
                       }
                       fill
@@ -281,16 +297,23 @@ export default async function Page({
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">
           <h3 className="text-secondary mb-4">Tła</h3>
           <ul className="flex flex-wrap gap-2">
-            {imagesList.backdrops.slice(0, 16).map((img: any) => (
-              <li className=" hover:cursor-pointer" key={img.file_path}>
-                <ImageModal
-                  altText="backdrop image"
-                  imageUrl={getImgUrl("original", img.file_path)}
-                  height={img.height}
-                  width={img.width}
-                />
-              </li>
-            ))}
+            {imagesList.backdrops
+              .slice(0, 16)
+              .map(
+                (img: { file_path: string; height: number; width: number }) => (
+                  <li className=" hover:cursor-pointer" key={img.file_path}>
+                    <ImageModal
+                      altText="backdrop image"
+                      imageUrl={getImgUrl(
+                        ImageSize.BACKDROP_ORIGINAL,
+                        img.file_path
+                      )}
+                      height={img.height}
+                      width={img.width}
+                    />
+                  </li>
+                )
+              )}
           </ul>
         </div>
       </section>

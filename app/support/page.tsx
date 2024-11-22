@@ -1,7 +1,7 @@
 import { fetchTrendingList } from "../lib/data";
 import { getImgUrl } from "../lib/utils";
 import Image from "next/image";
-import { MediaItem } from "../lib/types";
+import { ImageSize, MediaItem } from "../lib/types";
 import SupportForm from "./SupportForm";
 import AccordionList from "../ui/Accordions/AccordionsList";
 import FreeTrialCta from "../ui/FreeTrialCta";
@@ -33,7 +33,7 @@ export default async function Page() {
                   height={314}
                   quality={100}
                   alt="poster image"
-                  src={getImgUrl("w185", path)}
+                  src={getImgUrl(ImageSize.POSTER_MEDIUM, path)}
                   className="object-cover rounded-lg w-[98px] aspect-[2/3]"
                 />
               </li>

@@ -1,13 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useActionState, useRef } from "react";
+import { useActionState } from "react";
 import { sendSupportMessage } from "../lib/actions";
-import { formSchema } from "./formSchema";
-
-type FormData = z.infer<typeof formSchema>;
 
 export default function SupportPage() {
   const [error, formAction, isPending] = useActionState(
@@ -15,22 +9,10 @@ export default function SupportPage() {
     null
   );
 
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  });
-
   return (
     <form
-      ref={formRef}
       action={formAction}
       noValidate
-      onSubmit={handleSubmit(() => formRef.current?.submit())}
       className="space-y-6 p-6 border border-borderPrimary rounded-lg bg-backgroundFooter md:flex-grow flex flex-col"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
@@ -40,13 +22,13 @@ export default function SupportPage() {
           </label>
           <input
             type="text"
+            name="firstName"
             id="firstName"
-            {...register("firstName")}
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
-          {errors.firstName && (
+          {/* {errors.firstName && (
             <p className="text-sm text-red-600">{errors.firstName.message}</p>
-          )}
+          )} */}
         </div>
         <div>
           <label htmlFor="lastName" className="block mb-1">
@@ -55,12 +37,12 @@ export default function SupportPage() {
           <input
             type="text"
             id="lastName"
-            {...register("lastName")}
+            name="lastName"
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
-          {errors.lastName && (
+          {/* {errors.lastName && (
             <p className="text-sm text-red-600">{errors.lastName.message}</p>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -71,13 +53,13 @@ export default function SupportPage() {
         <input
           type="email"
           id="email"
+          name="email"
           placeholder="xxx@example.com"
-          {...register("email")}
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         />
-        {errors.email && (
+        {/* {errors.email && (
           <p className="text-sm text-red-600">{errors.email.message}</p>
-        )}
+        )} */}
       </div>
 
       <div className="">
@@ -87,12 +69,29 @@ export default function SupportPage() {
         <input
           type="tel"
           id="phoneNumber"
-          {...register("phoneNumber")}
+          name="phoneNumber"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md col-span-2"
         />
-        {errors.phoneNumber && (
+        {/* {errors.phoneNumber && (
           <p className="text-sm text-red-600">{errors.phoneNumber.message}</p>
-        )}
+        )} */}
+      </div>
+
+      <div>
+        <label htmlFor="subject" className="block mb-1">
+          Temat zapytania *
+        </label>
+        <select
+          id="subject"
+          name="subject"
+          className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
+        >
+          <option value="">Wybierz temat</option>
+          <option value="technicalSupport">Wsparcie techniczne</option>
+          <option value="billing">Problemy z płatnościami</option>
+          <option value="general">Ogólne pytania</option>
+          <option value="feedback">Opinie i sugestie</option>
+        </select>
       </div>
 
       <div>
@@ -101,14 +100,14 @@ export default function SupportPage() {
         </label>
         <textarea
           id="message"
+          name="message"
           placeholder="W czym możemy Ci pomóc?"
           rows={6}
-          {...register("message")}
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         ></textarea>
-        {errors.message && (
+        {/* {errors.message && (
           <p className="text-sm text-red-600">{errors.message.message}</p>
-        )}
+        )} */}
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row justify-between">
@@ -116,18 +115,18 @@ export default function SupportPage() {
           <label className="flex items-center space-x-2">
             <input
               type="checkbox"
-              {...register("privacyPolicy")}
+              name="privacyPolicy"
               className="appearance-none w-5 h-5 bg-transparent border border-borderPrimary rounded checked:bg-blue-500"
             />
             <span className="text-secondary">
               Akceptuję warunki polityki prywatności
             </span>
           </label>
-          {errors.privacyPolicy && (
+          {/* {errors.privacyPolicy && (
             <p className="text-sm text-red-600">
               {errors.privacyPolicy.message}
             </p>
-          )}
+          )} */}
         </div>
 
         <div>
@@ -141,10 +140,7 @@ export default function SupportPage() {
         </div>
       </div>
 
-      {error?.success && <p className="mt-4 text-green-500">{error.message}</p>}
-      {error && !error.success && (
-        <p className="mt-4 text-red-500">{error.message}</p>
-      )}
+      {error && <p className="mt-4 text-red-500">{error}</p>}
     </form>
   );
 }
