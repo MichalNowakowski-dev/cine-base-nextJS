@@ -10,10 +10,30 @@ const footerLinks = [
 ];
 
 const footerSocials = [
-  { name: "Facebook", url: "https://facebook.com", icon: <FaFacebookF /> },
-  { name: "Twitter", url: "https://twitter.com", icon: <RiTwitterXFill /> },
-  { name: "Instagram", url: "https://instagram.com", icon: <FaInstagram /> },
-  { name: "LinkedIn", url: "https://linkedin.com", icon: <FaLinkedin /> },
+  {
+    name: "Facebook",
+    ariaLabel: "Facebook link",
+    url: "https://facebook.com",
+    icon: <FaFacebookF />,
+  },
+  {
+    name: "Twitter",
+    ariaLabel: "Twitter link",
+    url: "https://twitter.com",
+    icon: <RiTwitterXFill />,
+  },
+  {
+    name: "Instagram",
+    ariaLabel: "Instagram link",
+    url: "https://instagram.com",
+    icon: <FaInstagram />,
+  },
+  {
+    name: "LinkedIn",
+    ariaLabel: "LinkedIn link",
+    url: "https://linkedin.com",
+    icon: <FaLinkedin />,
+  },
 ];
 
 const Footer = () => {
@@ -44,6 +64,7 @@ const Footer = () => {
           <li key={social.name} className="flex items-center justify-center">
             <Link
               href={social.url}
+              aria-label={social.ariaLabel}
               className="text-gray-200 p-3 bg-gray-700 rounded-full text-lg transition-transform duration-150 hover:scale-110"
             >
               {social.icon}

@@ -34,7 +34,7 @@ export default function GenreCard({
               />
             </li>
           ))}
-          <div className="absolute h-full w-full top-0 left-0 bg-fadeout-bottom z-10 pointer-events-none"></div>
+          <li className="absolute h-full w-full top-0 left-0 bg-fadeout-bottom z-10 pointer-events-none"></li>
         </ul>
         <div className="flex justify-between">
           <h3>{name}</h3>

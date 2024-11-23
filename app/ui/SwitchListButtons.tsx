@@ -14,10 +14,13 @@ export default function SwitchListButtons({
 }) {
   return (
     <div
-      className={`hidden lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary  ${className}`}
+      className={`hidden lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary ${
+        className && className
+      }`}
     >
       <button
         onClick={() => handleMoveList(activePage - 1)}
+        aria-label="previous button"
         className="p-3 bg-backgroundLight hover:bg-background rounded-md flex items-center justify-center border border-borderPrimary"
       >
         <FaArrowLeft />
@@ -37,6 +40,7 @@ export default function SwitchListButtons({
       </ul>
       <button
         onClick={() => handleMoveList(activePage + 1)}
+        aria-label="next button"
         className="p-3 bg-backgroundLight hover:bg-background rounded-md flex items-center justify-center border border-borderPrimary"
       >
         <FaArrowRight />
