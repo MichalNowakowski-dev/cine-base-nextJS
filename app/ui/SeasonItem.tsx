@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import EpisodeItem from "./EpisodeItem";
 import { Season } from "../lib/types";
+import { v4 as uuid } from "uuid";
 
 type SeasonItemProps = {
   episodeCount: number;
@@ -54,7 +55,7 @@ export default function SeasonItem({
       {isOpen && (
         <ul className="flex flex-col  gap-5 ">
           {seasonData.episodes.map((episode: EpisodeItemType) => (
-            <EpisodeItem episode={episode} />
+            <EpisodeItem key={uuid()} episode={episode} />
           ))}
         </ul>
       )}

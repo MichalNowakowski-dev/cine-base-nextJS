@@ -1,5 +1,4 @@
 // app/genres/page.tsx
-import { FC } from "react";
 import { fetchMovieListByGenre, fetchSeriesListByGenre } from "../lib/data";
 import GenresList from "./GenresList";
 import Pagination from "./Pagination";

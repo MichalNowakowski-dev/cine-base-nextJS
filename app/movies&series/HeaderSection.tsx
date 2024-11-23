@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { getImgUrl } from "../lib/utils";
@@ -8,7 +7,7 @@ import CtaLink from "../ui/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../ui/SwitchListButtons";
 import { usePagination } from "../hooks/usePagination";
-import { ImageSize, MediaItem } from "../lib/types";
+import { BackdropSize, MediaItem } from "../lib/types";
 
 const styles = {
   headerSection:
@@ -27,10 +26,7 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
           showList ? "opacity-100" : "opacity-0"
         }`}
         alt="movie image"
-        src={getImgUrl(
-          ImageSize.BACKDROP_LARGE,
-          list[activePage - 1].backdrop_path
-        )}
+        src={getImgUrl(BackdropSize.LARGE, list[activePage - 1].backdrop_path)}
         width={1600}
         height={900}
         priority

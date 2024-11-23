@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 export const MediaItemSkeleton = () => (
   <li className="text-sm min-w-[125px] sm:min-w-[150px] md:min-w-[175px] lg:min-w-[200px] xl:min-w-[225px] animate-pulse rounded-md">
     <div className="mb-2 bg-gray-300 w-full h-auto aspect-[2/3] "></div>
@@ -19,8 +21,11 @@ export const GenresCardListButtonsSkeleton = () => (
 );
 export const GenresCardsSkeleton = () => (
   <ul className="flex justify-between w-full">
-    {Array.from({ length: 5 }).map((_) => (
-      <li className="w-[220px] h-[220px] rounded-lg bg-gray-300 animate-pulse"></li>
+    {Array.from({ length: 5 }).map(() => (
+      <li
+        key={uuid()}
+        className="w-[220px] h-[220px] rounded-lg bg-gray-300 animate-pulse"
+      ></li>
     ))}
   </ul>
 );
@@ -28,8 +33,8 @@ export const GenresCardsSkeleton = () => (
 export const MediaScrollListSkeleton = () => (
   <div className="overflow-x-auto whitespace-nowrap no-scrollbar">
     <ul className="flex gap-3 ">
-      {Array.from({ length: 6 }).map((_, index) => (
-        <MediaItemSkeleton key={index} />
+      {Array.from({ length: 6 }).map(() => (
+        <MediaItemSkeleton key={uuid()} />
       ))}
     </ul>
   </div>

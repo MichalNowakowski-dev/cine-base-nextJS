@@ -14,7 +14,7 @@ model User {
   phoneNumber  String?
   createdAt    DateTime  @default(now())
   favorites    Favorite[] // Relacja z modelu `Favorite`
-  messages     Message[]  // Relacja z modelem `Message`
+
 }
 
 model Favorite {
@@ -26,10 +26,14 @@ model Favorite {
 }
 
 model Message {
-  id          Int       @id @default(autoincrement())
-  content     String
-  userId      Int       // Klucz obcy wskazujący użytkownika
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
+  id            Int      @id @default(autoincrement())
+  content       String
+  firstName     String?
+  lastName      String?
+  email         String?
+  phoneNumber   String?
+  acceptPolicy  Boolean
+  createdAt     DateTime @default(now())
 }
+
 

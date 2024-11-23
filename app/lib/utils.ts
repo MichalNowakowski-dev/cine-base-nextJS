@@ -1,5 +1,13 @@
 import { MutableRefObject } from "react";
-import { ImageSize } from "./types";
+import {
+  BackdropSize,
+  LogoSize,
+  PosterSize,
+  ProfileSize,
+  StillSize,
+} from "./types";
+
+type ImageSize = PosterSize | LogoSize | ProfileSize | BackdropSize | StillSize;
 
 export const getImgUrl = (size: ImageSize, path: string) => {
   const IMG_URL = `${process.env.NEXT_PUBLIC_IMAGES_URL}${size}${path}`;

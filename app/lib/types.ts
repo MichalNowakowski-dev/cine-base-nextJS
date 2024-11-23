@@ -11,43 +11,47 @@ export type MediaItem = {
   release_date?: string;
   first_air_date?: string;
   vote_average: number;
+  vote_count: number;
 };
 
 export type MediaType = "movie" | "tv";
 export type MediaCategory = "popular" | "top_rated" | "trending";
 export type TimeWindow = "day" | "week";
 
-export enum ImageSize {
-  // Poster sizes
-  POSTER_SMALL = "w92", // small poster size
-  POSTER_MEDIUM = "w185", // medium poster size
-  POSTER_LARGE = "w500", // large poster size
-  POSTER_XLARGE = "w780", // extra large poster size
-  POSTER_ORIGINAL = "original", // original poster size
+export enum PosterSize {
+  SMALL = "w92", // small poster size
+  MEDIUM = "w185", // medium poster size
+  LARGE = "w500", // large poster size
+  XLARGE = "w780", // extra large poster size
+  ORIGINAL = "original", // original poster size
+}
 
-  // Logo sizes
-  LOGO_SMALL = "w45", // small logo size
-  LOGO_MEDIUM = "w92", // medium logo size
-  LOGO_LARGE = "w154", // large logo size
-  LOGO_XLARGE = "w185", // extra large logo size
-  LOGO_ORIGINAL = "original", // original logo size
+export enum LogoSize {
+  SMALL = "w92", // medium logo size
+  MEDIUM = "w154", // large logo size
+  LARGE = "w185", // extra large logo size
+  ORIGINAL = "original", // original logo size
+}
 
-  // Profile sizes
-  PROFILE_SMALL = "w45", // small profile size
-  PROFILE_MEDIUM = "w185", // medium profile size
-  PROFILE_LARGE = "h632", // large profile size
-  PROFILE_XLARGE = "original", // extra large profile size
+export enum ProfileSize {
+  SMALL = "w45", // small profile size
+  MEDIUM = "w185", // medium profile size
+  LARGE = "h632", // large profile size
+  XLARGE = "original", // extra large profile size
+}
 
-  // Backdrop sizes
-  BACKDROP_SMALL = "w300", // small backdrop size
-  BACKDROP_MEDIUM = "w780", // medium backdrop size
-  BACKDROP_LARGE = "w1280", // large backdrop size
-  BACKDROP_XLARGE = "w1920", // extra large backdrop size
-  BACKDROP_ORIGINAL = "original", // original backdrop size
+export enum BackdropSize {
+  SMALL = "w300", // small backdrop size
+  MEDIUM = "w780", // medium backdrop size
+  LARGE = "w1280", // large backdrop size
+  XLARGE = "w1920", // extra large backdrop size
+  ORIGINAL = "original", // original backdrop size
+}
 
-  STILL_SMALL = "w92", // small STILL size
-  STILL_MEDIUM = "w185", // medium STILL size
-  STILL_LARGE = "w300", // large STILL size
+export enum StillSize {
+  SMALL = "w92", // small still size
+  MEDIUM = "w185", // medium still size
+  LARGE = "w300", // large still size
 }
 
 export type DeviceCardType = {

@@ -19,12 +19,11 @@ import { FaRegStar, FaScroll } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
-import MediaScrollList from "@/app/ui/MediaListCarousel/MediaList";
 import CtaLink from "@/app/ui/CtaLink";
 import ImageModal from "@/app/ui/ImageModal";
 import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
-import { ImageSize } from "@/app/lib/types";
+import { BackdropSize, Genre, LogoSize, ProfileSize } from "@/app/lib/types";
 
 export default async function Page({
   params,
@@ -69,7 +68,7 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="movie image"
-          src={getImgUrl(ImageSize.BACKDROP_LARGE, movieDetails.backdrop_path)}
+          src={getImgUrl(BackdropSize.LARGE, movieDetails.backdrop_path)}
           width={1280}
           height={720}
           quality={100}
@@ -116,7 +115,7 @@ export default async function Page({
                           height={40}
                           width={40}
                           alt="provider logo"
-                          src={getImgUrl(ImageSize.LOGO_SMALL, item.logo_path)}
+                          src={getImgUrl(LogoSize.SMALL, item.logo_path)}
                         />
                       </li>
                     )
@@ -134,7 +133,7 @@ export default async function Page({
                           height={40}
                           width={40}
                           alt="provider logo"
-                          src={getImgUrl(ImageSize.LOGO_SMALL, item.logo_path)}
+                          src={getImgUrl(LogoSize.SMALL, item.logo_path)}
                         />
                       </li>
                     )
@@ -201,16 +200,14 @@ export default async function Page({
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails.genres.map(
-                (genre: { id: number; name: String }) => (
-                  <li
-                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                    key={genre.id}
-                  >
-                    {genre.name}
-                  </li>
-                )
-              )}
+              {movieDetails.genres.map((genre: Genre) => (
+                <li
+                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                  key={genre.id}
+                >
+                  {genre.name}
+                </li>
+              ))}
             </ul>
           </section>
           <section className="mb-5">
@@ -225,7 +222,7 @@ export default async function Page({
                   src={
                     getPersonImagePath(movieDetailsFromOmdb.Director)
                       ? getImgUrl(
-                          ImageSize.PROFILE_MEDIUM,
+                          ProfileSize.MEDIUM,
                           getPersonImagePath(movieDetailsFromOmdb.Director)
                         )
                       : NoProfilePicture
@@ -257,7 +254,7 @@ export default async function Page({
                       src={
                         getPersonImagePath(writer)
                           ? getImgUrl(
-                              ImageSize.PROFILE_MEDIUM,
+                              ProfileSize.MEDIUM,
                               getPersonImagePath(writer)
                             )
                           : NoProfilePicture
@@ -304,10 +301,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(
-                        ImageSize.BACKDROP_ORIGINAL,
-                        img.file_path
-                      )}
+                      imageUrl={getImgUrl(BackdropSize.XLARGE, img.file_path)}
                       height={img.height}
                       width={img.width}
                     />

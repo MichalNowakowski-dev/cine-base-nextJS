@@ -2,35 +2,46 @@
 import { PrismaClient } from "@prisma/client";
 
 export async function sendSupportMessage(prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
-  // Tu możesz dodać logikę np. wysłania do bazy danych lub innego API
-  const formData = Object.fromEntries(data);
+  console.log(prevState);
 
+  const prisma = new PrismaClient();
+
+  // Pobranie danych z formularza
+  const message = data.get("message");
+  const firstName = data.get("firstName");
+  const lastName = data.get("lastName");
+  const email = data.get("email");
+  const phoneNumber = data.get("phoneNumber");
+  const acceptPolicy = data.get("acceptPolicy");
+
+  // Sprawdzenie, czy wszystkie dane są prawidłowe
+  if (
+    typeof message !== "string" ||
+    typeof firstName !== "string" ||
+    typeof lastName !== "string" ||
+    typeof email !== "string" ||
+    typeof acceptPolicy !== "string"
+  ) {
+    return "Wszystkie pola są wymagane.";
+  }
+
+  // Wartość numeru telefonu jest opcjonalna, więc może być null
+  const phone = phoneNumber ? String(phoneNumber) : null;
+
+  // Tworzenie nowej wiadomości
   try {
     const newMessage = await prisma.message.create({
       data: {
-        content: formData.message,
+        content: message,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phone,
+        acceptPolicy: acceptPolicy === "on", // Zmienna dla checkboxa, sprawdzamy, czy zaznaczone
       },
     });
     console.log(newMessage);
   } catch (error) {
-    return "Error occured when creating message";
-  }
-}
-export async function createUser(prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
-  // Tu możesz dodać logikę np. wysłania do bazy danych lub innego API
-  const formData = Object.fromEntries(data);
-
-  try {
-    const newUser = await prisma.user.create({
-      data: {
-        email: formData.email,
-        name: formData.firstName,
-      },
-    });
-    console.log(newUser);
-  } catch (error) {
-    return "Error occured when creating user in DB";
+    return `Błąd podczas tworzenia wiadomości: ${error}`;
   }
 }

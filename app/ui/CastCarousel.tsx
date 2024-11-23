@@ -8,7 +8,7 @@ import NoProfilePicture from "@/public/no-profile-img.png";
 import PaginatedSection from "./PaginatedSection";
 import { usePagination } from "../hooks/usePagination";
 import { useMemo } from "react";
-import { ImageSize, MediaPerson } from "../lib/types";
+import { MediaPerson, ProfileSize } from "../lib/types";
 
 const ITEMS_PER_VIEW = 5;
 const MAX_ITEMS = 25;
@@ -17,7 +17,7 @@ export default function CastCarousel({
   list,
   children,
 }: {
-  list: any;
+  list: MediaPerson[];
   children: React.ReactNode;
 }) {
   const slicedList = useMemo(() => list.slice(0, MAX_ITEMS), [list]);
@@ -60,7 +60,7 @@ export default function CastCarousel({
                 <Image
                   src={
                     person.profile_path
-                      ? getImgUrl(ImageSize.PROFILE_MEDIUM, person.profile_path)
+                      ? getImgUrl(ProfileSize.MEDIUM, person.profile_path)
                       : NoProfilePicture
                   }
                   alt="person image"

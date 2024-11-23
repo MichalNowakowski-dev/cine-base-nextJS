@@ -1,5 +1,10 @@
 import { fetchMediaList, fetchTrendingList } from "../../lib/data";
-import { MediaCategory, MediaType, TimeWindow } from "../../lib/types";
+import {
+  MediaCategory,
+  MediaItem,
+  MediaType,
+  TimeWindow,
+} from "../../lib/types";
 import MediaListController from "./MediaListController";
 
 async function fetchMediaData(
@@ -16,7 +21,7 @@ async function fetchMediaData(
     }
     list = await fetchMediaList(mediaType, mediaCategory, page);
     const filteredList = Array.isArray(list?.results)
-      ? list.results.filter((media: any) => media.vote_count > 300)
+      ? list.results.filter((media: MediaItem) => media.vote_count > 300)
       : [];
     let fullList = [...filteredList];
 
@@ -28,7 +33,7 @@ async function fetchMediaData(
       }
 
       const filteredList = Array.isArray(list?.results)
-        ? list.results.filter((media: any) => media.vote_count > 300)
+        ? list.results.filter((media: MediaItem) => media.vote_count > 300)
         : [];
 
       if (filteredList.length === 0) {

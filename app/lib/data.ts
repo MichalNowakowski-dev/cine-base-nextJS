@@ -1,10 +1,4 @@
-import {
-  MediaPerson,
-  Genre,
-  MediaCategory,
-  MediaType,
-  TimeWindow,
-} from "./types";
+import { Genre, MediaCategory, MediaType, TimeWindow } from "./types";
 
 export const fetchMediaList = async (
   mediaType: MediaType,

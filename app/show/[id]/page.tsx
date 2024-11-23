@@ -21,15 +21,13 @@ import { FaRegStar, FaScroll } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/ui/CastCarousel";
 import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
-import MediaScrollList from "@/app/ui/MediaListCarousel/MediaList";
+
 import CtaLink from "@/app/ui/CtaLink";
 import SeasonItem from "@/app/ui/SeasonItem";
 import ImageModal from "@/app/ui/ImageModal";
 import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
-import { Suspense } from "react";
-import MediaListContainer from "@/app/ui/MediaListCarousel/MediaListContainer";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
-import { ImageSize } from "@/app/lib/types";
+import { BackdropSize, LogoSize, ProfileSize } from "@/app/lib/types";
 
 export default async function Page({
   params,
@@ -84,7 +82,7 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="series image"
-          src={getImgUrl(ImageSize.BACKDROP_LARGE, seriesDetails.backdrop_path)}
+          src={getImgUrl(BackdropSize.LARGE, seriesDetails.backdrop_path)}
           width={1280}
           height={720}
           quality={100}
@@ -216,7 +214,7 @@ export default async function Page({
                           src={
                             getPersonImagePath(writer)
                               ? getImgUrl(
-                                  ImageSize.PROFILE_MEDIUM,
+                                  ProfileSize.MEDIUM,
                                   getPersonImagePath(writer)
                                 )
                               : NoProfilePicture
@@ -251,7 +249,7 @@ export default async function Page({
                         height={154}
                         width={154}
                         alt="provider logo"
-                        src={getImgUrl(ImageSize.LOGO_LARGE, item.logo_path)}
+                        src={getImgUrl(LogoSize.LARGE, item.logo_path)}
                       />
                     </li>
                   )
@@ -295,10 +293,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(
-                        ImageSize.BACKDROP_LARGE,
-                        img.file_path
-                      )}
+                      imageUrl={getImgUrl(BackdropSize.LARGE, img.file_path)}
                       height={img.height}
                       width={img.width}
                     />

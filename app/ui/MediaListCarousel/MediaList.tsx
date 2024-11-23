@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { ImageSize, MediaItem } from "../../lib/types";
+import { MediaItem, PosterSize } from "../../lib/types";
 import Link from "next/link";
 import MediaRoundedRating from "../MediaRoundedRating";
 import { v4 as uuidv4 } from "uuid";
 import { getImgUrl } from "@/app/lib/utils";
-import { ImageResponse } from "next/server";
 
 export default function MediaList({
   mediaType,
@@ -49,7 +48,7 @@ export default function MediaList({
                       className="rounded-md object-cover w-full min-w-[140px] lg:min-w-[160px] aspect-[2/3] "
                       src={
                         poster_path
-                          ? getImgUrl(ImageSize.POSTER_MEDIUM, poster_path)
+                          ? getImgUrl(PosterSize.MEDIUM, poster_path)
                           : "/no-poster-img.webp"
                       }
                       alt={"Movie image"}

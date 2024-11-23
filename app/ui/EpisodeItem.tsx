@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Episode, ImageSize } from "../lib/types";
+import { Episode, StillSize } from "../lib/types";
 
 type EpisodeItemProps = {
   episode: Episode;
@@ -27,7 +27,7 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
           {episode.still_path ? (
             <Image
               alt="episode poster"
-              src={getImgUrl(ImageSize.STILL_LARGE, episode.still_path)}
+              src={getImgUrl(StillSize.LARGE, episode.still_path)}
               width={300}
               height={169}
               quality={100}

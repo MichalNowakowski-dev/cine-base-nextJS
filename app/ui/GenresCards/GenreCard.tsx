@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
-import { ImageSize } from "@/app/lib/types";
+import { PosterSize } from "@/app/lib/types";
 
 type GenreWithImages = {
   id: number;
@@ -29,7 +29,7 @@ export default function GenreCard({
                 className="object-cover rounded-md"
                 fill
                 sizes="80px"
-                src={getImgUrl(ImageSize.POSTER_MEDIUM, path)}
+                src={getImgUrl(PosterSize.MEDIUM, path)}
                 alt="plakat filmowy"
               />
             </li>
