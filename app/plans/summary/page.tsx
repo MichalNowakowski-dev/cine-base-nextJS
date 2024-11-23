@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { plansData } from "@/app/lib/plansData";
 import { HiCloudDownload } from "react-icons/hi";
 import { FaVolumeUp } from "react-icons/fa";
@@ -16,7 +17,7 @@ import Link from "next/link";
 import Image from "next/image";
 import bg from "@/public/summaryBg-lg.jpg";
 
-export default function SubscriptionSummary() {
+const SubscriptionSummaryContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const plan = searchParams.get("id") || "standard";
@@ -148,5 +149,13 @@ export default function SubscriptionSummary() {
         </div>
       </div>
     </main>
+  );
+};
+
+export default function SubscriptionSummary() {
+  return (
+    <Suspense>
+      <SubscriptionSummaryContent />
+    </Suspense>
   );
 }
