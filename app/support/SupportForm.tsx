@@ -26,9 +26,6 @@ export default function SupportPage() {
             id="firstName"
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
-          {/* {errors.firstName && (
-            <p className="text-sm text-red-600">{errors.firstName.message}</p>
-          )} */}
         </div>
         <div>
           <label htmlFor="lastName" className="block mb-1">
@@ -40,9 +37,6 @@ export default function SupportPage() {
             name="lastName"
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
-          {/* {errors.lastName && (
-            <p className="text-sm text-red-600">{errors.lastName.message}</p>
-          )} */}
         </div>
       </div>
 
@@ -57,9 +51,6 @@ export default function SupportPage() {
           placeholder="xxx@example.com"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         />
-        {/* {errors.email && (
-          <p className="text-sm text-red-600">{errors.email.message}</p>
-        )} */}
       </div>
 
       <div className="">
@@ -72,9 +63,6 @@ export default function SupportPage() {
           name="phoneNumber"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md col-span-2"
         />
-        {/* {errors.phoneNumber && (
-          <p className="text-sm text-red-600">{errors.phoneNumber.message}</p>
-        )} */}
       </div>
 
       <div>
@@ -84,12 +72,12 @@ export default function SupportPage() {
         <select
           id="subject"
           name="subject"
+          defaultValue="general"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         >
-          <option value="">Wybierz temat</option>
+          <option value="general">Ogólne pytania</option>
           <option value="technicalSupport">Wsparcie techniczne</option>
           <option value="billing">Problemy z płatnościami</option>
-          <option value="general">Ogólne pytania</option>
           <option value="feedback">Opinie i sugestie</option>
         </select>
       </div>
@@ -105,9 +93,6 @@ export default function SupportPage() {
           rows={6}
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         ></textarea>
-        {/* {errors.message && (
-          <p className="text-sm text-red-600">{errors.message.message}</p>
-        )} */}
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row justify-between">
@@ -119,14 +104,9 @@ export default function SupportPage() {
               className="appearance-none w-5 h-5 bg-transparent border border-borderPrimary rounded checked:bg-blue-500"
             />
             <span className="text-secondary">
-              Akceptuję warunki polityki prywatności
+              Akceptuję warunki polityki prywatności *
             </span>
           </label>
-          {/* {errors.privacyPolicy && (
-            <p className="text-sm text-red-600">
-              {errors.privacyPolicy.message}
-            </p>
-          )} */}
         </div>
 
         <div>

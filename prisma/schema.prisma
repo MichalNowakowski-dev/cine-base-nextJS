@@ -28,9 +28,10 @@ model Favorite {
 model Message {
   id            Int      @id @default(autoincrement())
   content       String
-  firstName     String?
-  lastName      String?
-  email         String?
+  firstName     String
+  subject       String
+  lastName      String
+  email         String
   phoneNumber   String?
   acceptPolicy  Boolean
   createdAt     DateTime @default(now())
