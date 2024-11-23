@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { sendSupportMessage } from "../lib/actions";
 
 export default function SupportPage() {
-  const [error, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     sendSupportMessage,
     null
   );
@@ -26,6 +26,9 @@ export default function SupportPage() {
             id="firstName"
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
+          {state?.errors?.firstName && (
+            <p className="text-red-500 text-sm">{state.errors.firstName}</p>
+          )}
         </div>
         <div>
           <label htmlFor="lastName" className="block mb-1">
@@ -37,6 +40,9 @@ export default function SupportPage() {
             name="lastName"
             className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
           />
+          {state?.errors?.lastName && (
+            <p className="text-red-500 text-sm">{state.errors.lastName}</p>
+          )}
         </div>
       </div>
 
@@ -51,6 +57,9 @@ export default function SupportPage() {
           placeholder="xxx@example.com"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         />
+        {state?.errors?.email && (
+          <p className="text-red-500 text-sm">{state.errors.email}</p>
+        )}
       </div>
 
       <div className="">
@@ -63,6 +72,9 @@ export default function SupportPage() {
           name="phoneNumber"
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md col-span-2"
         />
+        {state?.errors?.phoneNumber && (
+          <p className="text-red-500 text-sm">{state.errors.phoneNumber}</p>
+        )}
       </div>
 
       <div>
@@ -92,7 +104,10 @@ export default function SupportPage() {
           placeholder="W czym możemy Ci pomóc?"
           rows={6}
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
-        ></textarea>
+        />
+        {state?.errors?.message && (
+          <p className="text-red-500 text-sm">{state.errors.message}</p>
+        )}
       </div>
 
       <div className="flex flex-col gap-4 lg:flex-row justify-between">
@@ -107,6 +122,9 @@ export default function SupportPage() {
               Akceptuję warunki polityki prywatności *
             </span>
           </label>
+          {state?.errors?.privacyPolicy && (
+            <p className="text-red-500 text-sm">{state.errors.privacyPolicy}</p>
+          )}
         </div>
 
         <div>
@@ -120,14 +138,10 @@ export default function SupportPage() {
         </div>
       </div>
 
-      {error && (
-        <p
-          className={`${
-            error.success ? "text-green-500" : "text-red-500"
-          } mt-4 `}
-        >
-          {error.message}
-        </p>
+      {state?.success ? (
+        <p className={`text-green-500 mt-4 `}>{state.message}</p>
+      ) : (
+        <p className={`text-red-500 mt-4 `}>{state?.message}</p>
       )}
     </form>
   );
