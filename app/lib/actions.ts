@@ -12,7 +12,7 @@ export async function sendSupportMessage(prevState: unknown, data: FormData) {
   const lastName = data.get("lastName");
   const email = data.get("email");
   const phoneNumber = data.get("phoneNumber");
-  const acceptPolicy = data.get("acceptPolicy");
+  const privacyPolicy = data.get("privacyPolicy");
 
   // Sprawdzenie, czy wszystkie dane są prawidłowe
   if (
@@ -20,7 +20,7 @@ export async function sendSupportMessage(prevState: unknown, data: FormData) {
     typeof firstName !== "string" ||
     typeof lastName !== "string" ||
     typeof email !== "string" ||
-    typeof acceptPolicy !== "string"
+    typeof privacyPolicy !== "string"
   ) {
     return "Wszystkie pola są wymagane.";
   }
@@ -37,7 +37,7 @@ export async function sendSupportMessage(prevState: unknown, data: FormData) {
         lastName: lastName,
         email: email,
         phoneNumber: phone,
-        acceptPolicy: acceptPolicy === "on", // Zmienna dla checkboxa, sprawdzamy, czy zaznaczone
+        acceptPolicy: privacyPolicy === "on", // Zmienna dla checkboxa, sprawdzamy, czy zaznaczone
       },
     });
     console.log(newMessage);
