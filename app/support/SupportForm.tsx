@@ -120,7 +120,15 @@ export default function SupportPage() {
         </div>
       </div>
 
-      {error && <p className="mt-4 text-red-500">{error}</p>}
+      {error && (
+        <p
+          className={`${
+            error.success ? "text-green-500" : "text-red-500"
+          } mt-4 `}
+        >
+          {error.message}
+        </p>
+      )}
     </form>
   );
 }

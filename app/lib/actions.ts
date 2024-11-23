@@ -22,7 +22,10 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
     typeof subject !== "string" ||
     typeof privacyPolicy !== "string"
   ) {
-    return "Wszystkie pola z gwiazdką są wymagane.";
+    return {
+      success: false,
+      message: "Wszystkie pola z gwiazdką są wymagane.",
+    };
   }
 
   // Wartość numeru telefonu jest opcjonalna, więc może być null
@@ -42,7 +45,12 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
       },
     });
     console.log(newMessage);
+    return { success: true, message: "Dziękujemy za wysłanie wiadomości" };
   } catch (error) {
-    return `Błąd podczas tworzenia wiadomości: ${error}`;
+    console.log(error);
+    return {
+      success: false,
+      message: "Wystąpił bład podczas wysyłania wiadomości",
+    };
   }
 }
