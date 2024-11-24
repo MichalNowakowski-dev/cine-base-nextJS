@@ -5,12 +5,13 @@ import { MediaItem, PosterSize } from "../lib/types";
 import SupportForm from "./SupportForm";
 import AccordionList from "../ui/Accordions/AccordionsList";
 import FreeTrialCta from "../ui/FreeTrialCta";
+import PageContainer from "../ui/PageContainer";
 
 export default async function Page() {
   const data = await fetchTrendingList("movie", "day", 1);
   const posters = data.results.map((movie: MediaItem) => movie.poster_path);
   return (
-    <main className="min-h-screen mx-auto py-24 md:pt-28 px-4 max-w-screen-xl flex flex-col gap-10 md:gap-x-5 lg:gap-12 md:flex-row flex-wrap justify-between ">
+    <PageContainer className=" flex flex-col gap-10 md:gap-x-5 lg:gap-12 md:flex-row flex-wrap justify-between ">
       <div className="flex flex-col gap-8 mx-auto md:basis-[35%] ">
         <header>
           <h2 className="mb-3 text-h2 ">Wsparcie CineBase</h2>
@@ -44,6 +45,6 @@ export default async function Page() {
       <SupportForm />
       <AccordionList />
       <FreeTrialCta />
-    </main>
+    </PageContainer>
   );
 }

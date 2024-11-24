@@ -19,15 +19,8 @@ export const MediaContainerSkeleton = () => (
 export const GenresCardListButtonsSkeleton = () => (
   <div className="px-4 py-2 h-10 w-20 bg-gray-300 rounded-md gap-3 animate-pulse "></div>
 );
-export const GenresCardsSkeleton = () => (
-  <ul className="flex gap-3 justify-between min-w-full overflow-x-auto lg:overflow-hidden">
-    {Array.from({ length: 5 }).map(() => (
-      <li
-        key={uuid()}
-        className="w-[220px] h-[220px] rounded-lg bg-gray-300 animate-pulse"
-      ></li>
-    ))}
-  </ul>
+export const GenresCardSkeleton = () => (
+  <li className="w-[220px] h-[220px] rounded-lg bg-gray-300 animate-pulse"></li>
 );
 
 export const MediaScrollListSkeleton = () => (

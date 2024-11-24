@@ -28,13 +28,7 @@ const GenresList = ({ mediaList, mediaType }: GenresListProps) => {
             key={uuid()}
             className="bg-zinc-800 text-white p-4 rounded-lg hover:shadow-lg hover:shadow-white hover:cursor-pointer transition-shadow"
           >
-            <Link
-              href={
-                mediaType === "movie"
-                  ? `/movie/${mediaItem.id}`
-                  : `/show/${mediaItem.id}`
-              }
-            >
+            <Link href={`/${mediaType}/${mediaItem.id}`}>
               <Image
                 src={
                   mediaItem.poster_path
@@ -45,7 +39,7 @@ const GenresList = ({ mediaList, mediaType }: GenresListProps) => {
                 height={750}
                 quality={100}
                 alt={mediaItem.title || mediaItem.name || "Media Poster"}
-                className="rounded-md mb-2  object-contain"
+                className="rounded-md mb-2 aspect-[2/3]"
               />
               <h2 className="font-semibold truncate">
                 {mediaItem.title || mediaItem.name}

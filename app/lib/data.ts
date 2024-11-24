@@ -1,5 +1,22 @@
 import { Genre, MediaCategory, MediaType, TimeWindow } from "./types";
 
+export const fetchResultsByQuery = async (query: string, page?: number) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/search/multi?query=${query}&page=${
+        page || 1
+      }&language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    if (!resp.ok) {
+      throw new Error("Failed to fetch search results.");
+    }
+
+    return resp.json();
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch query results.");
+  }
+};
 export const fetchMediaList = async (
   mediaType: MediaType,
   category: MediaCategory,

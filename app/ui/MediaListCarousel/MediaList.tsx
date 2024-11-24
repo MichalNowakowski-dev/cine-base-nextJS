@@ -31,7 +31,7 @@ export default function MediaList({
               key={uuidv4()}
               className="text-sm bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400 flex-grow max-w-[240px] relative"
             >
-              <Link href={`/${mediaType === "movie" ? "movie" : "show"}/${id}`}>
+              <Link href={`/${mediaType}/${id}`}>
                 <div className="mb-2">
                   <Image
                     className="rounded-md object-cover w-full min-w-[140px] lg:min-w-[160px] aspect-[2/3] "

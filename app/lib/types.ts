@@ -13,45 +13,62 @@ export type MediaItem = {
   vote_average: number;
   vote_count: number;
 };
+export type SearchItem = {
+  id: number;
+  poster_path?: string | null;
+  profile_path?: string | null;
+  genre_ids?: number[];
+  name?: string;
+  title?: string;
+  overview: string;
+  backdrop_path: string;
+  release_date?: string;
+  first_air_date?: string;
+  popularity?: string;
+  vote_average: number;
+  vote_count: number;
+  media_type: MediaType;
+};
 
-export type MediaType = "movie" | "tv";
+export type MediaType = "movie" | "tv" | "person";
 export type MediaCategory = "popular" | "top_rated" | "trending";
 export type TimeWindow = "day" | "week";
 
 export enum PosterSize {
-  SMALL = "w92", // small poster size
-  MEDIUM = "w185", // medium poster size
-  LARGE = "w500", // large poster size
-  XLARGE = "w780", // extra large poster size
-  ORIGINAL = "original", // original poster size
+  SMALL = "w92",
+  MEDIUM = "w185",
+  LARGE = "w500",
+  XLARGE = "w780",
+  ORIGINAL = "original",
 }
 
 export enum LogoSize {
-  SMALL = "w92", // medium logo size
-  MEDIUM = "w154", // large logo size
-  LARGE = "w185", // extra large logo size
-  ORIGINAL = "original", // original logo size
+  SMALL = "w92",
+  MEDIUM = "w154",
+  LARGE = "w185",
+  ORIGINAL = "original",
 }
 
 export enum ProfileSize {
-  SMALL = "w45", // small profile size
-  MEDIUM = "w185", // medium profile size
-  LARGE = "h632", // large profile size
-  XLARGE = "original", // extra large profile size
+  XSMALL = "w45",
+  SMALL = "w92",
+  MEDIUM = "w185",
+  LARGE = "h632",
+  XLARGE = "original",
 }
 
 export enum BackdropSize {
-  SMALL = "w300", // small backdrop size
-  MEDIUM = "w780", // medium backdrop size
-  LARGE = "w1280", // large backdrop size
-  XLARGE = "w1920", // extra large backdrop size
-  ORIGINAL = "original", // original backdrop size
+  SMALL = "w300",
+  MEDIUM = "w780",
+  LARGE = "w1280",
+  XLARGE = "w1920",
+  ORIGINAL = "original",
 }
 
 export enum StillSize {
-  SMALL = "w92", // small still size
-  MEDIUM = "w185", // medium still size
-  LARGE = "w300", // large still size
+  SMALL = "w92",
+  MEDIUM = "w185",
+  LARGE = "w300",
 }
 
 export type DeviceCardType = {

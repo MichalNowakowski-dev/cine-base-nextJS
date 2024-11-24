@@ -24,6 +24,7 @@ import ImageModal from "@/app/ui/ImageModal";
 import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
 import { BackdropSize, Genre, LogoSize, ProfileSize } from "@/app/lib/types";
+import PageContainer from "@/app/ui/PageContainer";
 
 export default async function Page({
   params,
@@ -63,7 +64,7 @@ export default async function Page({
   };
 
   return (
-    <main className="min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl ">
+    <PageContainer>
       <section className={styles.headerSection}>
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
@@ -314,6 +315,6 @@ export default async function Page({
       <section className="mb-20">
         <FreeTrialCta />
       </section>
-    </main>
+    </PageContainer>
   );
 }

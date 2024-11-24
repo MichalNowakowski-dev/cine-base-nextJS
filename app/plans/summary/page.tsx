@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import bg from "@/public/summaryBg-lg.jpg";
+import PageContainer from "@/app/ui/PageContainer";
 
 const SubscriptionSummaryContent = () => {
   const searchParams = useSearchParams();
@@ -83,7 +84,7 @@ const SubscriptionSummaryContent = () => {
   ];
 
   return (
-    <main className="relative min-h-screen mx-auto pt-24 md:pt-28 px-2 md:px-4 overflow-hidden">
+    <PageContainer className="relative overflow-hidden">
       <Image
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 "
         alt="Background image cinema"
@@ -148,7 +149,7 @@ const SubscriptionSummaryContent = () => {
           </div>
         </div>
       </div>
-    </main>
+    </PageContainer>
   );
 };
 

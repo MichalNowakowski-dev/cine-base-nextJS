@@ -53,15 +53,15 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
         </h4>
       </div>
 
-      <div className="hidden lg:flex flex-col justify-between lg:basis-1/2">
-        <div className="flex flex-col items-start gap-3 lg:flex-row-reverse lg:justify-between ">
+      <div className="flex flex-col justify-between lg:basis-1/2">
+        <div className="flex flex-row items-start gap-3 lg:flex-row-reverse lg:justify-between ">
           <div className="flex justify-between items-center gap-1 py-1 px-2 bg-backgroundFooter rounded-lg border border-borderPrimary">
             <FaClock color="grey" size={14} />
             <span>{formatRuntime(episode.runtime as number)}</span>
           </div>
           <h4 className="text-h4 font-normal">{episode.name}</h4>
         </div>
-        <p className="text-secondary">{episode.overview}</p>
+        <p className="text-secondary hidden lg:block">{episode.overview}</p>
       </div>
     </li>
   );

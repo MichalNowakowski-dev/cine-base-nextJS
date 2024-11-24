@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "@/public/CineBaseLogo.png";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { GoSearch } from "react-icons/go";
@@ -18,7 +18,35 @@ const navItems: { label: string; href: string }[] = [
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isMobileNavDisplayed, setIsMobileNavDisplayed] = useState(true);
+  const lastScrollY = useRef(0);
+
   const pathname = usePathname();
+
+  const styles = {
+    nav: `w-full h-20 fixed flex items-center py-3 z-50 transition-transform duration-300 ${
+      isMobileNavDisplayed ? "translate-y-0" : "-translate-y-full"
+    }`,
+    navBackground: isMobileNavOpen
+      ? "bg-black"
+      : "bg-[#00000070] backdrop-blur-sm",
+    logo: "w-[17vw] max-w-28",
+    desktopNav: "hidden md:flex gap-2 border-2 border-gray-600 p-2 rounded-md",
+    navItem: (isActive: boolean) =>
+      `${
+        isActive ? "text-white bg-backgroundLight" : "text-secondary bg-none"
+      } rounded-md flex items-center hover:bg-backgroundLight`,
+    mobileNav: `absolute top-[130%] left-0 w-full lg:hidden bg-black flex flex-col items-center justify-center space-y-8 transform transition-transform duration-300 ease-in-out`,
+    mobileNavItem: (isActive: boolean) =>
+      `${
+        isActive
+          ? "text-white bg-gradient-to-r from-gray-700 via-gray-800 to-black shadow-lg"
+          : "text-white hover:bg-gradient-to-r hover:from-gray-800 hover:to-black hover:shadow-lg"
+      } 
+      px-8 py-4 rounded-lg w-[80%] text-center text-lg transition-all duration-300`,
+    mobileButton:
+      "p-3 bg-backgroundLight border-2 border-gray-600 rounded-md flex items-center justify-center md:hidden",
+  };
 
   function openMobileNav() {
     setIsMobileNavOpen((prevState) => !prevState);
@@ -29,65 +57,75 @@ export default function Navigation() {
     }
   }
 
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY === 0) {
+      setIsMobileNavDisplayed(true);
+    } else {
+      const isScrollingUp = currentScrollY < lastScrollY.current;
+      setIsMobileNavDisplayed(isScrollingUp);
+    }
+    lastScrollY.current = currentScrollY;
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     setIsMobileNavOpen(false);
     window.document.body.style.overflow = "scroll";
   }, [pathname]);
+
   return (
-    <nav
-      className={`w-full h-20 ${
-        isMobileNavOpen ? "bg-transparent" : "bg-[#00000070]"
-      } backdrop-blur-sm md:h-24 fixed flex items-center py-3 z-50`}
-    >
-      <div className="xl:max-w-screen-xl mx-auto flex justify-between items-center w-full px-3 ">
-        <Link href={"/"} className="w-[17vw] max-w-28">
+    <nav className={`${styles.nav} ${styles.navBackground}`}>
+      <div className="xl:max-w-screen-xl mx-auto flex justify-between items-center w-full px-3 relative">
+        {/* Logo */}
+        <Link href={"/"} className={styles.logo}>
           <Image src={Logo} alt="CineBase Logo image" />
         </Link>
-        <ul className="hidden md:flex gap-2 border-2 border-gray-600  p-2 rounded-md">
+
+        {/* Desktop navigation */}
+        <ul className={styles.desktopNav}>
           {navItems.map(({ label, href }) => (
-            <li
-              className={`${
-                pathname === href
-                  ? "text-white bg-backgroundLight"
-                  : "text-secondary bg-none"
-              }  rounded-md flex items-center hover:bg-backgroundLight`}
-              key={label}
-            >
+            <li key={label} className={styles.navItem(pathname === href)}>
               <Link className="px-3 py-2" href={href}>
                 {label}
               </Link>
             </li>
           ))}
         </ul>
-        <div className="hidden md:flex gap-2 items-center">
-          <Link href={"/advanced-search"}>
+
+        {/* Search and Mobile button */}
+        <div className="flex items-center gap-5">
+          <Link
+            href={"/search"}
+            className="flex gap-2 items-center bg-transparent border-none"
+          >
             <GoSearch size={25} />
           </Link>
+
+          <button onClick={openMobileNav} className={styles.mobileButton}>
+            {isMobileNavOpen ? (
+              <IoClose size={20} />
+            ) : (
+              <HiOutlineMenuAlt3 size={20} />
+            )}
+          </button>
         </div>
-        <button
-          onClick={openMobileNav}
-          className="p-3 bg-backgroundLight border-2 border-gray-600 rounded-md flex items-center justify-center md:hidden"
-        >
-          {isMobileNavOpen ? (
-            <IoClose size={20} />
-          ) : (
-            <HiOutlineMenuAlt3 size={20} />
-          )}
-        </button>
+
+        {/* Mobile navigation */}
         {isMobileNavOpen && (
-          <ul className="absolute top-20 left-0 w-full text-center bg-black/90">
+          <ul className={styles.mobileNav}>
             {navItems.map(({ label, href }) => (
               <li
-                className={`${
-                  pathname === href
-                    ? "text-white bg-backgroundLight"
-                    : "text-white bg-none"
-                } px-3 py-5 border-t`}
                 key={label}
+                className={styles.mobileNavItem(pathname === href)}
               >
-                <Link className={``} href={href}>
-                  {label}
-                </Link>
+                <Link href={href}>{label}</Link>
               </li>
             ))}
           </ul>

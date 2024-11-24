@@ -25,11 +25,15 @@
   --background-light: #1a1a1a;
   --background-footer: #0f0f0f;
 }
+html {
+  overflow-x: hidden;
+}
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-roboto);
+  box-sizing: border-box;
 }
 
 h1 {

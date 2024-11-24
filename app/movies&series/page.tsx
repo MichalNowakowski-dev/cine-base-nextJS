@@ -6,6 +6,7 @@ import HeaderSection from "./HeaderSection";
 import Tabs from "./Tabs";
 import { MediaContainerSkeleton } from "../ui/skeletons";
 import MediaListContainer from "../ui/MediaListCarousel/MediaListContainer";
+import PageContainer from "../ui/PageContainer";
 
 export default async function Page({
   searchParams,
@@ -18,7 +19,7 @@ export default async function Page({
   const headerList = trendingList.results.slice(0, 4);
 
   return (
-    <main className="min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl flex flex-col gap-5">
+    <PageContainer className="flex flex-col gap-5">
       <HeaderSection list={headerList} />
       <Tabs />
       <div className="relative  mb-16">
@@ -97,6 +98,6 @@ export default async function Page({
           </section>
         </section>
       </div>
-    </main>
+    </PageContainer>
   );
 }
