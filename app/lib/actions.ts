@@ -18,6 +18,7 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
   };
 
   // Tworzenie nowej wiadomości
+
   try {
     const validatedData = formSchema.parse(formData);
     const newMessage = await prisma.message.create({
@@ -41,7 +42,7 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
         return acc;
       }, {} as Record<string, string>);
 
-      return { success: false, errors: fieldErrors };
+      return { success: false, errors: fieldErrors, fields: formData };
     }
     console.error("Błąd podczas wysyłania wiadomości:", error);
     return {

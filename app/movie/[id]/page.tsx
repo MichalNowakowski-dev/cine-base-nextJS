@@ -272,7 +272,7 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
           <section className="mb-5">
-            <CastCarousel list={movieCast.cast}>
+            <CastCarousel list={movieCast}>
               <h3 className="text-secondary">Obsada</h3>
             </CastCarousel>
           </section>
@@ -301,7 +301,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(BackdropSize.XLARGE, img.file_path)}
+                      imageUrl={getImgUrl(BackdropSize.LARGE, img.file_path)}
                       height={img.height}
                       width={img.width}
                     />

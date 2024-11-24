@@ -21,6 +21,7 @@ export default function SupportPage() {
             Imię *
           </label>
           <input
+            defaultValue={state?.fields?.firstName as string}
             type="text"
             name="firstName"
             id="firstName"
@@ -35,6 +36,7 @@ export default function SupportPage() {
             Nazwisko *
           </label>
           <input
+            defaultValue={state?.fields?.lastName as string}
             type="text"
             id="lastName"
             name="lastName"
@@ -51,6 +53,7 @@ export default function SupportPage() {
           Email *
         </label>
         <input
+          defaultValue={state?.fields?.email as string}
           type="email"
           id="email"
           name="email"
@@ -67,6 +70,7 @@ export default function SupportPage() {
           Numer telefonu
         </label>
         <input
+          defaultValue={state?.fields?.phoneNumber as string}
           type="tel"
           id="phoneNumber"
           name="phoneNumber"
@@ -84,7 +88,7 @@ export default function SupportPage() {
         <select
           id="subject"
           name="subject"
-          defaultValue="general"
+          defaultValue={(state?.fields?.firstName as string) || "general"}
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         >
           <option value="general">Ogólne pytania</option>
@@ -99,6 +103,7 @@ export default function SupportPage() {
           Wiadomość *
         </label>
         <textarea
+          defaultValue={state?.fields?.message as string}
           id="message"
           name="message"
           placeholder="W czym możemy Ci pomóc?"

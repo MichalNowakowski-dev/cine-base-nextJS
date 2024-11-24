@@ -20,7 +20,7 @@ export const GenresCardListButtonsSkeleton = () => (
   <div className="px-4 py-2 h-10 w-20 bg-gray-300 rounded-md gap-3 animate-pulse "></div>
 );
 export const GenresCardsSkeleton = () => (
-  <ul className="flex justify-between w-full">
+  <ul className="flex gap-3 justify-between min-w-full overflow-x-auto lg:overflow-hidden">
     {Array.from({ length: 5 }).map(() => (
       <li
         key={uuid()}

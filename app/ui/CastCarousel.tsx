@@ -20,7 +20,9 @@ export default function CastCarousel({
   list: MediaPerson[];
   children: React.ReactNode;
 }) {
-  const slicedList = useMemo(() => list.slice(0, MAX_ITEMS), [list]);
+  console.log(list);
+
+  const slicedList = useMemo(() => list?.slice(0, MAX_ITEMS), [list]);
 
   const {
     activePage,
