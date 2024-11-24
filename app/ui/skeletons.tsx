@@ -24,7 +24,7 @@ export const GenresCardSkeleton = () => (
 );
 
 export const MediaScrollListSkeleton = () => (
-  <div className="overflow-x-auto whitespace-nowrap no-scrollbar">
+  <div className="overflow-x-auto whitespace-nowrap ">
     <ul className="flex gap-3 ">
       {Array.from({ length: 6 }).map(() => (
         <MediaItemSkeleton key={uuid()} />

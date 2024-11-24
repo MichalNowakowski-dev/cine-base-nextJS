@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto, Montserrat, Oswald } from "next/font/google";
-import Navigation from "./ui/Navigation";
+import Navigation from "./ui/Navigation/Navigation";
 import "./globals.css";
 import Footer from "./ui/Footer";
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body
-        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} antialiased `}
+        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} overflow-x-hidden`}
       >
         <Navigation />
         {children}

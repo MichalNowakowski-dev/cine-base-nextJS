@@ -12,7 +12,7 @@ export default async function Home() {
     <>
       <header className="h-[70vh] w-full relative flex flex-col items-center justify-center mb-5 after:content-[''] after:absolute after:inset-0 after:bg-fade-to-dark">
         <Image
-          className=" object-cover h-full absolute top-0 left-0 -z-10"
+          className=" object-cover w-full h-full absolute top-0 left-0 -z-10"
           src={HeaderImgDesktop}
           alt="Hero image"
           priority

@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        "screen-minus-nav": `calc(100vh - 80px)`,
+      },
       backgroundImage: {
         "fade-black-to-red": `linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
                            radial-gradient(circle at top right, rgba(255, 0, 0, 0.3), transparent),
@@ -25,6 +28,7 @@ const config: Config = {
           "linear-gradient(to bottom, rgba(20, 20, 20, 0)50%,  #141414)",
         "fadeout-bottom":
           "linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #1A1A1A 100%)",
+        notFoundBg: "url('/notFoundBg.png')",
       },
       colors: {
         background: "var(--background)",

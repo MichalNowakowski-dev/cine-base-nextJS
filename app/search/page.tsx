@@ -15,7 +15,7 @@ export default async function SearchPage(props: {
         <SearchBar />
         {query && (
           <h1 className="text-xl font-bold">
-            Wyniki wyszukiwania dla: "{query}"
+            Wyniki wyszukiwania dla: {`"${query}"`}
           </h1>
         )}
         <Suspense fallback={"Loading..."}>
