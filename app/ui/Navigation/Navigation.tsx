@@ -5,17 +5,20 @@ import React, { useEffect, useRef, useState } from "react";
 import Logo from "@/public/CineBaseLogo.png";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { GoSearch } from "react-icons/go";
-import { FaUserCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navItems } from "./navigationData";
 import { navigationStyles } from "./navigationStyles";
+import SignIn from "../SignIn";
+import { useSession } from "next-auth/react";
+import { SignOut } from "../SignOut";
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileNavDisplayed, setIsMobileNavDisplayed] = useState(true);
   const lastScrollY = useRef(0);
+  const { data: session } = useSession();
 
   const pathname = usePathname();
 
@@ -77,6 +80,7 @@ export default function Navigation() {
               </li>
             );
           })}
+          <li>{session ? <SignOut /> : <SignIn />}</li>
         </ul>
 
         {isMobileNavOpen && (
@@ -103,11 +107,14 @@ export default function Navigation() {
                   key={label}
                   className={`${navigationStyles.mobileNavItem(
                     pathname === href
-                  )} ${href === "/sign-in" && "bg-primary"}`}
+                  )}`}
                 >
                   <Link href={href}>{label}</Link>
                 </li>
               ))}
+              <li>
+                <SignIn />
+              </li>
             </ul>
           </div>
         )}

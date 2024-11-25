@@ -3,5 +3,4 @@ export const navItems: { label: string; href: string }[] = [
   { label: "Filmy & Seriale", href: "/movies&series" },
   { label: "Pomoc", href: "/support" },
   { label: "Subskrypcje", href: "/plans" },
-  { label: "Zaloguj", href: "/sign-in" },
 ];

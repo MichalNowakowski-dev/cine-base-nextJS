@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Roboto, Montserrat, Oswald } from "next/font/google";
 import Navigation from "./ui/Navigation/Navigation";
 import "./globals.css";
@@ -39,7 +40,10 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} overflow-x-hidden`}
       >
-        <Navigation />
+        <SessionProvider>
+          <Navigation />
+        </SessionProvider>
+
         {children}
         <Footer />
       </body>
