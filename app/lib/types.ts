@@ -12,6 +12,9 @@ export type MediaItem = {
   first_air_date?: string;
   vote_average: number;
   vote_count: number;
+  media_type?: string;
+  character?: string;
+  job?: string;
 };
 export type SearchItem = {
   id: number;

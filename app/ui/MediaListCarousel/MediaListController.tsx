@@ -14,7 +14,7 @@ export default function MediaListController({
   itemsPerViewNumber,
 }: {
   list: MediaItem[];
-  mediaType: MediaType;
+  mediaType?: MediaType;
   children: React.ReactNode;
   itemsPerViewNumber?: number;
 }) {

@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Logo from "@/public/CineBaseLogo.png";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { GoSearch } from "react-icons/go";
+import { FaUserCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,8 +19,9 @@ export default function Navigation() {
 
   const pathname = usePathname();
 
-  function toggleMobileNav() {
+  function toggleNav() {
     setIsMobileNavOpen((prev) => !prev);
+
     if (!isMobileNavOpen) {
       window.document.body.style.overflow = "hidden";
     } else {
@@ -52,9 +54,9 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`${navigationStyles.nav(
-        isMobileNavDisplayed
-      )} ${navigationStyles.navBackground(isMobileNavDisplayed)}`}
+      className={`${navigationStyles.nav(isMobileNavDisplayed)} ${
+        navigationStyles.navBackground
+      }`}
     >
       <div className="max-w-screen-xl mx-auto flex justify-between items-center w-full px-4 relative">
         <Link href={"/"} className={navigationStyles.logo}>
@@ -62,16 +64,19 @@ export default function Navigation() {
         </Link>
 
         <ul className={navigationStyles.desktopNav}>
-          {navItems.map(({ label, href }) => (
-            <li
-              key={label}
-              className={navigationStyles.navItem(pathname === href)}
-            >
-              <Link className="px-3 py-2" href={href}>
-                {label}
-              </Link>
-            </li>
-          ))}
+          {navItems.map(({ label, href }) => {
+            if (href === "/sign-in") return;
+            return (
+              <li
+                key={label}
+                className={navigationStyles.navItem(pathname === href)}
+              >
+                <Link className="px-3 py-2" href={href}>
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {isMobileNavOpen && (
@@ -84,7 +89,15 @@ export default function Navigation() {
             }}
             className="fixed bg-black/70 h-screen-minus-nav w-screen top-20 left-0 z-10 px-4 flex justify-end items-start"
           >
-            <ul className={navigationStyles.mobileNav(isMobileNavDisplayed)}>
+            <ul
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+              className={navigationStyles.mobileNav(isMobileNavDisplayed)}
+            >
               {navItems.map(({ label, href }) => (
                 <li
                   key={label}
@@ -107,10 +120,7 @@ export default function Navigation() {
             <GoSearch size={25} />
           </Link>
 
-          <button
-            onClick={toggleMobileNav}
-            className={navigationStyles.mobileButton}
-          >
+          <button onClick={toggleNav} className={navigationStyles.mobileButton}>
             {isMobileNavOpen ? (
               <IoClose size={20} />
             ) : (

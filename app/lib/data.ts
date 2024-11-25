@@ -17,6 +17,42 @@ export const fetchResultsByQuery = async (query: string, page?: number) => {
     throw new Error("Failed to fetch query results.");
   }
 };
+export const fetchPersonById = async (id: number) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}?language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch person details.`);
+  }
+};
+export const fetchPersonCredits = async (id: number) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}/combined_credits?language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch person credits.`);
+  }
+};
+export const fetchPersonImages = async (id: number) => {
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}/images?language=pl&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch person credits.`);
+  }
+};
 export const fetchMediaList = async (
   mediaType: MediaType,
   category: MediaCategory,

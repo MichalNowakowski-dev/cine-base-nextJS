@@ -33,3 +33,8 @@ export function formatRuntime(minutes: number): string {
 
   return `${hours !== 0 ? `${hours}h` : ""} ${remainingMinutes}m`;
 }
+export function calculateAge(year: string): number {
+  const today = new Date().getFullYear();
+
+  return today - Number(year);
+}
