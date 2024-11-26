@@ -80,7 +80,15 @@ export default function Navigation() {
               </li>
             );
           })}
-          <li>{session ? <SignOut /> : <SignIn />}</li>
+          {session ? (
+            <li>
+              <SignOut />
+            </li>
+          ) : (
+            <li>
+              <SignIn />
+            </li>
+          )}
         </ul>
 
         {isMobileNavOpen && (
@@ -112,9 +120,15 @@ export default function Navigation() {
                   <Link href={href}>{label}</Link>
                 </li>
               ))}
-              <li>
-                <SignIn />
-              </li>
+              {session ? (
+                <li>
+                  <SignOut />
+                </li>
+              ) : (
+                <li>
+                  <SignIn />
+                </li>
+              )}
             </ul>
           </div>
         )}

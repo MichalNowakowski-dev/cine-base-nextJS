@@ -30,20 +30,20 @@ export default function MediaList({
             ({ id, poster_path, vote_average, media_type, character, job }) => (
               <li
                 key={uuidv4()}
-                className="text-sm bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400 flex-grow  relative"
+                className="text-sm bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400  relative"
               >
                 <Link href={`/${mediaType || media_type}/${id}`}>
                   <div className="mb-2">
                     <Image
-                      className="rounded-md aspect-[2/3] "
+                      className="rounded-md aspect-[2/3]  max-w-40"
                       src={
                         poster_path
                           ? getImgUrl(PosterSize.LARGE, poster_path)
                           : "/no-poster-img.webp"
                       }
                       alt={"Movie image"}
-                      width={513}
-                      height={342}
+                      width={500}
+                      height={750}
                       quality={100}
                     />
                   </div>

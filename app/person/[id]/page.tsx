@@ -4,29 +4,17 @@ import {
   fetchPersonImages,
 } from "@/app/lib/data";
 
-import NoProfilePicture from "@/public/no-profile-img.png";
 import Image from "next/image";
-import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
+
 import { CiCalendar } from "react-icons/ci";
-import { PiTranslate, PiFilmScript } from "react-icons/pi";
-import { HiOutlineSquares2X2 } from "react-icons/hi2";
-import { FaRegStar, FaScroll } from "react-icons/fa";
+
 import { GiHastyGrave } from "react-icons/gi";
 import { calculateAge, getImgUrl } from "@/app/lib/utils";
-import CastCarousel from "@/app/ui/CastCarousel";
-import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
-import CtaLink from "@/app/ui/CtaLink";
+
 import ImageModal from "@/app/ui/ImageModal";
 import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/ui/FreeTrialCta";
-import {
-  BackdropSize,
-  Genre,
-  LogoSize,
-  MediaItem,
-  ProfileSize,
-} from "@/app/lib/types";
+import { MediaItem, ProfileSize } from "@/app/lib/types";
 import PageContainer from "@/app/ui/PageContainer";
 
 export default async function Page({
@@ -66,7 +54,7 @@ export default async function Page({
             <h1>{personDetails.name}</h1>
           </header>
         </div>
-        <div className="p-7 bg-backgroundLight rounded-md md:col-span-2 col-start-2">
+        <div className="p-7 bg-backgroundLight rounded-md md:col-span-2 md:col-start-2">
           <h3 className="text-secondary mb-3">Biografia</h3>
           <p className="text-white tracking-wider leading-7">
             {personDetails.biography
@@ -74,7 +62,6 @@ export default async function Page({
               : "--- Brak biografii ---"}
           </p>
         </div>
-
         <div className="p-7 bg-backgroundLight rounded-md ">
           <section className="mb-5">
             <p className="text-secondary flex gap-1 items-center mb-3">

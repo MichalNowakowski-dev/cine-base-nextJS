@@ -10,7 +10,7 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
   const imagePath = isPerson ? result.profile_path : result.poster_path;
 
   const placeholderImg = isPerson ? NoProfileImg : NoPosterImg;
-  const { id, name, title, media_type } = result;
+  const { id, name, title, media_type, release_date, first_air_date } = result;
 
   return (
     <li className="bg-zinc-800 text-white p-4 rounded-lg hover:shadow-lg hover:shadow-white hover:cursor-pointer transition-shadow">
@@ -25,12 +25,19 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
           height={750}
           quality={100}
           alt={name || title || "Brak nazwy"}
-          className="rounded-md mb-2  object-contain"
+          className="rounded-md mb-2 aspect-[2/3]"
         />
-        <h2 className="font-semibold truncate">{title || name}</h2>
-        <span className="text-xs text-gray-500 capitalize">
-          {result.media_type}
-        </span>
+        <h2 className="font-semibold">{title || name}</h2>
+        {first_air_date && (
+          <span className="text-sm text-gray-500 capitalize">
+            {first_air_date.slice(0, 4)}
+          </span>
+        )}
+        {release_date && (
+          <span className="text-sm text-gray-500 capitalize">
+            {release_date.slice(0, 4)}
+          </span>
+        )}
       </Link>
     </li>
   );

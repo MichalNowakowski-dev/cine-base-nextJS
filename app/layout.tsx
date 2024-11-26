@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body
-        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} overflow-x-hidden`}
+        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} `}
       >
         <SessionProvider>
           <Navigation />

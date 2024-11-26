@@ -20,14 +20,14 @@ export default function SearchBar() {
   }, 300);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-w-lg w-full mx-auto">
       <label htmlFor="search">Czego szukasz?</label>
       <input
         id="search"
         type="text"
         defaultValue={searchParams.get("query")?.toString()}
         onChange={(e) => handleSearch(e.target.value)}
-        className="border rounded p-2 flex-grow text-black"
+        className="border rounded p-2 flex-grow text-black w-full"
         placeholder="Szukaj filmów lub aktorów..."
       />
     </div>

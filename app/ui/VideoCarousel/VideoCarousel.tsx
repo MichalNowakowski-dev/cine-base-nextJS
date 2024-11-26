@@ -47,7 +47,7 @@ export default function VideoCarousel({
       </PaginatedSection>
 
       <ul
-        className={`flex gap-2 overflow-x-auto no-scrollbar scroll-smooth transition-opacity duration-${
+        className={`flex gap-4 overflow-x-auto no-scrollbar justify-between scroll-smooth transition-opacity duration-${
           process.env.NEXT_PUBLIC_FADE_TRANSITION_TIME
         } ${showList ? "opacity-100" : "opacity-0"} `}
       >
@@ -58,15 +58,15 @@ export default function VideoCarousel({
             <li
               key={video.id}
               onClick={() => handleClick(video)}
-              className="flex flex-col flex-shrink-0 w-[clamp(10rem,20vw,250px)] cursor-pointer space-y-1"
+              className="flex flex-col flex-shrink-0 max-w-56 cursor-pointer space-y-1"
             >
               <div className="relative mb-2">
                 <Image
                   src={thumbnailSrc}
                   alt={`${video.name} thumbnail`}
-                  className="rounded-md object-cover w-full h-auto aspect-video"
-                  height={90}
-                  width={160}
+                  className="rounded-md aspect-video"
+                  height={180}
+                  width={320}
                 />
               </div>
               <h4 className="overflow-hidden whitespace-nowrap text-ellipsis max-w-full text-center group relative">
