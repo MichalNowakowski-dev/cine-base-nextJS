@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import bg from "@/public/summaryBg-lg.jpg";
-import PageContainer from "@/app/ui/PageContainer";
+import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 
 const SubscriptionSummaryContent = () => {
   const searchParams = useSearchParams();

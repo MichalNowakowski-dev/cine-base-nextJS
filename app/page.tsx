@@ -1,11 +1,11 @@
 import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroImageCineBase.png";
-import GenresCardsSectionContainer from "./ui/GenresCards/GenresCardsContainer";
-import DeviceCardsList from "./ui/DeviceCards/DeviceCardsList";
-import AccordionsList from "./ui/Accordions/AccordionsList";
-import FreeTrialCta from "./ui/FreeTrialCta";
-import SubscriptionPlan from "./ui/SubscriptionPlan/SubscriptionPlan";
-import CtaLink from "./ui/CtaLink";
+import GenresCardsSectionContainer from "./components/genreCardsList/GenreCardsContainer";
+import DeviceCardsList from "./components/deviceList/DeviceCardsList";
+import FaqList from "./components/faqList/FaqList";
+import FreeTrialCta from "./components/ui/freeTrialCta/FreeTrialCta";
+import SubscriptionPlan from "./plans/SubscriptionPlan/SubscriptionPlan";
+import CtaLink from "./components/ui/ctaLink/CtaLink";
 
 export default async function Home() {
   return (
@@ -84,7 +84,7 @@ export default async function Home() {
             </header>
             <CtaLink href="/support">Zadaj pytanie</CtaLink>
           </div>
-          <AccordionsList />
+          <FaqList />
         </section>
 
         <section className="px-4">

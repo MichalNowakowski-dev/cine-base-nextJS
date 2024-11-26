@@ -9,6 +9,8 @@ export default function SupportPage() {
     null
   );
 
+  console.log(state?.fields?.subject);
+
   return (
     <form
       action={formAction}
@@ -88,7 +90,9 @@ export default function SupportPage() {
         <select
           id="subject"
           name="subject"
-          defaultValue={(state?.fields?.firstName as string) || "general"}
+          defaultValue={
+            (state?.fields?.subject as string) || "technicalSupport"
+          }
           className="w-full p-2 border border-borderPrimary bg-backgroundLight rounded-md"
         >
           <option value="general">Ogólne pytania</option>

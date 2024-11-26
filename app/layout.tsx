@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Roboto, Montserrat, Oswald } from "next/font/google";
-import Navigation from "./ui/Navigation/Navigation";
+import Navigation from "./components/navigation/Navigation";
 import "./globals.css";
-import Footer from "./ui/Footer";
+import Footer from "./components/footer/Footer";
 
 const roboto = Roboto({
   weight: ["400", "100", "300", "500", "700"],
@@ -42,10 +42,10 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Navigation />
-        </SessionProvider>
 
-        {children}
-        <Footer />
+          {children}
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

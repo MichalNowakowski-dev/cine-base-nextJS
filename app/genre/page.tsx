@@ -1,6 +1,6 @@
 // app/genres/page.tsx
 import { fetchMovieListByGenre, fetchSeriesListByGenre } from "../lib/data";
-import GenresList from "./GenresList";
+import MediaGenreList from "./MediaGenreList";
 import Pagination from "./Pagination";
 import { MediaType } from "../lib/types";
 
@@ -38,7 +38,7 @@ const GenrePage = async ({ searchParams }: GenrePageProps) => {
         </h1>
 
         {/* Komponent do wyświetlania filmów/seriali */}
-        <GenresList mediaList={mediaList} mediaType={media} />
+        <MediaGenreList mediaList={mediaList} mediaType={media} />
 
         {/* Komponent do paginacji */}
         <Pagination currentPage={currentPage} totalPages={totalPages} />

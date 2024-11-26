@@ -1,5 +1,7 @@
 import React from "react";
 
+import PageContainer from "../components/ui/pageContainer/PageContainer";
+
 export default function page() {
-  return <div>page</div>;
+  return <PageContainer>ok</PageContainer>;
 }

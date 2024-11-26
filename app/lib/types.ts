@@ -30,10 +30,10 @@ export type SearchItem = {
   popularity?: string;
   vote_average: number;
   vote_count: number;
-  media_type: MediaType;
+  media_type: MediaType | "person";
 };
 
-export type MediaType = "movie" | "tv" | "person";
+export type MediaType = "movie" | "tv";
 export type MediaCategory = "popular" | "top_rated" | "trending";
 export type TimeWindow = "day" | "week";
 

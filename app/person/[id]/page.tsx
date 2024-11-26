@@ -11,11 +11,11 @@ import { CiCalendar } from "react-icons/ci";
 import { GiHastyGrave } from "react-icons/gi";
 import { calculateAge, getImgUrl } from "@/app/lib/utils";
 
-import ImageModal from "@/app/ui/ImageModal";
-import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
-import FreeTrialCta from "@/app/ui/FreeTrialCta";
+import ImageModal from "@/app/components/imageModal/ImageModal";
+import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
+import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { MediaItem, ProfileSize } from "@/app/lib/types";
-import PageContainer from "@/app/ui/PageContainer";
+import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 
 export default async function Page({
   params,

@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import { fetchTrendingList } from "../lib/data";
 import { MediaType } from "../lib/types";
-import GenresCardsSectionContainer from "../ui/GenresCards/GenresCardsContainer";
+import GenreCardsSectionContainer from "../components/genreCardsList/GenreCardsContainer";
 import HeaderSection from "./HeaderSection";
 import Tabs from "./Tabs";
-import { MediaContainerSkeleton } from "../ui/skeletons";
-import MediaListContainer from "../ui/MediaListCarousel/MediaListContainer";
-import PageContainer from "../ui/PageContainer";
+import { MediaContainerSkeleton } from "../components/ui/skeletons/skeletons";
+import MediaListContainer from "../components/mediaListCarousel/MediaListContainer";
+import PageContainer from "../components/ui/pageContainer/PageContainer";
 
 export default async function Page({
   searchParams,
@@ -27,9 +27,9 @@ export default async function Page({
           Filmy
         </span>
         <section className="lg:p-5 lg:border border-borderPrimary rounded-lg flex flex-col gap-5 lg:gap-20">
-          <GenresCardsSectionContainer mediaType={mediaType || "movie"}>
+          <GenreCardsSectionContainer mediaType={mediaType || "movie"}>
             <h3 className="text-h3 ">Nasze gatunki</h3>
-          </GenresCardsSectionContainer>
+          </GenreCardsSectionContainer>
           <section>
             <Suspense fallback={<MediaContainerSkeleton />}>
               <MediaListContainer
@@ -68,9 +68,9 @@ export default async function Page({
           Seriale
         </span>
         <section className="p-5 border border-borderPrimary rounded-lg flex flex-col gap-20">
-          <GenresCardsSectionContainer mediaType={"tv"}>
+          <GenreCardsSectionContainer mediaType={"tv"}>
             <h3 className="text-h3 ">Nasze gatunki</h3>
-          </GenresCardsSectionContainer>
+          </GenreCardsSectionContainer>
           <section>
             <Suspense fallback={<MediaContainerSkeleton />}>
               <MediaListContainer mediaCategory="top_rated" mediaType={"tv"}>

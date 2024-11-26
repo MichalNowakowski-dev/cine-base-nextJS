@@ -3,9 +3,9 @@ import { getImgUrl } from "../lib/utils";
 import Image from "next/image";
 import { MediaItem, PosterSize } from "../lib/types";
 import SupportForm from "./SupportForm";
-import AccordionList from "../ui/Accordions/AccordionsList";
-import FreeTrialCta from "../ui/FreeTrialCta";
-import PageContainer from "../ui/PageContainer";
+import AccordionList from "../components/faqList/FaqList";
+import FreeTrialCta from "../components/ui/freeTrialCta/FreeTrialCta";
+import PageContainer from "../components/ui/pageContainer/PageContainer";
 
 export default async function Page() {
   const data = await fetchTrendingList("movie", "day", 1);

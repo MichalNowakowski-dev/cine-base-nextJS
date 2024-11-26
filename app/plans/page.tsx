@@ -1,7 +1,7 @@
-import FreeTrialCta from "../ui/FreeTrialCta";
-import PageContainer from "../ui/PageContainer";
-import SubscriptionPlan from "../ui/SubscriptionPlan/SubscriptionPlan";
-import SubscriptionPlanInfo from "../ui/SubscriptionPlan/SubscriptionPlanInfo";
+import FreeTrialCta from "../components/ui/freeTrialCta/FreeTrialCta";
+import PageContainer from "../components/ui/pageContainer/PageContainer";
+import SubscriptionPlan from "./SubscriptionPlan/SubscriptionPlan";
+import SubscriptionPlanInfo from "./SubscriptionPlan/SubscriptionPlanInfo";
 
 export default function Page() {
   return (

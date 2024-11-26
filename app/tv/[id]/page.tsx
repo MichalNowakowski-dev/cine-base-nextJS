@@ -19,16 +19,16 @@ import { PiTranslate } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
 import { getImgUrl } from "@/app/lib/utils";
-import CastCarousel from "@/app/ui/CastCarousel";
-import VideoModalContainer from "@/app/ui/VideoCarousel/VideoModalConainer";
+import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
+import VideoModalContainer from "@/app/components/VideoCarousel/VideoModalConainer";
 
-import CtaLink from "@/app/ui/CtaLink";
-import SeasonItem from "@/app/ui/SeasonItem";
-import ImageModal from "@/app/ui/ImageModal";
-import MediaListController from "@/app/ui/MediaListCarousel/MediaListController";
-import FreeTrialCta from "@/app/ui/FreeTrialCta";
+import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
+import SeasonItem from "@/app/tv/[id]/SeasonItem";
+import ImageModal from "@/app/components/imageModal/ImageModal";
+import MediaListController from "@/app/components/ui/MediaListCarousel/MediaListController";
+import FreeTrialCta from "@/app/components/ui/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/lib/types";
-import PageContainer from "@/app/ui/PageContainer";
+import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 
 export default async function Page({
   params,

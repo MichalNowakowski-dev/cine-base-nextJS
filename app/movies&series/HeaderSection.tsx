@@ -3,9 +3,9 @@
 import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { getImgUrl } from "../lib/utils";
-import CtaLink from "../ui/CtaLink";
+import CtaLink from "../components/ui/ctaLink/CtaLink";
 import Image from "next/image";
-import SwitchListButtons from "../ui/SwitchListButtons";
+import SwitchListButtons from "../components/ui/switchPaginatedListButtons/SwitchPaginatedListButtons";
 import { usePagination } from "../hooks/usePagination";
 import { BackdropSize, MediaItem } from "../lib/types";
 
@@ -17,7 +17,7 @@ const styles = {
 export default function HeaderSection({ list }: { list: MediaItem[] }) {
   const { activePage, showList, handleMoveList } = usePagination(list, 1);
 
-  const { title, name, overview } = list[activePage - 1];
+  const { title, name, overview, id } = list[activePage - 1];
 
   return (
     <section className={styles.headerSection}>
@@ -32,15 +32,21 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
         priority
       />
       <header
-        className={`z-10 text-center transition-opacity duration-250 mb-5 ${
+        className={`z-10 text-center transition-opacity duration-250  mb-5 ${
           showList ? "opacity-100" : "opacity-0"
         }`}
       >
         <h1>{title || name}</h1>
-        <p className="hidden md:block text-white/90 px-20">{overview}</p>
+        <p className="hidden md:block text-white leading-tight px-20 max-w-full">
+          {overview}
+        </p>
       </header>
       <div className="z-10 mb-14 md:mb-0 flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
-        <CtaLink href="/plans" play className="w-4/5">
+        <CtaLink
+          href={title ? `/movie/${id}` : `/tv/${id}`}
+          play
+          className="w-4/5"
+        >
           Oglądaj
         </CtaLink>
         <div className="flex gap-x-3 ">
