@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 import Image from "next/image";
-import { getImgUrl } from "../../lib/utils";
 import NoProfilePicture from "@/public/no-profile-img.png";
 import PaginatedSection from "../ui/PaginatedSection";
 import { usePagination } from "../../hooks/usePagination";
@@ -60,7 +59,7 @@ export default function CastCarousel({
                 <Image
                   src={
                     person.profile_path
-                      ? getImgUrl(ProfileSize.MEDIUM, person.profile_path)
+                      ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${person.profile_path}`
                       : NoProfilePicture
                   }
                   alt="person image"

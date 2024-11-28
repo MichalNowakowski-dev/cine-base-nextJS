@@ -14,11 +14,13 @@ import SignIn from "./SignIn";
 import { useSession } from "next-auth/react";
 import SignOut from "./SignOut";
 import { FaUserCircle } from "react-icons/fa";
+import CtaLink from "../ui/ctaLink/CtaLink";
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileNavDisplayed, setIsMobileNavDisplayed] = useState(true);
   const lastScrollY = useRef(0);
+
   const { data: session } = useSession();
 
   const pathname = usePathname();
@@ -87,7 +89,7 @@ export default function Navigation() {
             </li>
           ) : (
             <li>
-              <SignIn />
+              <CtaLink href={"/sign-in"}>Zaloguj</CtaLink>
             </li>
           )}
         </ul>

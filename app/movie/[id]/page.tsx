@@ -16,7 +16,7 @@ import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
-import { getImgUrl } from "@/app/lib/utils";
+
 import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
 import VideoModalContainer from "@/app/components/ui/VideoCarousel/VideoModalConainer";
 import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
@@ -69,11 +69,12 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="movie image"
-          src={getImgUrl(BackdropSize.LARGE, movieDetails.backdrop_path)}
+          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${movieDetails.backdrop_path}`}
           width={1280}
           height={720}
           quality={100}
         />
+
         <header className="z-10 text-center">
           <h1>{movieDetails.title}</h1>
           <p className="hidden md:block text-secondary px-20 ">
@@ -81,7 +82,7 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col md:flex-row gap-3 ">
-          <CtaLink href="/plans" play>
+          <CtaLink href={`/movie/${movieDetails.id}/mediaPlay`} play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
@@ -116,7 +117,7 @@ export default async function Page({
                           height={40}
                           width={40}
                           alt="provider logo"
-                          src={getImgUrl(LogoSize.SMALL, item.logo_path)}
+                          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
                         />
                       </li>
                     )
@@ -134,7 +135,7 @@ export default async function Page({
                           height={40}
                           width={40}
                           alt="provider logo"
-                          src={getImgUrl(LogoSize.SMALL, item.logo_path)}
+                          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
                         />
                       </li>
                     )
@@ -222,10 +223,7 @@ export default async function Page({
                   alt="Director image"
                   src={
                     getPersonImagePath(movieDetailsFromOmdb.Director)
-                      ? getImgUrl(
-                          ProfileSize.MEDIUM,
-                          getPersonImagePath(movieDetailsFromOmdb.Director)
-                        )
+                      ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${movieDetailsFromOmdb.Director}`
                       : NoProfilePicture
                   }
                   fill
@@ -254,10 +252,7 @@ export default async function Page({
                       alt="Director image"
                       src={
                         getPersonImagePath(writer)
-                          ? getImgUrl(
-                              ProfileSize.MEDIUM,
-                              getPersonImagePath(writer)
-                            )
+                          ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${writer}`
                           : NoProfilePicture
                       }
                       fill
@@ -302,7 +297,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(BackdropSize.LARGE, img.file_path)}
+                      imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
                       height={img.height}
                       width={img.width}
                     />

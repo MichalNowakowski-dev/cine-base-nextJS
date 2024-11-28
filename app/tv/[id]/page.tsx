@@ -18,15 +18,14 @@ import { CiCalendar } from "react-icons/ci";
 import { PiTranslate } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
-import { getImgUrl } from "@/app/lib/utils";
 import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
-import VideoModalContainer from "@/app/components/VideoCarousel/VideoModalConainer";
+import VideoModalContainer from "@/app/components/ui/VideoCarousel/VideoModalConainer";
 
 import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
 import SeasonItem from "@/app/tv/[id]/SeasonItem";
 import ImageModal from "@/app/components/imageModal/ImageModal";
-import MediaListController from "@/app/components/ui/MediaListCarousel/MediaListController";
-import FreeTrialCta from "@/app/components/ui/FreeTrialCta";
+import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
+import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/lib/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 
@@ -83,7 +82,7 @@ export default async function Page({
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
           alt="series image"
-          src={getImgUrl(BackdropSize.LARGE, seriesDetails.backdrop_path)}
+          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${seriesDetails.backdrop_path}`}
           width={1280}
           height={720}
           quality={100}
@@ -214,10 +213,9 @@ export default async function Page({
                           alt="Director image"
                           src={
                             getPersonImagePath(writer)
-                              ? getImgUrl(
-                                  ProfileSize.MEDIUM,
-                                  getPersonImagePath(writer)
-                                )
+                              ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                                  ProfileSize.MEDIUM
+                                }${getPersonImagePath(writer)}`
                               : NoProfilePicture
                           }
                           fill
@@ -250,7 +248,7 @@ export default async function Page({
                         height={154}
                         width={154}
                         alt="provider logo"
-                        src={getImgUrl(LogoSize.LARGE, item.logo_path)}
+                        src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.LARGE}${item.logo_path}`}
                       />
                     </li>
                   )
@@ -294,7 +292,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(BackdropSize.LARGE, img.file_path)}
+                      imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
                       height={img.height}
                       width={img.width}
                     />

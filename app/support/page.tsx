@@ -1,5 +1,4 @@
 import { fetchTrendingList } from "../lib/data";
-import { getImgUrl } from "../lib/utils";
 import Image from "next/image";
 import { MediaItem, PosterSize } from "../lib/types";
 import SupportForm from "./SupportForm";
@@ -34,7 +33,7 @@ export default async function Page() {
                   height={314}
                   quality={100}
                   alt="poster image"
-                  src={getImgUrl(PosterSize.MEDIUM, path)}
+                  src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}
                   className="object-cover rounded-lg w-[98px] aspect-[2/3]"
                 />
               </li>

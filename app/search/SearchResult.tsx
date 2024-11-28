@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import NoPosterImg from "@/public/no-poster-img.webp";
 import NoProfileImg from "@/public/no-profile-img.png";
-import { getImgUrl } from "../lib/utils";
 import { PosterSize, SearchItem } from "../lib/types";
 
 const SearchResult = ({ result }: { result: SearchItem }) => {
@@ -18,7 +17,7 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
         <Image
           src={
             imagePath
-              ? `${getImgUrl(PosterSize.MEDIUM, imagePath)}`
+              ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${imagePath}`
               : placeholderImg
           }
           width={500}

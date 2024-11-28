@@ -9,7 +9,7 @@ import Image from "next/image";
 import { CiCalendar } from "react-icons/ci";
 
 import { GiHastyGrave } from "react-icons/gi";
-import { calculateAge, getImgUrl } from "@/app/lib/utils";
+import { calculateAge } from "@/app/lib/utils";
 
 import ImageModal from "@/app/components/imageModal/ImageModal";
 import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
@@ -45,7 +45,7 @@ export default async function Page({
           <Image
             className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full"
             alt="movie image"
-            src={getImgUrl(ProfileSize.XLARGE, personDetails.profile_path)}
+            src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.XLARGE}${personDetails.profile_path}`}
             width={635}
             height={953}
             quality={100}
@@ -121,7 +121,7 @@ export default async function Page({
                   <li className=" hover:cursor-pointer" key={img.file_path}>
                     <ImageModal
                       altText="backdrop image"
-                      imageUrl={getImgUrl(ProfileSize.XLARGE, img.file_path)}
+                      imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.XLARGE}${img.file_path}`}
                       height={img.height}
                       width={img.width}
                     />

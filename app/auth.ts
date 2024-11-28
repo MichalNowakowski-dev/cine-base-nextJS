@@ -1,6 +1,57 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import type { Provider } from "next-auth/providers";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/app/prisma";
+import verifyUser from "./lib/verifyUser";
+import Credentials from "next-auth/providers/credentials";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Google],
+// Define the User interface using optional chaining for avatarUrl
+
+const providers: Provider[] = [
+  Credentials({
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+    async authorize(credentials): Promise<any> {
+      const { email, password } = credentials;
+
+      if (!email || !password) {
+        return null;
+      }
+
+      const user = await verifyUser(email as string, password as string);
+
+      if (!user) {
+        throw new Error("Invalid credentials");
+      }
+
+      return user;
+    },
+  }),
+  Google,
+];
+
+export const providerMap = providers
+  .map((provider) => {
+    if (typeof provider === "function") {
+      const providerData = provider();
+      return { id: providerData.id, name: providerData.name };
+    } else {
+      return { id: provider.id, name: provider.name };
+    }
+  })
+  .filter((provider) => provider.id !== "credentials");
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers,
+  pages: {
+    signIn: "/sign-in",
+  },
+  session: {
+    strategy: "jwt",
+  },
 });

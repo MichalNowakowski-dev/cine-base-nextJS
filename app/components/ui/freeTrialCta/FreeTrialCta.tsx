@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { fetchMediaList } from "@/app/lib/data";
-import { getImgUrl } from "@/app/lib/utils";
 import Image from "next/image";
 import { MediaItem, PosterSize } from "@/app/lib/types";
 
@@ -40,7 +39,7 @@ export default async function FreeTrialCta() {
               width={125}
               height={74}
               alt="poster image"
-              src={getImgUrl(PosterSize.MEDIUM, path)}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}
               className="object-cover md:aspect-video"
             />
           </li>

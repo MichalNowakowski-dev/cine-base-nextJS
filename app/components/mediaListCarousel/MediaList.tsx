@@ -6,7 +6,6 @@ import { MediaItem, PosterSize } from "@/app/lib/types";
 import Link from "next/link";
 import MediaRoundedRating from "../ui/mediaRoundedRating/MediaRoundedRating";
 import { v4 as uuidv4 } from "uuid";
-import { getImgUrl } from "@/app/lib/utils";
 
 export default function MediaList({
   mediaType,
@@ -38,7 +37,7 @@ export default function MediaList({
                       className="rounded-md aspect-[2/3] "
                       src={
                         poster_path
-                          ? getImgUrl(PosterSize.LARGE, poster_path)
+                          ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.LARGE}${poster_path}`
                           : "/no-poster-img.webp"
                       }
                       alt={"Movie image"}

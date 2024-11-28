@@ -2,7 +2,7 @@
 
 import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
-import { getImgUrl } from "../lib/utils";
+
 import CtaLink from "../components/ui/ctaLink/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../components/ui/switchPaginatedListButtons/SwitchPaginatedListButtons";
@@ -26,7 +26,9 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
           showList ? "opacity-100" : "opacity-0"
         }`}
         alt="movie image"
-        src={getImgUrl(BackdropSize.LARGE, list[activePage - 1].backdrop_path)}
+        src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${
+          list[activePage - 1].backdrop_path
+        }`}
         width={1600}
         height={900}
         priority

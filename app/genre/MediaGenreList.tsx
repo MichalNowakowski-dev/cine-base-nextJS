@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { getImgUrl } from "../lib/utils";
 import { v4 as uuid } from "uuid";
 import Link from "next/link";
 import { MediaType, PosterSize } from "../lib/types";
@@ -32,7 +31,7 @@ const MediaGenreList = ({ mediaList, mediaType }: GenresListProps) => {
               <Image
                 src={
                   mediaItem.poster_path
-                    ? getImgUrl(PosterSize.LARGE, mediaItem.poster_path)
+                    ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.LARGE}${mediaItem.poster_path}`
                     : "/no-poster-img.webp"
                 }
                 width={500}

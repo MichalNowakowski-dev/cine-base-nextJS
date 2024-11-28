@@ -2,7 +2,7 @@
 
 import React from "react";
 import { PiPlayCircleThin } from "react-icons/pi";
-import { formatRuntime, getImgUrl } from "../../lib/utils";
+import { formatRuntime } from "../../lib/utils";
 import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
@@ -27,7 +27,7 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
           {episode.still_path ? (
             <Image
               alt="episode poster"
-              src={getImgUrl(StillSize.LARGE, episode.still_path)}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${StillSize.LARGE}${episode.still_path}`}
               width={300}
               height={169}
               quality={100}

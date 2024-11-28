@@ -1,18 +1,5 @@
 import { MutableRefObject } from "react";
-import {
-  BackdropSize,
-  LogoSize,
-  PosterSize,
-  ProfileSize,
-  StillSize,
-} from "./types";
-
-type ImageSize = PosterSize | LogoSize | ProfileSize | BackdropSize | StillSize;
-
-export const getImgUrl = (size: ImageSize, path: string) => {
-  const IMG_URL = `${process.env.NEXT_PUBLIC_IMAGES_URL}${size}${path}`;
-  return IMG_URL;
-};
+import bcrypt from "bcryptjs";
 
 export const moveMediaList = (
   direction: string,
@@ -38,3 +25,18 @@ export function calculateAge(year: string): number {
 
   return today - Number(year);
 }
+
+export async function saltAndHashPassword(password: string) {
+  try {
+    // Generowanie soli
+    const salt = await bcrypt.genSalt(10); // 10 to liczba rund, im wyższa, tym bezpieczniejsze
+    // Haszowanie hasła
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw new Error("Błąd podczas haszowania hasła: " + error.message);
+  }
+}
+
+module.exports = saltAndHashPassword;

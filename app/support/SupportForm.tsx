@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { sendSupportMessage } from "../lib/actions";
 
-export default function SupportPage() {
+export default function SupportForm() {
   const [state, formAction, isPending] = useActionState(
     sendSupportMessage,
     null

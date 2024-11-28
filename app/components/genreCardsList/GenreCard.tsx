@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
-import { getImgUrl } from "@/app/lib/utils";
+// import { getImgUrl } from "@/app/lib/utils";
 import { PosterSize } from "@/app/lib/types";
 
 type GenreWithImages = {
@@ -29,11 +29,12 @@ export default function GenreCard({
                 className="object-cover rounded-md"
                 fill
                 sizes="80px"
-                src={getImgUrl(PosterSize.MEDIUM, path)}
+                src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}
                 alt="poster image"
               />
             </li>
           ))}
+
           <li className="absolute h-full w-full top-0 left-0 bg-fadeout-bottom z-10 pointer-events-none"></li>
         </ul>
         <div className="flex justify-between">
