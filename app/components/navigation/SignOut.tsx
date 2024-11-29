@@ -1,10 +1,10 @@
 "use client";
 import { signOut } from "next-auth/react";
 
-export default function SignOut() {
+export default function SignOut({ className }: { className?: string }) {
   return (
     <button
-      className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-800"
+      className={`flex gap-x-1 items-center justify-center bg-primary hover:bg-red-800 text-white  rounded-md py-3 px-4 ${className}`}
       onClick={() => signOut()}
     >
       Wyloguj

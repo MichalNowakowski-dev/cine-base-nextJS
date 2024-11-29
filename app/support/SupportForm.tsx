@@ -9,8 +9,6 @@ export default function SupportForm() {
     null
   );
 
-  console.log(state?.fields?.subject);
-
   return (
     <form
       action={formAction}

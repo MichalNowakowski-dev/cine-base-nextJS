@@ -20,7 +20,7 @@ export default async function Page() {
           </p>
         </header>
         <div className="relative w-full overflow-hidden rounded-lg border-8 border-borderPrimary max-w-md mx-auto">
-          <ul className="grid grid-cols-4 gap-4 ">
+          <ul className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 md:max-h-[580px]  gap-4 ">
             {posters.slice(0, 16).map((path: string, index: number) => (
               <li
                 key={path}
@@ -34,7 +34,7 @@ export default async function Page() {
                   quality={100}
                   alt="poster image"
                   src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}
-                  className="object-cover rounded-lg w-[98px] aspect-[2/3]"
+                  className="object-cover rounded-lg  aspect-[2/3]"
                 />
               </li>
             ))}

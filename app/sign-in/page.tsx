@@ -2,10 +2,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { signIn, providerMap } from "@/app/auth";
 import { AuthError } from "next-auth";
-import PageContainer from "../components/ui/pageContainer/PageContainer";
 import LoginForm from "./LoginForm";
-
-// import { loginUser } from "../lib/actions";
 
 export default async function SignInPage(props: {
   searchParams: Promise<{ callbackUrl: string | undefined; error?: string }>;
@@ -14,17 +11,29 @@ export default async function SignInPage(props: {
   const SIGNIN_ERROR_URL = "/sign-in";
 
   return (
-    <PageContainer>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6">
-        <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-6">
-          <h1 className="text-2xl font-bold mb-6 text-center">Sign In</h1>
-          {/* Credentials Form */}
+    <div className="lg:min-h-screen mx-auto pt-20 lg:pt-28 lg:px-4 max-w-screen-xl">
+      <div className="flex flex-col lg:flex-row items-center lg:h-[800px] bg-white text-white w-full">
+        <div className="hidden lg:block basis-1/2 lg:bg-signupBg bg-no-repeat bg-center bg-cover h-full px-20 pt-10 ">
+          <h1 className="text-h1 mb-10">
+            Odkryj tysiące tytułów na wyciągnięcie ręki.
+          </h1>
+          <p className="text-lg ">
+            Zaloguj się, aby stworzyć swoją osobistą listę ulubionych produkcji,
+            otrzymywać rekomendacje i nigdy nie przegapić hitów na ekranie.
+          </p>
+        </div>
+        <div className="flex flex-col bg-signupBg bg-center bg-cover bg-no-repeat lg:bg-backgroundLight lg:bg-none items-center justify-center gap-10 px-4 lg:px-20 lg:basis-1/2 lg:h-full h-screen-minus-nav w-full sm:px-40">
+          <h1 className="text-h1 font-bold  w-full">Zaloguj</h1>
+
           <LoginForm error={error as string} />
 
-          <div className="my-6 text-center text-gray-400">Lub</div>
+          <div className="flex justify-center items-center gap-5 w-full">
+            <div className="bg-white lg:bg-secondary w-full  h-[2px]"></div>
+            <div className=" text-center text-white lg:text-gray-400 ">lub</div>
+            <div className="bg-white lg:bg-secondary w-full  h-[2px]"></div>
+          </div>
 
-          {/* OAuth Providers */}
-          <div className="space-y-3">
+          <div className="space-y-3 w-full ">
             {Object.values(providerMap).map((provider) => (
               <form
                 key={provider.id}
@@ -46,7 +55,7 @@ export default async function SignInPage(props: {
               >
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg shadow-md transition duration-300"
+                  className="w-full flex items-center justify-center py-2 bg-black/70 md:bg-gray-700 hover:bg-gray-600 border border-secondary text-white rounded-full shadow-md transition duration-300"
                 >
                   <Image
                     src={`/icons/${provider.id}.svg`}
@@ -62,6 +71,6 @@ export default async function SignInPage(props: {
           </div>
         </div>
       </div>
-    </PageContainer>
+    </div>
   );
 }

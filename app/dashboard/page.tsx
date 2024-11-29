@@ -1,6 +1,12 @@
-import React from "react";
-import PageContainer from "../components/ui/pageContainer/PageContainer";
+"use client";
 
-export default function page() {
-  return <PageContainer>Dashboard</PageContainer>;
+import PageContainer from "../components/ui/pageContainer/PageContainer";
+import UpdateSession from "../components/updateSession/UpdateSession";
+
+export default function Page() {
+  return (
+    <PageContainer>
+      <UpdateSession />
+    </PageContainer>
+  );
 }

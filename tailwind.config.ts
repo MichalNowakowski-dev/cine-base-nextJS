@@ -30,6 +30,7 @@ const config: Config = {
           "linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #1A1A1A 100%)",
         notFoundBg: "url('/notFoundBg.png')",
         mediaPlayBg: "url('/mediaPlayBg.jpg')",
+        signupBg: "url('/signUpBackground.jpg')",
       },
       colors: {
         background: "var(--background)",

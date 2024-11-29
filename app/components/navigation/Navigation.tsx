@@ -10,11 +10,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/app/data/navigation";
 import { navigationStyles } from "../../styles/navigationStyles";
-import SignIn from "./SignIn";
 import { useSession } from "next-auth/react";
-import SignOut from "./SignOut";
-import { FaUserCircle } from "react-icons/fa";
-import CtaLink from "../ui/ctaLink/CtaLink";
+import UserAccountNav from "./UserAccountNav";
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -83,15 +80,6 @@ export default function Navigation() {
               </li>
             );
           })}
-          {session ? (
-            <li>
-              <SignOut />
-            </li>
-          ) : (
-            <li>
-              <CtaLink href={"/sign-in"}>Zaloguj</CtaLink>
-            </li>
-          )}
         </ul>
 
         {isMobileNavOpen && (
@@ -123,15 +111,6 @@ export default function Navigation() {
                   <Link href={href}>{label}</Link>
                 </li>
               ))}
-              {session ? (
-                <li>
-                  <SignOut />
-                </li>
-              ) : (
-                <li>
-                  <SignIn />
-                </li>
-              )}
             </ul>
           </div>
         )}
@@ -139,16 +118,13 @@ export default function Navigation() {
         <div className="flex items-center gap-5">
           <Link
             href={"/search"}
-            className="flex gap-2 items-center bg-transparent border-none"
+            className="p-2 flex gap-2 items-center bg-transparent  
+             rounded-full hover:bg-white "
           >
-            <GoSearch size={25} />
+            <GoSearch size={25} fill="gray" />
           </Link>
 
-          {session && (
-            <button>
-              <FaUserCircle size={25} fill="gray" />
-            </button>
-          )}
+          <UserAccountNav isAuthenticated={session ? true : false} />
 
           <button onClick={toggleNav} className={navigationStyles.mobileButton}>
             {isMobileNavOpen ? (
