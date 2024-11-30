@@ -1,19 +1,16 @@
+"use client";
 import { loginUser } from "../lib/actions";
+import { useActionState } from "react";
 
-export default function LoginForm({ error }: { error: string }) {
+export default function LoginForm() {
+  const [state, formAction, isPending] = useActionState(loginUser, null);
+
   return (
     <form
       noValidate
       className="space-y-10 md:space-y-14 w-full"
-      action={loginUser}
+      action={formAction}
     >
-      {error && (
-        <div className="text-sm text-primary">
-          {error === "CallbackRouteError" || "CredentialsSignin"
-            ? "Nieprawidłowy email lub hasło."
-            : "Wystąpił błąd. Skontaktuj się z pomocą techniczną."}
-        </div>
-      )}
       <div className="space-y-4">
         <div className="space-y-2">
           <label htmlFor="email" className="block text-sm mb-1">
@@ -45,11 +42,16 @@ export default function LoginForm({ error }: { error: string }) {
         </div>
       </div>
 
+      {!state?.success && (
+        <div className="text-sm text-primary">{state?.message}</div>
+      )}
+
       <button
         type="submit"
+        disabled={isPending}
         className="w-full py-2 bg-indigo-700 hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-md transition duration-300"
       >
-        Zaloguj
+        {isPending ? "Logowanie..." : "Zaloguj"}
       </button>
     </form>
   );

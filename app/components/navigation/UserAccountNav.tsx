@@ -33,7 +33,7 @@ export default function UserAccountNav({
           onMouseLeave={() => {
             setIsOpen(false);
           }}
-          className="fixed bg-black/70 h-screen-minus-nav w-screen top-20 left-0 z-10 px-4 flex justify-end items-start"
+          className="fixed top-20 left-0 lg:bg-transparent bg-black/70 h-screen-minus-nav lg:h-auto  w-screen lg:max-w-7xl lg:left-1/2 lg:-translate-x-1/2   z-10 px-4 flex justify-end items-start"
         >
           <div
             onClick={() => {

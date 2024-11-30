@@ -101,8 +101,11 @@ export async function addUserToDb(_prevState: unknown, data: FormData) {
   redirect("/sign-in");
 }
 
-export async function loginUser(formData: FormData) {
-  "use server";
+export async function loginUser(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _prevState: any,
+  formData: FormData
+) {
   const formObject = Object.fromEntries(formData.entries());
   try {
     await signIn("credentials", {
@@ -111,8 +114,10 @@ export async function loginUser(formData: FormData) {
     });
   } catch (error) {
     if (error instanceof AuthError) {
-      return redirect(`/sign-in?error=${error.type}`);
+      return {
+        success: false,
+        message: "Błędne dane logowania.",
+      };
     }
-    throw error;
   }
 }
