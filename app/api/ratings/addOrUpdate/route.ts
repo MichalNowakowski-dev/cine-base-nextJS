@@ -1,96 +1,67 @@
-import { prisma } from "@/app/prisma"; // Załóżmy, że masz ustawionego klienta Prisma
+import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { MediaItem, MediaType } from "@/app/lib/types";
+import { ensureMediaExists } from "@/app/lib/api/utils";
 
-export async function POST(req: NextRequest) {
-  const session = await auth(); // Pobranie sesji
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-  const { id } = session.user;
-
-  const {
-    mediaData,
-    mediaType,
-    rating,
-  }: { mediaData: MediaItem; mediaType: MediaType; rating: number } =
-    await req.json();
-
-  // Zakładając, że masz odpowiednią walidację
+// Funkcja do obsługi walidacji oceny
+const validateRating = (rating: number) => {
   if (rating < 0 || rating > 10) {
-    return NextResponse.json(
-      { message: "Invalid rating value" },
-      { status: 400 }
-    );
+    throw new Error("Invalid rating value");
   }
+};
 
-  try {
-    // Zależnie od typu medium (film/serial)
+// Funkcja do dodawania/aktualizowania oceny
+const upsertRating = async (
+  userId: number,
+  mediaData: MediaItem,
+  mediaType: MediaType,
+  rating: number
+) => {
+  const isMovie = mediaType === "movie";
 
-    // Sprawdź, czy film istnieje
-    const media =
-      mediaType === "movie"
-        ? await prisma.movie.findUnique({
-            where: { id: mediaData.id },
-          })
-        : await prisma.show.findUnique({
-            where: { id: mediaData.id },
-          });
-
-    // Jeśli film nie istnieje, dodaj go do bazy
-    if (!media) {
-      if (mediaType === "movie") {
-        await prisma.movie.create({
-          data: {
-            id: mediaData.id,
-            title: mediaData.title as string,
-            overview: mediaData.overview,
-            releaseDate: new Date(mediaData.release_date as string),
-          },
-        });
-      }
-
-      await prisma.show.create({
-        data: {
-          id: mediaData.id,
-          name: mediaData.name as string,
-          overview: mediaData.overview,
-          firstAirDate: new Date(mediaData.first_air_date as string),
+  return isMovie
+    ? prisma.movieRating.upsert({
+        where: {
+          userId_movieId: { userId, movieId: mediaData.id },
         },
+        update: { rating },
+        create: { userId, movieId: mediaData.id, rating },
+      })
+    : prisma.showRating.upsert({
+        where: {
+          userId_showId: { userId, showId: mediaData.id },
+        },
+        update: { rating },
+        create: { userId, showId: mediaData.id, rating },
       });
-    }
+};
 
-    const ratingRecord =
-      mediaType === "movie"
-        ? await prisma.movieRating.upsert({
-            where: {
-              userId_movieId: {
-                userId: Number(id),
-                movieId: Number(mediaData.id),
-              },
-            },
-            update: { rating: Number(rating) },
-            create: {
-              userId: Number(id),
-              movieId: Number(mediaData.id),
-              rating: Number(rating),
-            },
-          })
-        : await prisma.showRating.upsert({
-            where: {
-              userId_showId: {
-                userId: Number(id),
-                showId: Number(mediaData.id),
-              },
-            },
-            update: { rating: Number(rating) },
-            create: {
-              userId: Number(id),
-              showId: Number(mediaData.id),
-              rating: Number(rating),
-            },
-          });
+// Główna funkcja POST
+export async function POST(req: NextRequest) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const userId = Number(session.user.id);
+
+    const {
+      mediaData,
+      mediaType,
+      rating,
+    }: { mediaData: MediaItem; mediaType: MediaType; rating: number } =
+      await req.json();
+
+    validateRating(rating);
+    await ensureMediaExists(mediaData, mediaType);
+    const ratingRecord = await upsertRating(
+      userId,
+      mediaData,
+      mediaType,
+      rating
+    );
+
     return NextResponse.json(
       { message: "Rating added/updated", rating: ratingRecord },
       { status: 200 }

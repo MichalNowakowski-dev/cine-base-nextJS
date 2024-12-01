@@ -6,10 +6,10 @@ import { handleAddOrUpdateRating } from "@/app/lib/api/utils";
 import { MediaItem, MediaType } from "@/app/lib/types";
 
 interface RateMediaButtonProps {
-  isRated: boolean; // Czy element jest oceniony
+  isRated: boolean;
   mediaData: MediaItem;
   mediaType: MediaType;
-  rating?: number; // Ocena już przypisana (jeśli istnieje)
+  rating?: number;
 }
 
 const RateMediaButton = ({
@@ -19,28 +19,26 @@ const RateMediaButton = ({
   mediaType,
 }: RateMediaButtonProps) => {
   const [rated, setRated] = useState(isRated);
-  const [selectedRating, setSelectedRating] = useState(rating || 0); // stan oceny użytkownika
-  const [showRatingOptions, setShowRatingOptions] = useState(false); // stan pokazania opcji oceny
+  const [selectedRating, setSelectedRating] = useState(rating || 0);
+  const [showRatingOptions, setShowRatingOptions] = useState(false);
 
-  // Funkcja do toggle'owania oceniania
-  const toggleRating = () => {
-    setShowRatingOptions(!showRatingOptions); // Pokaż opcje oceny
+  const toggleRatingOptions = () => {
+    setShowRatingOptions((prev) => !prev);
   };
 
-  // Funkcja do aktualizacji oceny
-  const handleRatingChange = (newRating: number) => {
-    setSelectedRating(newRating); // Zaktualizuj ocenę
-    handleAddOrUpdateRating(mediaData, mediaType, newRating);
+  const handleRatingChange = async (newRating: number) => {
+    await handleAddOrUpdateRating(mediaData, mediaType, newRating);
+    setSelectedRating(newRating);
     setRated(true);
     setShowRatingOptions(false);
   };
 
   return (
-    <div>
+    <div className="relative inline-block">
       <button
         aria-label="Rating button"
-        onClick={toggleRating}
-        className={`bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800  ${
+        onClick={toggleRatingOptions}
+        className={`bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 ${
           rated
             ? "text-green-500 hover:text-white"
             : "text-white hover:text-green-500"
@@ -49,17 +47,16 @@ const RateMediaButton = ({
         <FaThumbsUp size={25} />
       </button>
 
-      {/* Opcje oceniania */}
       {showRatingOptions && (
-        <div className="mt-2 flex space-x-2 ">
+        <div className="absolute top-full mt-2 bg-[#1a1a1a] border border-zinc-700 rounded-md shadow-md p-3 flex space-x-2 z-50">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ratingOption) => (
             <button
               key={ratingOption}
               onClick={() => handleRatingChange(ratingOption)}
-              className={`p-2 rounded-md hover:scale-105 hover:bg-green-800 ${
+              className={`p-2 w-8 h-8 rounded-md flex items-center justify-center transition-transform transform hover:scale-110 ${
                 selectedRating === ratingOption
                   ? "bg-green-500 text-white"
-                  : "bg-zinc-800 text-white"
+                  : "bg-zinc-800 text-zinc-300 hover:bg-green-800"
               }`}
             >
               {ratingOption}

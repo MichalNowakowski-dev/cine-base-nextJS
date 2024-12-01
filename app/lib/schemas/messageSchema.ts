@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const messageSchema = z.object({
   firstName: z.string().min(2, { message: "Imię jest wymagane" }),
   lastName: z.string().min(2, { message: "Nazwisko jest wymagane" }),
   email: z

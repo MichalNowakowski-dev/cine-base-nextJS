@@ -1,5 +1,5 @@
 import { prisma } from "@/app/prisma";
-import { MediaItem, MediaType } from "../types";
+import { type MediaItem, type MediaType } from "../types";
 
 export const handleAddToWatchlist = async (
   mediaData: MediaItem,
@@ -19,7 +19,6 @@ export const handleAddToWatchlist = async (
     console.error("Failed to add media to watchlist");
   }
 };
-
 export const handleRemoveFromWatchlist = async (
   mediaId: number,
   mediaType: MediaType
@@ -40,7 +39,6 @@ export const handleRemoveFromWatchlist = async (
     console.error("Failed to remove media from watchlist");
   }
 };
-
 export const getWatchlistStatus = async (
   mediaId: number,
   userId: number,
@@ -83,7 +81,6 @@ export const handleAddToFavorites = async (
     console.error("Failed to add media to favorites");
   }
 };
-
 export const handleRemoveFromFavorites = async (
   mediaId: number,
   mediaType: MediaType
@@ -104,7 +101,6 @@ export const handleRemoveFromFavorites = async (
     console.error("Failed to remove media from favorites");
   }
 };
-
 export const getFavoriteStatus = async (
   mediaId: number,
   userId: number,
@@ -128,7 +124,6 @@ export const getFavoriteStatus = async (
 
   return Boolean(toWatchMedia);
 };
-
 export const getUserRating = async (
   mediaId: number,
   userId: number,
@@ -153,7 +148,6 @@ export const getUserRating = async (
 
   return userRating ? userRating.rating : null;
 };
-
 export const handleAddOrUpdateRating = async (
   mediaData: MediaItem,
   mediaType: MediaType,
@@ -173,7 +167,6 @@ export const handleAddOrUpdateRating = async (
     console.error("Failed to add/update rating");
   }
 };
-
 export const fetchUserMediaStatus = async (
   mediaId: number,
   userId: number,
@@ -186,4 +179,38 @@ export const fetchUserMediaStatus = async (
   ]);
 
   return { favoriteStatus, watchlistStatus, ratingStatus };
+};
+export const ensureMediaExists = async (
+  mediaData: MediaItem,
+  mediaType: MediaType
+) => {
+  const isMovie = mediaType === "movie";
+
+  const media = isMovie
+    ? await prisma.movie.findUnique({ where: { id: mediaData.id } })
+    : await prisma.show.findUnique({ where: { id: mediaData.id } });
+
+  if (!media) {
+    if (isMovie) {
+      // Utwórz rekord filmu
+      await prisma.movie.create({
+        data: {
+          id: mediaData.id,
+          title: mediaData.title as string,
+          overview: mediaData.overview || "",
+          releaseDate: new Date(mediaData.release_date!),
+        },
+      });
+    } else {
+      // Utwórz rekord serialu
+      await prisma.show.create({
+        data: {
+          id: mediaData.id,
+          name: mediaData.name as string,
+          overview: mediaData.overview || "",
+          firstAirDate: new Date(mediaData.first_air_date!),
+        },
+      });
+    }
+  }
 };

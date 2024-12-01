@@ -1,6 +1,6 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-import { formSchema } from "./schemas/formSchema";
+import { messageSchema } from "./schemas/messageSchema";
 import { z } from "zod";
 import registerSchema from "./schemas/registerSchema";
 import { saltAndHashPassword } from "./utils";
@@ -25,7 +25,7 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
   // Tworzenie nowej wiadomości
 
   try {
-    const validatedData = formSchema.parse(formData);
+    const validatedData = messageSchema.parse(formData);
     const newMessage = await prisma.message.create({
       data: {
         content: validatedData.message,

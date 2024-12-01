@@ -45,7 +45,7 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
       </header>
       <div className="z-10 mb-14 md:mb-0 flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
         <CtaLink
-          href={title ? `/movie/${id}` : `/tv/${id}`}
+          href={title ? `/movie/${id}/mediaPlay` : `/tv/${id}/mediaPlay`}
           play
           className="w-4/5"
         >

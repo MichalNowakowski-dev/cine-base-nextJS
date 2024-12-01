@@ -19,6 +19,9 @@ model User {
   emailVerified  Boolean?
   image          String?
   name           String?
+  planId          String?   // Identyfikator planu
+  subscriptionStart DateTime? // Data rozpoczęcia subskrypcji
+  subscriptionEnd   DateTime? // Data zakończenia subskrypcji
   accounts       Account[]
   favoriteMovies FavoriteMovie[]
   favoriteShows  FavoriteShow[]
@@ -149,4 +152,21 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Plan {
+  id          String   @id
+  name        String
+  description String
+  content     String
+  monthlyPrice Float
+  yearlyPrice  Float
+  devicesNumber Int
+  trialPeriod  Int
+  cancelAllowed Boolean
+  hdr          Boolean
+  dolbyAtmos   Boolean
+  adsFree      Boolean
+  offlineView  Boolean
+  familySharing Int?   
 }

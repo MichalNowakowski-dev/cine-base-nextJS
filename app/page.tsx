@@ -34,7 +34,7 @@ export default async function Home() {
               miejscu
             </p>
 
-            <CtaLink href={"/sign-in"}>Zacznij oglądać</CtaLink>
+            <CtaLink href={"/movies&series"}>Zacznij oglądać</CtaLink>
           </div>
         </section>
       </header>
