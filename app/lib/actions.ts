@@ -107,17 +107,21 @@ export async function loginUser(
   formData: FormData
 ) {
   const formObject = Object.fromEntries(formData.entries());
+  let errorOccurred = false;
   try {
-    await signIn("credentials", {
-      ...formObject,
-      redirectTo: "/dashboard",
-    });
+    await signIn("credentials", formObject);
   } catch (error) {
     if (error instanceof AuthError) {
-      return {
-        success: false,
-        message: "Błędne dane logowania.",
-      };
+      errorOccurred = true;
+      if (error.message.includes("Invalid credentials")) {
+        return { success: false, message: "Błędne dane logowania." };
+      } else {
+        return { success: false, message: "Coś poszło nie tak." };
+      }
+    }
+  } finally {
+    if (!errorOccurred) {
+      redirect("/dashboard");
     }
   }
 }

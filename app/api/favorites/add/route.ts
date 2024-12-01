@@ -50,9 +50,9 @@ export async function POST(request: NextRequest) {
       await prisma.show.create({
         data: {
           id: mediaData.id,
-          name: mediaData.title as string,
+          name: mediaData.name as string,
           overview: mediaData.overview,
-          firstAirDate: new Date(mediaData.release_date as string),
+          firstAirDate: new Date(mediaData.first_air_date as string),
         },
       });
     }

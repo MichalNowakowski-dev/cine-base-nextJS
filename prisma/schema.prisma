@@ -25,6 +25,8 @@ model User {
   sessions       Session[]
   toWatchMovies  ToWatchMovie[]
   toWatchShows   ToWatchShow[]
+  movieRating    MovieRating[]
+  showRating    ShowRating[]
 }
 
 model FavoriteMovie {
@@ -59,6 +61,30 @@ model ToWatchShow {
   user   User @relation(fields: [userId], references: [id])
 }
 
+model MovieRating {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  movieId  Int
+  rating   Float
+  user     User   @relation(fields: [userId], references: [id])
+  movie    Movie  @relation(fields: [movieId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, movieId])
+}
+
+model ShowRating {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  showId   Int
+  rating   Float
+  user     User   @relation(fields: [userId], references: [id])
+  show     Show   @relation(fields: [showId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, showId])
+}
+
 model Movie {
   id          Int             @id
   title       String
@@ -66,6 +92,7 @@ model Movie {
   releaseDate DateTime
   favorites   FavoriteMovie[]
   toWatch     ToWatchMovie[]
+  movieRating MovieRating[]
 }
 
 model Show {
@@ -75,6 +102,7 @@ model Show {
   firstAirDate DateTime
   favorites    FavoriteShow[]
   toWatch      ToWatchShow[]
+  showRating   ShowRating[]
 }
 
 model Message {

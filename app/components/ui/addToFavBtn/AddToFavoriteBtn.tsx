@@ -41,7 +41,7 @@ const FavoriteButton = ({
           : "text-white hover:text-red-500"
       }`}
     >
-      {favorite ? <FaHeart /> : <FaRegHeart />}
+      {favorite ? <FaHeart size={25} /> : <FaRegHeart size={25} />}
     </button>
   );
 };

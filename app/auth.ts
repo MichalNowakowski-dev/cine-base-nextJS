@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthError } from "next-auth";
 import Google from "next-auth/providers/google";
 import type { Provider } from "next-auth/providers";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -25,7 +25,7 @@ const providers: Provider[] = [
       const user = await verifyUser(email as string, password as string);
 
       if (!user) {
-        throw new Error("Invalid credentials");
+        throw new AuthError("Invalid credentials");
       }
 
       return user;

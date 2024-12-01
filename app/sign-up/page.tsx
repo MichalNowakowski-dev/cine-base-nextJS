@@ -1,7 +1,11 @@
+import { redirect } from "next/navigation";
+import { auth } from "../auth";
 import PageContainer from "../components/ui/pageContainer/PageContainer";
 import RegistrationForm from "./RegistrationForm";
 
-const Register = () => {
+const Register = async () => {
+  const session = await auth();
+  if (session) redirect("/dashboard");
   return (
     <PageContainer>
       <div className="max-w-md mx-auto p-4">

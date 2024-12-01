@@ -5,8 +5,12 @@ import Recommendations from "./components/Recommendations";
 import Stats from "./components/Stats";
 import PageContainer from "../components/ui/pageContainer/PageContainer";
 import UpdateSession from "../components/updateSession/UpdateSession";
+import { auth } from "@/app/auth";
+import { redirect } from "next/navigation";
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const session = await auth();
+  if (!session) redirect("/sign-in");
   const user = {
     firstName: "Michał",
     avatarUrl: "/path_to_avatar.jpg",

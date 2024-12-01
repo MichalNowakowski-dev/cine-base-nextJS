@@ -41,7 +41,7 @@ const AddToWatchlistButton = ({
           : "text-white hover:text-yellow-500"
       }`}
     >
-      <IoMdAdd />
+      <IoMdAdd size={25} />
     </button>
   );
 };

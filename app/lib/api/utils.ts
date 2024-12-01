@@ -128,3 +128,62 @@ export const getFavoriteStatus = async (
 
   return Boolean(toWatchMedia);
 };
+
+export const getUserRating = async (
+  mediaId: number,
+  userId: number,
+  mediaType: MediaType
+) => {
+  if (!userId) return null;
+
+  const userRating =
+    mediaType === "movie"
+      ? await prisma.movieRating.findFirst({
+          where: {
+            userId: userId,
+            movieId: mediaId,
+          },
+        })
+      : await prisma.showRating.findFirst({
+          where: {
+            userId: userId,
+            showId: mediaId,
+          },
+        });
+
+  return userRating ? userRating.rating : null;
+};
+
+export const handleAddOrUpdateRating = async (
+  mediaData: MediaItem,
+  mediaType: MediaType,
+  rating: number
+) => {
+  const response = await fetch("/api/ratings/addOrUpdate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ mediaData, mediaType, rating }),
+  });
+
+  if (response.ok) {
+    console.log("Rating added/updated successfully!");
+  } else {
+    console.error("Failed to add/update rating");
+  }
+};
+
+export const fetchUserMediaStatus = async (
+  mediaId: number,
+  userId: number,
+  mediaType: MediaType
+) => {
+  const [favoriteStatus, watchlistStatus, ratingStatus] = await Promise.all([
+    getFavoriteStatus(mediaId, userId, mediaType),
+    getWatchlistStatus(mediaId, userId, mediaType),
+    getUserRating(mediaId, userId, mediaType),
+  ]);
+
+  return { favoriteStatus, watchlistStatus, ratingStatus };
+};

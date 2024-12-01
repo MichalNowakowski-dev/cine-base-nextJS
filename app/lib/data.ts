@@ -308,3 +308,38 @@ export const fetchProviders = async (id: string, mediaType: MediaType) => {
     throw new Error(`Failed to fetch ${mediaType} providers.`);
   }
 };
+
+export async function fetchMediaData(id: string, type: MediaType) {
+  const results = await Promise.allSettled([
+    fetchProviders(id, type),
+    fetchMediaCast(id, type),
+    fetchRecommendationsList(id, type),
+    fetchVideosList(id, type),
+    fetchImages(id, type),
+  ]);
+
+  // Obsługa wyników
+  const [
+    providers,
+    mediaMembers,
+    mediaRecommendationsList,
+    videoList,
+    imagesList,
+  ] = results.map((result, index) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    } else {
+      console.error(`Promise ${index + 1} failed:`, result.reason);
+      return null; // Wartość domyślna w przypadku błędu
+    }
+  });
+
+  // Zwróć dane w formie obiektu
+  return {
+    providers,
+    mediaMembers,
+    mediaRecommendationsList,
+    videoList,
+    imagesList,
+  };
+}

@@ -1,8 +1,11 @@
-import { providerMap } from "../auth";
+import { redirect } from "next/navigation";
+import { auth, providerMap } from "../auth";
 import LoginForm from "./LoginForm";
 import Providers from "./Providers";
 
 export default async function SignInPage() {
+  const session = await auth();
+  if (session) redirect("/dashboard");
   return (
     <div className="lg:min-h-screen mx-auto pt-20 lg:pt-28 lg:px-4 max-w-screen-xl">
       <div className="flex flex-col lg:flex-row items-center lg:h-[800px] bg-white text-white w-full">

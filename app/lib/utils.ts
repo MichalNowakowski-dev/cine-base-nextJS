@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import bcrypt from "bcryptjs";
+import { MediaPerson } from "./types";
 
 export const moveMediaList = (
   direction: string,
@@ -39,4 +40,17 @@ export async function saltAndHashPassword(password: string) {
   }
 }
 
-module.exports = saltAndHashPassword;
+export function removeSpaces(str: string) {
+  return str.replace(/\s+/g, "");
+}
+
+export function getPersonImagePathFromList(
+  personName: string,
+  list: MediaPerson[]
+) {
+  const [person] = list.filter(
+    (person: { name: string }) =>
+      removeSpaces(person.name) === removeSpaces(personName)
+  );
+  return person.profile_path ? person.profile_path : false;
+}

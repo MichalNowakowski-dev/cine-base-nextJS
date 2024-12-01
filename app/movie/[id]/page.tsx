@@ -1,16 +1,11 @@
 import {
   fetchMediaByID,
-  fetchProviders,
-  fetchMediaCast,
-  fetchRecommendationsList,
-  fetchVideosList,
-  fetchImages,
   fetchMovieByIDfromOMDB,
+  fetchMediaData,
 } from "@/app/lib/data";
 
 import NoProfilePicture from "@/public/no-profile-img.png";
 import Image from "next/image";
-import { FaThumbsUp } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
@@ -32,8 +27,11 @@ import {
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
-import { getFavoriteStatus, getWatchlistStatus } from "@/app/lib/api/utils";
+import { fetchUserMediaStatus } from "@/app/lib/api/utils";
 import { auth } from "@/app/auth";
+import { getPersonImagePathFromList } from "@/app/lib/utils";
+import { styles } from "./styles";
+import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
 
 export default async function Page({
   params,
@@ -42,53 +40,31 @@ export default async function Page({
 }) {
   const { id } = await params;
   const session = await auth();
-
   const movieDetails: MediaItem = await fetchMediaByID(id, "movie");
   const movieDetailsFromOmdb = await fetchMovieByIDfromOMDB(
     movieDetails.imdb_id as string
   );
-  const providers = await fetchProviders(id, "movie");
-  const movieMembers = await fetchMediaCast(id, "movie");
-  const movieRecommendationsList = await fetchRecommendationsList(id, "movie");
-  const videoList = await fetchVideosList(id, "movie");
-  const imagesList = await fetchImages(id, "movie");
 
-  const movieCast = movieMembers.cast;
-  const movieCrew = movieMembers.crew;
+  const {
+    providers,
+    mediaMembers,
+    mediaRecommendationsList,
+    videoList,
+    imagesList,
+  } = await fetchMediaData(id, "movie");
 
-  const isFavorite = await getFavoriteStatus(
-    movieDetails.id,
-    Number(session?.user?.id),
-    "movie"
-  );
-  const isInWatchlist = await getWatchlistStatus(
-    movieDetails.id,
-    Number(session?.user?.id),
-    "movie"
-  );
-
-  function removeSpaces(str: string) {
-    return str.replace(/\s+/g, "");
-  }
-
-  function getPersonImagePath(personName: string) {
-    const [person] = movieCrew.filter(
-      (person: { name: string }) =>
-        removeSpaces(person.name) === removeSpaces(personName)
+  const { favoriteStatus, watchlistStatus, ratingStatus } =
+    await fetchUserMediaStatus(
+      movieDetails.id,
+      Number(session?.user?.id),
+      "movie"
     );
-    return person.profile_path ? person.profile_path : false;
-  }
-
-  const styles = {
-    headerSection:
-      "flex flex-col justify-end items-center gap-y-4 h-[70vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_100%),_linear-gradient(to_top,_#141414_0%,_transparent_50%)] mb-6",
-  };
 
   return (
     <PageContainer>
       <section className={styles.headerSection}>
         <Image
-          className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full  "
+          className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full"
           alt="movie image"
           src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${movieDetails.backdrop_path}`}
           width={1280}
@@ -107,16 +83,19 @@ export default async function Page({
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500 group">
-              <FaThumbsUp size={20} />
-            </button>
+            <RateMediaButton
+              isRated={Boolean(ratingStatus)}
+              mediaData={movieDetails}
+              mediaType="movie"
+              rating={ratingStatus as number}
+            />
             <AddToWatchlistButton
-              isInWatchlist={isInWatchlist}
+              isInWatchlist={watchlistStatus}
               mediaData={movieDetails}
               mediaType="movie"
             />
             <FavoriteButton
-              isFavorite={isFavorite}
+              isFavorite={favoriteStatus}
               mediaData={movieDetails}
               mediaType="movie"
             />
@@ -258,7 +237,10 @@ export default async function Page({
                           director
                             ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
                                 ProfileSize.MEDIUM
-                              }${getPersonImagePath(director)}`
+                              }${getPersonImagePathFromList(
+                                director,
+                                mediaMembers.crew
+                              )}`
                             : NoProfilePicture
                         }
                         fill
@@ -287,10 +269,13 @@ export default async function Page({
                     <Image
                       alt="Script person profile"
                       src={
-                        getPersonImagePath(writer)
+                        getPersonImagePathFromList(writer, mediaMembers.crew)
                           ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
                               ProfileSize.MEDIUM
-                            }${getPersonImagePath(writer)}`
+                            }${getPersonImagePathFromList(
+                              writer,
+                              mediaMembers.crew
+                            )}`
                           : NoProfilePicture
                       }
                       fill
@@ -306,7 +291,7 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
           <section className="mb-5">
-            <CastCarousel list={movieCast}>
+            <CastCarousel list={mediaMembers.cast}>
               <h3 className="text-secondary">Obsada</h3>
             </CastCarousel>
           </section>
@@ -318,7 +303,7 @@ export default async function Page({
           <section className="mb-5">
             <MediaListController
               mediaType="movie"
-              list={movieRecommendationsList.results}
+              list={mediaRecommendationsList.results}
               itemsPerViewNumber={4}
             >
               <h3 className="text-secondary">Rekomendacje</h3>
