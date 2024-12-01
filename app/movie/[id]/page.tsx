@@ -10,8 +10,7 @@ import {
 
 import NoProfilePicture from "@/public/no-profile-img.png";
 import Image from "next/image";
-import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
+import { FaThumbsUp } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
@@ -23,8 +22,18 @@ import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
 import ImageModal from "@/app/components/imageModal/ImageModal";
 import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
-import { BackdropSize, Genre, LogoSize, ProfileSize } from "@/app/lib/types";
+import {
+  BackdropSize,
+  Genre,
+  LogoSize,
+  MediaItem,
+  ProfileSize,
+} from "@/app/lib/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
+import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
+import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
+import { getFavoriteStatus, getWatchlistStatus } from "@/app/lib/api/utils";
+import { auth } from "@/app/auth";
 
 export default async function Page({
   params,
@@ -32,10 +41,11 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await auth();
 
-  const movieDetails = await fetchMediaByID(id, "movie");
+  const movieDetails: MediaItem = await fetchMediaByID(id, "movie");
   const movieDetailsFromOmdb = await fetchMovieByIDfromOMDB(
-    movieDetails.imdb_id
+    movieDetails.imdb_id as string
   );
   const providers = await fetchProviders(id, "movie");
   const movieMembers = await fetchMediaCast(id, "movie");
@@ -46,6 +56,17 @@ export default async function Page({
   const movieCast = movieMembers.cast;
   const movieCrew = movieMembers.crew;
 
+  const isFavorite = await getFavoriteStatus(
+    movieDetails.id,
+    Number(session?.user?.id),
+    "movie"
+  );
+  const isInWatchlist = await getWatchlistStatus(
+    movieDetails.id,
+    Number(session?.user?.id),
+    "movie"
+  );
+
   function removeSpaces(str: string) {
     return str.replace(/\s+/g, "");
   }
@@ -55,7 +76,7 @@ export default async function Page({
       (person: { name: string }) =>
         removeSpaces(person.name) === removeSpaces(personName)
     );
-    return person ? person.profile_path : false;
+    return person.profile_path ? person.profile_path : false;
   }
 
   const styles = {
@@ -89,12 +110,16 @@ export default async function Page({
             <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500 group">
               <FaThumbsUp size={20} />
             </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-yellow-500">
-              <IoMdAdd size={20} />
-            </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-red-500">
-              <FaRegHeart size={20} />
-            </button>
+            <AddToWatchlistButton
+              isInWatchlist={isInWatchlist}
+              mediaData={movieDetails}
+              mediaType="movie"
+            />
+            <FavoriteButton
+              isFavorite={isFavorite}
+              mediaData={movieDetails}
+              mediaType="movie"
+            />
           </div>
         </div>
       </section>
@@ -107,7 +132,9 @@ export default async function Page({
           {providers.results?.PL?.flatrate || providers.results?.PL?.rent ? (
             <>
               <div className="mb-7">
-                <h3 className="text-secondary mb-3">Gdzie zobaczyć:</h3>
+                <h3 className="text-secondary mb-3">
+                  Gdzie jeszcze można zobaczyć:
+                </h3>
                 <ul className="flex gap-3">
                   {providers.results?.PL?.flatrate?.map(
                     (item: { provider_id: number; logo_path: string }) => (
@@ -125,7 +152,7 @@ export default async function Page({
                 </ul>
               </div>
               <div>
-                <h3 className="text-secondary mb-3">Gdzie wypożyczyć:</h3>
+                <h3 className="text-secondary mb-3">Gdzie można wypożyczyć:</h3>
                 <ul className="flex gap-3">
                   {providers.results?.PL?.rent?.map(
                     (item: { logo_path: string; provider_id: number }) => (
@@ -155,7 +182,7 @@ export default async function Page({
               {" "}
               <CiCalendar size={20} /> Rok premiery
             </p>
-            <div>{movieDetails.release_date.slice(0, 4)}</div>
+            <div>{movieDetails?.release_date?.slice(0, 4)}</div>
           </section>
           <section className="mb-5 ">
             <p className="text-secondary flex gap-1 items-center mb-3">
@@ -163,7 +190,7 @@ export default async function Page({
               <PiTranslate size={20} /> Dostępne języki
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails.spoken_languages.map((lang: { name: string }) => (
+              {movieDetails?.spoken_languages?.map((lang: { name: string }) => (
                 <li
                   className="px-2 py-1 bg-background rounded-md border border-zinc-700"
                   key={lang.name}
@@ -202,7 +229,7 @@ export default async function Page({
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails.genres.map((genre: Genre) => (
+              {movieDetails?.genres?.map((genre: Genre) => (
                 <li
                   className="px-2 py-1 bg-background rounded-md border border-zinc-700"
                   key={genre.id}
@@ -217,24 +244,33 @@ export default async function Page({
               {" "}
               <PiFilmScript size={20} /> Reżyseria
             </p>
-            <div className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 ">
-              <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
-                <Image
-                  alt="Director image"
-                  src={
-                    getPersonImagePath(movieDetailsFromOmdb.Director)
-                      ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${movieDetailsFromOmdb.Director}`
-                      : NoProfilePicture
-                  }
-                  fill
-                  className="object-cover rounded-md"
-                  sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
-                />
-              </div>
-              <p className="flex items-center">
-                {movieDetailsFromOmdb.Director}
-              </p>
-            </div>
+            <ul>
+              {movieDetailsFromOmdb.Director.split(", ").map(
+                (director: string) => (
+                  <li
+                    key={director}
+                    className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
+                  >
+                    <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
+                      <Image
+                        alt="Script person profile"
+                        src={
+                          director
+                            ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                                ProfileSize.MEDIUM
+                              }${getPersonImagePath(director)}`
+                            : NoProfilePicture
+                        }
+                        fill
+                        className="object-cover rounded-md"
+                        sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
+                      />
+                    </div>
+                    <p className="flex items-center">{director}</p>
+                  </li>
+                )
+              )}
+            </ul>
           </section>
           <section className="mb-5">
             <p className="text-secondary flex gap-1 items-center mb-3">
@@ -249,10 +285,12 @@ export default async function Page({
                 >
                   <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
                     <Image
-                      alt="Director image"
+                      alt="Script person profile"
                       src={
                         getPersonImagePath(writer)
-                          ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${writer}`
+                          ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                              ProfileSize.MEDIUM
+                            }${getPersonImagePath(writer)}`
                           : NoProfilePicture
                       }
                       fill

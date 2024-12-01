@@ -228,6 +228,26 @@ export const fetchRecommendationsList = async (
     throw new Error(`Failed to fetch ${mediaType} cast.`);
   }
 };
+export const fetchUserRecommendationList = async (
+  genres: Genre[],
+  mediaType: MediaType
+) => {
+  try {
+    const resp = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_DB_URL
+      }/3/discover/${mediaType}?language=pl&page=1&with_genres=${genres.join(
+        ","
+      )}&api_key=${process.env.TMDB_API_KEY}`
+    );
+    const data = await resp.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch ${mediaType} cast.`);
+  }
+};
 export const fetchSimilarList = async (
   mediaId: string,
   mediaType: MediaType

@@ -4,7 +4,9 @@ export type MediaItem = {
   id: number;
   poster_path: string;
   genre_ids: number[];
+  genres?: Genre[];
   title?: string;
+  tagline?: string;
   name?: string;
   overview: string;
   backdrop_path: string;
@@ -15,6 +17,8 @@ export type MediaItem = {
   media_type?: string;
   character?: string;
   job?: string;
+  imdb_id?: string;
+  spoken_languages?: { name: string }[];
 };
 export type SearchItem = {
   id: number;

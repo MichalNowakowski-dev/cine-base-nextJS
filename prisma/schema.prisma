@@ -1,111 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id              Int               @id @default(autoincrement())
-  email           String?           @unique
-  passwordHash    String?
-  name            String?
-  emailVerified   Boolean?
-  firstName       String?
-  lastName        String?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  isActive        Boolean           @default(true)
-  image       String?           // Możliwość przechowywania URL do awatara
-
-  // Relacje do innych tabel
-  favoriteMovies  FavoriteMovie[]   // Ulubione filmy
-  favoriteShows   FavoriteShow[]    // Ulubione seriale
-  toWatchMovies   ToWatchMovie[]    // Filmy do obejrzenia
-  toWatchShows    ToWatchShow[]     // Seriale do obejrzenia
-  accounts        Account[]         // Relacja z tabelą Account
-  sessions        Session[]         // Relacja z tabelą Session
+  id             Int             @id @default(autoincrement())
+  email          String?         @unique
+  passwordHash   String?
+  firstName      String?
+  lastName       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  isActive       Boolean         @default(true)
+  emailVerified  Boolean?
+  image          String?
+  name           String?
+  accounts       Account[]
+  favoriteMovies FavoriteMovie[]
+  favoriteShows  FavoriteShow[]
+  sessions       Session[]
+  toWatchMovies  ToWatchMovie[]
+  toWatchShows   ToWatchShow[]
 }
 
 model FavoriteMovie {
-  id        Int    @id @default(autoincrement())
-  userId    Int
-  movieId   Int
-  user      User   @relation(fields: [userId], references: [id])
-  movie     Movie  @relation(fields: [movieId], references: [id])
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
 }
 
 model FavoriteShow {
-  id        Int    @id @default(autoincrement())
-  userId    Int
-  showId    Int
-  user      User   @relation(fields: [userId], references: [id])
-  show      Show   @relation(fields: [showId], references: [id])
+  id     Int  @id @default(autoincrement())
+  userId Int
+  showId Int
+  show   Show @relation(fields: [showId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 }
 
 model ToWatchMovie {
-  id        Int    @id @default(autoincrement())
-  userId    Int
-  movieId   Int
-  user      User   @relation(fields: [userId], references: [id])
-  movie     Movie  @relation(fields: [movieId], references: [id])
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  movieId Int
+  movie   Movie @relation(fields: [movieId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
 }
 
 model ToWatchShow {
-  id        Int    @id @default(autoincrement())
-  userId    Int
-  showId    Int
-  user      User   @relation(fields: [userId], references: [id])
-  show      Show   @relation(fields: [showId], references: [id])
+  id     Int  @id @default(autoincrement())
+  userId Int
+  showId Int
+  show   Show @relation(fields: [showId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 }
 
 model Movie {
-  id          Int         @id @default(autoincrement())
+  id          Int             @id
   title       String
   overview    String
   releaseDate DateTime
-  favorites   FavoriteMovie[]  // Relacja z ulubionymi filmami
-  toWatch     ToWatchMovie[]   // Relacja z filmami do obejrzenia
+  favorites   FavoriteMovie[]
+  toWatch     ToWatchMovie[]
 }
 
 model Show {
-  id          Int         @id @default(autoincrement())
-  name        String
-  overview    String
+  id           Int            @id @default(autoincrement())
+  name         String
+  overview     String
   firstAirDate DateTime
-  favorites   FavoriteShow[]  // Relacja z ulubionymi serialami
-  toWatch     ToWatchShow[]   // Relacja z serialami do obejrzenia
+  favorites    FavoriteShow[]
+  toWatch      ToWatchShow[]
 }
 
 model Message {
-  id            Int      @id @default(autoincrement())
-  content       String
-  firstName     String
-  subject       String
-  lastName      String
-  email         String
-  phoneNumber   String?
-  acceptPolicy  Boolean
-  createdAt     DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  content      String
+  createdAt    DateTime @default(now())
+  acceptPolicy Boolean
+  email        String
+  firstName    String
+  lastName     String
+  phoneNumber  String?
+  subject      String
 }
 
 model Account {
-  id                 Int      @id @default(autoincrement())
-  userId             Int
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  // Google-specific
-  access_token       String?  // Google-specific
-  expires_at         Int?     // Google-specific
-  token_type         String? 
-  scope              String? 
-  id_token           String? 
-  session_state      String? 
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -115,13 +112,12 @@ model Session {
   sessionToken String   @unique
   userId       Int
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
   identifier String
-  token      String @unique
+  token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])

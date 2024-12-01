@@ -54,4 +54,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Dodajemy `id` użytkownika do tokena JWT, jeśli istnieje
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Dodajemy ID z tokena JWT do sesji
+      if (token.id) {
+        session.user.id = String(token.id);
+      }
+      return session;
+    },
+  },
 });
