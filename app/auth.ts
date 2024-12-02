@@ -53,6 +53,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: {
     strategy: "jwt",
+    maxAge: 3600,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -66,6 +67,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Dodajemy ID z tokena JWT do sesji
       if (token.id) {
         session.user.id = String(token.id);
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { email: session.user?.email },
+        select: {
+          planId: true,
+          subscriptionStart: true,
+          subscriptionEnd: true,
+        },
+      });
+
+      if (user) {
+        session.user.planId = user.planId;
+        session.user.subscriptionStart = user.subscriptionStart;
+        session.user.subscriptionEnd = user.subscriptionEnd;
       }
       return session;
     },

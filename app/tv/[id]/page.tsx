@@ -1,26 +1,22 @@
 import {
   fetchMediaByID,
-  fetchProviders,
-  fetchMediaCast,
-  fetchRecommendationsList,
-  fetchVideosList,
-  fetchImages,
   fetchSeriesByTitlefromOMDB,
-  getSeasonDetails,
+  fetchMediaData,
 } from "@/app/lib/data";
 
 import NoProfilePicture from "@/public/no-profile-img.png";
 
 import Image from "next/image";
-import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
 import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
 import VideoModalContainer from "@/app/components/ui/VideoCarousel/VideoModalConainer";
-
+import {
+  fetchAllSeasonsData,
+  getPersonImagePathFromList,
+} from "@/app/lib/utils";
 import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
 import SeasonItem from "@/app/tv/[id]/SeasonItem";
 import ImageModal from "@/app/components/imageModal/ImageModal";
@@ -28,6 +24,12 @@ import MediaListController from "@/app/components/mediaListCarousel/MediaListCon
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/lib/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
+import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
+import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
+import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
+import { fetchUserMediaStatus } from "@/app/lib/api/utils";
+import { auth } from "@/app/auth";
+import { styles } from "@/app/styles";
 
 export default async function Page({
   params,
@@ -35,46 +37,29 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await auth();
 
   const seriesDetails = await fetchMediaByID(id, "tv");
-
   const seriesDetailsFromOmdb = await fetchSeriesByTitlefromOMDB(
     seriesDetails?.original_name
   );
-
   const numberOfSeasons = seriesDetails.number_of_seasons;
+  const seasonsData = await fetchAllSeasonsData(Number(id), numberOfSeasons);
 
-  async function fetchAllSeasonsData() {
-    const seasonsPromises = Array.from({ length: numberOfSeasons }, (_, i) =>
-      getSeasonDetails(Number(id), i + 1)
+  const {
+    providers,
+    mediaMembers,
+    mediaRecommendationsList,
+    videoList,
+    imagesList,
+  } = await fetchMediaData(id, "tv");
+
+  const { favoriteStatus, watchlistStatus, ratingStatus } =
+    await fetchUserMediaStatus(
+      seriesDetails.id,
+      Number(session?.user?.id),
+      "tv"
     );
-    return await Promise.all(seasonsPromises);
-  }
-
-  const seasonsData = await fetchAllSeasonsData();
-
-  const providers = await fetchProviders(id, "tv");
-  const seriesCast = await fetchMediaCast(id, "tv");
-  const seriesRecommendationsList = await fetchRecommendationsList(id, "tv");
-  const videoList = await fetchVideosList(id, "tv");
-  const imagesList = await fetchImages(id, "tv");
-
-  function removeSpaces(str: string) {
-    return str.replace(/\s+/g, "");
-  }
-
-  function getPersonImagePath(personName: string) {
-    const [person] = seriesCast.crew.filter(
-      (person: { name: string }) =>
-        removeSpaces(person.name) === removeSpaces(personName)
-    );
-    return person ? person.profile_path : false;
-  }
-
-  const styles = {
-    headerSection:
-      "flex flex-col justify-end items-center gap-y-4 h-[70vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_100%),_linear-gradient(to_top,_#141414_0%,_transparent_50%)] mb-6",
-  };
 
   return (
     <PageContainer>
@@ -93,19 +78,26 @@ export default async function Page({
           <p className=" text-secondary ">{seriesDetails.tagline}</p>
         </header>
         <div className="z-10 mb-14 flex flex-col lg:flex-row gap-3 ">
-          <CtaLink href="/plans" play>
+          <CtaLink href={`/mediaPlay?seriesId=${seriesDetails.id}`} play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500 group">
-              <FaThumbsUp size={20} />
-            </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-yellow-500">
-              <IoMdAdd size={20} />
-            </button>
-            <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-red-500">
-              <FaRegHeart size={20} />
-            </button>
+            <RateMediaButton
+              isRated={Boolean(ratingStatus)}
+              mediaData={seriesDetails}
+              mediaType="tv"
+              rating={ratingStatus as number}
+            />
+            <AddToWatchlistButton
+              isInWatchlist={watchlistStatus}
+              mediaData={seriesDetails}
+              mediaType="tv"
+            />
+            <FavoriteButton
+              isFavorite={favoriteStatus}
+              mediaData={seriesDetails}
+              mediaType="tv"
+            />
           </div>
         </div>
       </section>
@@ -212,10 +204,16 @@ export default async function Page({
                         <Image
                           alt="Director image"
                           src={
-                            getPersonImagePath(writer)
+                            getPersonImagePathFromList(
+                              writer,
+                              mediaMembers.crew
+                            )
                               ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
                                   ProfileSize.MEDIUM
-                                }${getPersonImagePath(writer)}`
+                                }${getPersonImagePathFromList(
+                                  writer,
+                                  mediaMembers.crew
+                                )}`
                               : NoProfilePicture
                           }
                           fill
@@ -263,7 +261,7 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2 border border-borderPrimary">
           <section className="mb-8">
-            <CastCarousel list={seriesCast.cast}>
+            <CastCarousel list={mediaMembers.cast}>
               <h3 className="text-secondary ">Obsada</h3>
             </CastCarousel>
           </section>
@@ -275,7 +273,7 @@ export default async function Page({
           <section className="mb-8">
             <MediaListController
               mediaType="tv"
-              list={seriesRecommendationsList.results}
+              list={mediaRecommendationsList.results}
               itemsPerViewNumber={4}
             >
               <h3 className="text-secondary">Rekomendacje</h3>

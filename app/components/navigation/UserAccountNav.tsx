@@ -1,11 +1,11 @@
 "use client";
 
-import { accountLinks } from "@/app/data/navigation";
+import { accountLinks } from "./navigationData";
 import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import SignOut from "./SignOut";
-import { navigationStyles } from "@/app/styles/navigationStyles";
+import { navigationStyles } from "@/app/styles";
 
 export default function UserAccountNav({
   isAuthenticated,

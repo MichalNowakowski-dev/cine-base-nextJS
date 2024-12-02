@@ -1,6 +1,7 @@
 import { MutableRefObject } from "react";
 import bcrypt from "bcryptjs";
 import { MediaPerson } from "./types";
+import { getSeasonDetails } from "./data";
 
 export const moveMediaList = (
   direction: string,
@@ -53,4 +54,14 @@ export function getPersonImagePathFromList(
       removeSpaces(person.name) === removeSpaces(personName)
   );
   return person.profile_path ? person.profile_path : false;
+}
+
+export async function fetchAllSeasonsData(
+  seriesId: number,
+  numberOfSeasons: number
+) {
+  const seasonsPromises = Array.from({ length: numberOfSeasons }, (_, i) =>
+    getSeasonDetails(seriesId, i + 1)
+  );
+  return await Promise.all(seasonsPromises);
 }

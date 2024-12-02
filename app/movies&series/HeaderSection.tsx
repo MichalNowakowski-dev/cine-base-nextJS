@@ -8,11 +8,7 @@ import Image from "next/image";
 import SwitchListButtons from "../components/ui/switchPaginatedListButtons/SwitchPaginatedListButtons";
 import { usePagination } from "../hooks/usePagination";
 import { BackdropSize, MediaItem } from "../lib/types";
-
-const styles = {
-  headerSection:
-    "flex flex-col justify-end items-center gap-y-1 h-[50vh] md:h[80vh] w-full relative after:content-[''] after:absolute after:inset-0 after:bg-[linear-gradient(to_top,_#141414_0%,_transparent_70%),_linear-gradient(to_top,_#141414_0%,_transparent_30%)] ",
-};
+import { styles } from "../styles";
 
 export default function HeaderSection({ list }: { list: MediaItem[] }) {
   const { activePage, showList, handleMoveList } = usePagination(list, 1);
@@ -45,7 +41,9 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
       </header>
       <div className="z-10 mb-14 md:mb-0 flex flex-col md:flex-row gap-3 w-full md:w-auto items-center">
         <CtaLink
-          href={title ? `/movie/${id}/mediaPlay` : `/tv/${id}/mediaPlay`}
+          href={
+            title ? `/mediaPlay?movieId=${id}` : `/mediaPlay?seriesId=${id}`
+          }
           play
           className="w-4/5"
         >

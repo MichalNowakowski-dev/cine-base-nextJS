@@ -30,7 +30,7 @@ import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchli
 import { fetchUserMediaStatus } from "@/app/lib/api/utils";
 import { auth } from "@/app/auth";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
-import { styles } from "./styles";
+import { styles } from "@/app/styles";
 import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
 
 export default async function Page({
@@ -79,7 +79,7 @@ export default async function Page({
           </p>
         </header>
         <div className="z-10 mb-14 flex flex-col md:flex-row gap-3 ">
-          <CtaLink href={`/movie/${movieDetails.id}/mediaPlay`} play>
+          <CtaLink href={`/mediaPlay?movieId=${movieDetails.id}`} play>
             Oglądaj
           </CtaLink>
           <div className="flex gap-x-3">

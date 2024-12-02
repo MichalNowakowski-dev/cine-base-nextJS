@@ -8,10 +8,10 @@ import { GoSearch } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navLinks } from "@/app/data/navigation";
-import { navigationStyles } from "../../styles/navigationStyles";
+import { navLinks } from "./navigationData";
 import { useSession } from "next-auth/react";
 import UserAccountNav from "./UserAccountNav";
+import { navigationStyles } from "@/app/styles";
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
