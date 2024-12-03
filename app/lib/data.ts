@@ -205,6 +205,7 @@ export const fetchMediaCast = async (mediaId: string, mediaType: MediaType) => {
       `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/credits?language=pl&api_key=${process.env.TMDB_API_KEY}`
     );
     const data = response.json();
+
     return data;
   } catch (error) {
     console.error(error);

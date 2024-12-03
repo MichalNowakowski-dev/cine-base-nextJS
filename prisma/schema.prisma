@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  seed = "./seed.ts"
 }
 
 datasource db {
@@ -155,18 +156,19 @@ model VerificationToken {
 }
 
 model Plan {
-  id          String   @id
-  name        String
-  description String
-  content     String
-  monthlyPrice Float
-  yearlyPrice  Float
+  id            String  @id @unique
+  name          String
+  description   String
+  monthlyPrice  Float
+  yearlyPrice   Float
+  content       String
   devicesNumber Int
-  trialPeriod  Int
+  trialPeriod   Int
   cancelAllowed Boolean
-  hdr          Boolean
-  dolbyAtmos   Boolean
-  adsFree      Boolean
-  offlineView  Boolean
-  familySharing Int?   
+  HDR           Boolean
+  DolbyAtmos    Boolean
+  adsFree       Boolean
+  offlineView   Boolean
+  familySharing Boolean
+  popular       Boolean  
 }
