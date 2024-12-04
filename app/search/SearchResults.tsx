@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchResultsByQuery } from "../lib/data";
+import { fetchResultsByQuery } from "../lib/api/tmdbApi";
 import SearchResult from "./SearchResult";
 import { SearchItem } from "../lib/types";
 import Pagination from "../genre/Pagination";

@@ -2,7 +2,7 @@ import {
   fetchPersonById,
   fetchPersonCredits,
   fetchPersonImages,
-} from "@/app/lib/data";
+} from "@/app/lib/api/tmdbApi";
 
 import Image from "next/image";
 

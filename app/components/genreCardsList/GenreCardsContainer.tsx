@@ -9,7 +9,7 @@ import {
   fetchGenresList,
   fetchMovieListByGenre,
   fetchSeriesListByGenre,
-} from "@/app/lib/data";
+} from "@/app/lib/api/tmdbApi";
 
 async function getGenresWithImages(
   mediaType: MediaType

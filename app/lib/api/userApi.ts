@@ -198,9 +198,10 @@ export const ensureMediaExists = async (
           id: mediaData.id,
           title: mediaData.title as string,
           overview: mediaData.overview || "",
-          releaseDate: new Date(mediaData.release_date!),
+          releaseDate: new Date(mediaData.release_date as string),
         },
       });
+      console.log("Swtorzony obiekt filmu");
     } else {
       // Utwórz rekord serialu
       await prisma.show.create({
@@ -208,9 +209,12 @@ export const ensureMediaExists = async (
           id: mediaData.id,
           name: mediaData.name as string,
           overview: mediaData.overview || "",
-          firstAirDate: new Date(mediaData.first_air_date!),
+          firstAirDate: new Date(mediaData.first_air_date as string),
         },
       });
+      console.log("Swtorzony obiekt serialu");
     }
   }
 };
+
+// Funkcja, która pobiera informacje o subskrypcji użytkownika

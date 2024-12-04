@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   handleAddToWatchlist,
   handleRemoveFromWatchlist,
-} from "@/app/lib/api/utils";
+} from "@/app/lib/api/userApi";
 import { MediaItem, MediaType } from "@/app/lib/types";
 import { IoMdAdd } from "react-icons/io";
 

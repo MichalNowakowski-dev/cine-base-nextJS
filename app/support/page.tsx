@@ -1,4 +1,4 @@
-import { fetchTrendingList } from "../lib/data";
+import { fetchTrendingList } from "../lib/api/tmdbApi";
 import Image from "next/image";
 import { MediaItem, PosterSize } from "../lib/types";
 import SupportForm from "./SupportForm";

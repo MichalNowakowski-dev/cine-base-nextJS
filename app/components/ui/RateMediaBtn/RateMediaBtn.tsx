@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
-import { handleAddOrUpdateRating } from "@/app/lib/api/utils";
+import { handleAddOrUpdateRating } from "@/app/lib/api/userApi";
 import { MediaItem, MediaType } from "@/app/lib/types";
 
 interface RateMediaButtonProps {

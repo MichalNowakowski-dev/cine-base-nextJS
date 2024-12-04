@@ -1,52 +1,41 @@
 "use client";
 
-import { SubscriptionPlanData } from "@/app/lib/types";
+import { SubscriptionPlan } from "@/app/lib/types";
 import React, { useState } from "react";
 
 export default function SubscriptionPlanMobile({
   data,
 }: {
-  data: SubscriptionPlanData;
+  data: SubscriptionPlan[];
 }) {
-  const [selectedPlan, setSelectedPlan] = useState(data.standard);
+  const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan>(data[0]);
+
   return (
     <section className="flex flex-col gap-5 lg:hidden">
       <div className="flex p-2 bg-backgroundFooter rounded-lg border border-borderPrimary font-light">
-        <button
-          onClick={() => setSelectedPlan(data.basic)}
-          className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
-            selectedPlan.name === data.basic.name
-              ? "bg-background text-white"
-              : " bg-transparent text-secondary"
-          }`}
-        >
-          {data.basic.name}
-        </button>
-        <button
-          onClick={() => setSelectedPlan(data.standard)}
-          className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
-            selectedPlan.name === data.standard.name
-              ? "bg-background text-white"
-              : " bg-transparent text-secondary"
-          }`}
-        >
-          {data.standard.name}
-        </button>
-        <button
-          onClick={() => setSelectedPlan(data.premium)}
-          className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
-            selectedPlan.name === data.premium.name
-              ? "bg-background text-white"
-              : " bg-transparent text-secondary"
-          }`}
-        >
-          {data.premium.name}
-        </button>
+        {data.map((plan) => (
+          <button
+            key={plan.id}
+            onClick={() => setSelectedPlan(plan)}
+            className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
+              selectedPlan.id === plan.id
+                ? "bg-background text-white"
+                : "bg-transparent text-secondary"
+            }`}
+          >
+            {plan.name}
+          </button>
+        ))}
       </div>
+
       <main className="grid grid-cols-2 gap-5 p-6 bg-backgroundFooter rounded-lg border border-borderPrimary font-light">
         <div className="flex flex-col col-start-1">
           <h5 className="text-secondary">Cena</h5>
-          <p>{selectedPlan.price.monthly}zł/Miesiąc</p>
+          <p>
+            {selectedPlan.monthlyPrice} zł / miesiąc
+            <br />
+            {selectedPlan.yearlyPrice} zł / rok
+          </p>
         </div>
         <div className="flex flex-col col-start-2">
           <h5 className="text-secondary">Okres próbny</h5>
@@ -78,11 +67,11 @@ export default function SubscriptionPlanMobile({
         </div>
         <div className="flex flex-col col-start-1">
           <h5 className="text-secondary">Oglądanie offline</h5>
-          <p>{selectedPlan.offlineView}</p>
+          <p>{selectedPlan.offlineView ? "Tak" : "Nie"}</p>
         </div>
         <div className="flex flex-col col-start-2">
           <h5 className="text-secondary">Współdzielenie konta</h5>
-          <p>{selectedPlan.familySharing}</p>
+          <p>{selectedPlan.familySharing ? "Tak" : "Nie"}</p>
         </div>
       </main>
     </section>

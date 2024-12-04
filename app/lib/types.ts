@@ -99,20 +99,18 @@ export type SubscriptionPlan = {
   id: string;
   popular: boolean;
   name: string;
-  price: {
-    monthly: number;
-    yearly: number;
-  };
+  monthlyPrice: number;
+  yearlyPrice: number;
   description: string;
   content: string;
   devicesNumber: number;
   trialPeriod: number;
-  cancelAllowed: string;
-  HDR: string;
-  DolbyAtmos: string;
-  adsFree: string;
-  offlineView: string;
-  familySharing: string;
+  cancelAllowed: boolean;
+  HDR: boolean;
+  DolbyAtmos: boolean;
+  adsFree: boolean;
+  offlineView: boolean;
+  familySharing: boolean;
 };
 
 export type SubscriptionPlanData = Record<string, SubscriptionPlan>;

@@ -2,7 +2,7 @@ import {
   fetchMediaByID,
   fetchMovieByIDfromOMDB,
   fetchMediaData,
-} from "@/app/lib/data";
+} from "@/app/lib/api/tmdbApi";
 
 import NoProfilePicture from "@/public/no-profile-img.png";
 import Image from "next/image";
@@ -27,7 +27,7 @@ import {
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
-import { fetchUserMediaStatus } from "@/app/lib/api/utils";
+import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
 import { auth } from "@/app/auth";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
 import { styles } from "@/app/styles";
@@ -39,7 +39,6 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await auth();
   const movieDetails: MediaItem = await fetchMediaByID(id, "movie");
   const movieDetailsFromOmdb = await fetchMovieByIDfromOMDB(
     movieDetails.imdb_id as string
@@ -53,6 +52,7 @@ export default async function Page({
     imagesList,
   } = await fetchMediaData(id, "movie");
 
+  const session = await auth();
   const { favoriteStatus, watchlistStatus, ratingStatus } =
     await fetchUserMediaStatus(
       movieDetails.id,

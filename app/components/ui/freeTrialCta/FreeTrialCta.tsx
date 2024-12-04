@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchMediaList } from "@/app/lib/data";
+import { fetchMediaList } from "@/app/lib/api/tmdbApi";
 import Image from "next/image";
 import { MediaItem, PosterSize } from "@/app/lib/types";
 

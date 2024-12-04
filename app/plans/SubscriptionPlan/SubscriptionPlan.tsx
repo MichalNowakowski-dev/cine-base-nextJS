@@ -1,26 +1,27 @@
 "use client";
 import SubscriptionPlanCard from "./SubscriptionPlanCard";
-import { plansData } from "@/app/lib/plansData";
-import { SubscriptionPlanData } from "@/app/lib/types";
+import { type SubscriptionPlan } from "@/app/lib/types";
 
 import React, { useState } from "react";
 
-export default function SubscriptionPlan() {
+export default function SubscriptionPlan({
+  plansData,
+}: {
+  plansData: SubscriptionPlan[];
+}) {
   const [priceCycle, setPriceCycle] = useState("monthly");
 
-  function renderPlanOptions(obj: SubscriptionPlanData) {
-    return Object.values(obj).map((plan) => {
-      return (
-        <SubscriptionPlanCard
-          key={plan.id}
-          planDesc={plan.description}
-          planName={plan.name}
-          planId={plan.id}
-          planPrice={plan.price}
-          priceCycle={priceCycle}
-        />
-      );
-    });
+  function renderPlanOptions(plansList: SubscriptionPlan[]) {
+    return plansList.map((plan) => (
+      <SubscriptionPlanCard
+        key={plan.id}
+        planDesc={plan.description}
+        planName={plan.name}
+        planId={plan.id}
+        planPrice={{ monthly: plan.monthlyPrice, yearly: plan.yearlyPrice }}
+        priceCycle={priceCycle}
+      />
+    ));
   }
 
   return (

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
 import { MediaItem, MediaType } from "@/app/lib/types";
-import { ensureMediaExists } from "@/app/lib/api/utils";
+import { ensureMediaExists } from "@/app/lib/api/userApi";
 
 export async function POST(request: NextRequest) {
   const session = await auth(); // Pobranie sesji
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Sprawdź, czy film istnieje
-    ensureMediaExists(mediaData, mediaType);
+    await ensureMediaExists(mediaData, mediaType);
 
     const favorite =
       mediaType === "movie"

@@ -2,29 +2,38 @@
 
 import { accountLinks } from "./navigationData";
 import Link from "next/link";
-import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import SignOut from "./SignOut";
 import { navigationStyles } from "@/app/styles";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
-export default function UserAccountNav({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean;
-}) {
+export default function UserAccountNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <div className="relative">
       {/* Ikona użytkownika */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        // onTouchStart={() => setIsOpen(!isOpen)}
         className={`flex items-center justify-center border-4 border-transparent p-1 lg:hover:border-white ${
           isOpen && "border-white"
         } rounded-full`}
       >
-        <FaUserCircle size={30} />
+        {
+          <Image
+            className="rounded-full aspect-square"
+            alt="user avatar"
+            src={
+              session?.user?.image
+                ? (session.user.image as string)
+                : "/no-profile-img.png"
+            }
+            width={45}
+            height={45}
+          />
+        }
       </button>
 
       {/* Rozwijana lista */}
@@ -42,7 +51,7 @@ export default function UserAccountNav({
             className={navigationStyles.mobileNav(isOpen)}
           >
             {accountLinks.map((item) => {
-              if (isAuthenticated && item.private) {
+              if (session?.user && item.private) {
                 return (
                   <div key={item.href} className="min-w-32">
                     <Link
@@ -53,7 +62,7 @@ export default function UserAccountNav({
                     </Link>
                   </div>
                 );
-              } else if (!isAuthenticated && !item.private) {
+              } else if (!session?.user && !item.private) {
                 return (
                   <div key={item.href} className="min-w-32">
                     <Link
@@ -67,7 +76,7 @@ export default function UserAccountNav({
               }
             })}
 
-            {isAuthenticated && <SignOut />}
+            {session?.user && <SignOut />}
           </div>
         </div>
       )}

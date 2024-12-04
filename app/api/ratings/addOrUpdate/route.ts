@@ -2,7 +2,7 @@ import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { MediaItem, MediaType } from "@/app/lib/types";
-import { ensureMediaExists } from "@/app/lib/api/utils";
+import { ensureMediaExists } from "@/app/lib/api/userApi";
 
 // Funkcja do obsługi walidacji oceny
 const validateRating = (rating: number) => {

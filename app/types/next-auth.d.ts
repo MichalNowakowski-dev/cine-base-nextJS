@@ -10,9 +10,11 @@ declare module "next-auth" {
 
   interface User {
     id: string; // Dodajemy pole ID do User
-    planId?: string | null; // Plan subskrypcji
+    planId?: number | null; // Plan subskrypcji
     subscriptionStart?: Date | null; // Data rozpoczęcia
     subscriptionEnd?: Date | null; // Data zakończenia
+    subscriptionStatus?: string | null;
+    plan?: { name: string; monthlyPrice: number; yearlyPrice: number };
   }
 }
 

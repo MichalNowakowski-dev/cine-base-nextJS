@@ -1,5 +1,8 @@
 // app/genres/page.tsx
-import { fetchMovieListByGenre, fetchSeriesListByGenre } from "../lib/data";
+import {
+  fetchMovieListByGenre,
+  fetchSeriesListByGenre,
+} from "../lib/api/tmdbApi";
 import MediaGenreList from "./MediaGenreList";
 import Pagination from "./Pagination";
 import { MediaType } from "../lib/types";

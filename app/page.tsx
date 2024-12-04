@@ -6,8 +6,10 @@ import FaqList from "./components/faqList/FaqList";
 import FreeTrialCta from "./components/ui/freeTrialCta/FreeTrialCta";
 import SubscriptionPlan from "./plans/SubscriptionPlan/SubscriptionPlan";
 import CtaLink from "./components/ui/ctaLink/CtaLink";
+import { prisma } from "./prisma";
 
 export default async function Home() {
+  const plans = await prisma.plan.findMany();
   return (
     <>
       <header className="h-[70vh] w-full relative flex flex-col items-center justify-center mb-5 after:content-[''] after:absolute after:inset-0 after:bg-fade-to-dark">
@@ -88,7 +90,7 @@ export default async function Home() {
         </section>
 
         <section className="px-4">
-          <SubscriptionPlan />
+          <SubscriptionPlan plansData={plans} />
         </section>
 
         <section className="px-4 mb-16">

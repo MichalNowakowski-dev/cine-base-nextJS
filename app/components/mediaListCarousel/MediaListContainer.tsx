@@ -1,4 +1,4 @@
-import { fetchMediaList, fetchTrendingList } from "@/app/lib/data";
+import { fetchMediaList, fetchTrendingList } from "@/app/lib/api/tmdbApi";
 import {
   MediaCategory,
   MediaItem,

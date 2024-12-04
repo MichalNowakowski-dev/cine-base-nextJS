@@ -1,9 +1,12 @@
-import { plansData } from "@/app/lib/plansData";
-
 import SubscriptionTable from "./SubscriptionPlanTable";
 import SubscriptionPlanMobile from "./SubscriptionPlanMobile";
+import { type SubscriptionPlan } from "@/app/lib/types";
 
-export default function SubscriptionPlanInfo() {
+export default function SubscriptionPlanInfo({
+  plansData,
+}: {
+  plansData: SubscriptionPlan[];
+}) {
   return (
     <div className="flex flex-wrap gap-8 justify-between items-center mb-8">
       <header>

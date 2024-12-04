@@ -2,7 +2,7 @@ import {
   fetchMediaByID,
   fetchSeriesByTitlefromOMDB,
   fetchMediaData,
-} from "@/app/lib/data";
+} from "@/app/lib/api/tmdbApi";
 
 import NoProfilePicture from "@/public/no-profile-img.png";
 
@@ -27,7 +27,7 @@ import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
-import { fetchUserMediaStatus } from "@/app/lib/api/utils";
+import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
 import { auth } from "@/app/auth";
 import { styles } from "@/app/styles";
 

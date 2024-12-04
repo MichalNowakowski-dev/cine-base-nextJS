@@ -5,7 +5,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import {
   handleAddToFavorites,
   handleRemoveFromFavorites,
-} from "@/app/lib/api/utils";
+} from "@/app/lib/api/userApi";
 import { MediaItem, MediaType } from "@/app/lib/types";
 
 interface FavoriteButtonProps {

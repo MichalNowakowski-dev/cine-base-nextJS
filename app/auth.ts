@@ -56,33 +56,58 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     maxAge: 3600,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       // Dodajemy `id` użytkownika do tokena JWT, jeśli istnieje
       if (user) {
         token.id = user.id;
+        token.image = user.image || null;
+      }
+      if (trigger === "update" && session) {
+        token.image = session.user.image; // Przykład: nowy obraz awatara
       }
       return token;
     },
     async session({ session, token }) {
       // Dodajemy ID z tokena JWT do sesji
-      if (token.id) {
-        session.user.id = String(token.id);
-      }
+      session.user.id = String(token.id);
+      session.user.image = token.image as string;
 
+      // Pobieramy dane użytkownika, w tym subskrypcje
       const user = await prisma.user.findUnique({
         where: { email: session.user?.email },
-        select: {
-          planId: true,
-          subscriptionStart: true,
-          subscriptionEnd: true,
+        include: {
+          subscriptions: {
+            where: { status: "active" }, // Wybieramy tylko aktywne subskrypcje
+            orderBy: {
+              subscriptionEnd: "desc", // Najnowsza subskrypcja
+            },
+            take: 1, // Bierzemy tylko jedną subskrypcję
+            select: {
+              planId: true,
+              subscriptionStart: true,
+              subscriptionEnd: true,
+              status: true,
+              plan: {
+                select: {
+                  name: true,
+                  monthlyPrice: true,
+                  yearlyPrice: true,
+                },
+              },
+            },
+          },
         },
       });
 
-      if (user) {
-        session.user.planId = user.planId;
-        session.user.subscriptionStart = user.subscriptionStart;
-        session.user.subscriptionEnd = user.subscriptionEnd;
+      if (user && user.subscriptions.length > 0) {
+        const activeSubscription = user.subscriptions[0]; // Bierzemy aktywną subskrypcję
+        session.user.planId = activeSubscription.planId;
+        session.user.subscriptionStart = activeSubscription.subscriptionStart;
+        session.user.subscriptionEnd = activeSubscription.subscriptionEnd;
+        session.user.subscriptionStatus = activeSubscription.status;
+        session.user.plan = activeSubscription.plan; // Plan subskrypcji
       }
+
       return session;
     },
   },

@@ -1,7 +1,7 @@
 import { MutableRefObject } from "react";
 import bcrypt from "bcryptjs";
 import { MediaPerson } from "./types";
-import { getSeasonDetails } from "./data";
+import { getSeasonDetails } from "./api/tmdbApi";
 
 export const moveMediaList = (
   direction: string,
@@ -45,15 +45,30 @@ export function removeSpaces(str: string) {
   return str.replace(/\s+/g, "");
 }
 
+function compareNames(name1: string, name2: string): boolean {
+  // Normalizacja nazw (usuwanie cudzysłowów i konwersja do małych liter)
+  const normalize = (name: string) =>
+    name.toLowerCase().replace(/['"]/g, "").trim();
+
+  const words1 = new Set(normalize(name1).split(" "));
+  const words2 = new Set(normalize(name2).split(" "));
+
+  // Sprawdzenie, czy wszystkie główne komponenty (imię i nazwisko) są wspólne
+  const commonWords = [...words1].filter((word) => words2.has(word));
+
+  // Jeśli co najmniej 2 elementy są wspólne, można uznać, że to ta sama osoba
+  return commonWords.length >= 2;
+}
+
 export function getPersonImagePathFromList(
   personName: string,
   list: MediaPerson[]
 ) {
-  const [person] = list.filter(
-    (person: { name: string }) =>
-      removeSpaces(person.name) === removeSpaces(personName)
+  const [person] = list.filter((person: { name: string }) =>
+    compareNames(person.name, personName)
   );
-  return person.profile_path ? person.profile_path : false;
+
+  return person?.profile_path ? person.profile_path : false;
 }
 
 export async function fetchAllSeasonsData(

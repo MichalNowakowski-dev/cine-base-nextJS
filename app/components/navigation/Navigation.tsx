@@ -9,7 +9,7 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "./navigationData";
-import { useSession } from "next-auth/react";
+
 import UserAccountNav from "./UserAccountNav";
 import { navigationStyles } from "@/app/styles";
 
@@ -17,8 +17,6 @@ export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileNavDisplayed, setIsMobileNavDisplayed] = useState(true);
   const lastScrollY = useRef(0);
-
-  const { data: session } = useSession();
 
   const pathname = usePathname();
 
@@ -124,7 +122,7 @@ export default function Navigation() {
             <GoSearch size={25} fill="gray" />
           </Link>
 
-          <UserAccountNav isAuthenticated={session ? true : false} />
+          <UserAccountNav />
 
           <button onClick={toggleNav} className={navigationStyles.mobileButton}>
             {isMobileNavOpen ? (

@@ -1,7 +1,7 @@
-import { SubscriptionPlan, SubscriptionPlanData } from "@/app/lib/types";
+import { type SubscriptionPlan } from "@/app/lib/types";
 import React from "react";
 
-const SubscriptionTable = ({ data }: { data: SubscriptionPlanData }) => {
+const SubscriptionTable = ({ data }: { data: SubscriptionPlan[] }) => {
   const features: { key: string; label: string }[] = [
     { key: "price", label: "Cena (PLN)" },
     { key: "devicesNumber", label: "Liczba urządzeń" },
@@ -22,7 +22,7 @@ const SubscriptionTable = ({ data }: { data: SubscriptionPlanData }) => {
             <th className="border border-borderPrimary py-6 text-center font-light basis-1/4 text-xl">
               Funkcjonalność
             </th>
-            {Object.values(data).map((plan) => (
+            {data.map((plan) => (
               <th
                 key={plan.name}
                 className="border border-borderPrimary py-6 font-light basis-1/4"
@@ -33,7 +33,7 @@ const SubscriptionTable = ({ data }: { data: SubscriptionPlanData }) => {
                     <span className="px-2 py-1 bg-primary text-xs font-light rounded-md">
                       Popularne
                     </span>
-                  )}{" "}
+                  )}
                 </div>
               </th>
             ))}
@@ -45,13 +45,31 @@ const SubscriptionTable = ({ data }: { data: SubscriptionPlanData }) => {
               <td className="border border-borderPrimary font-light text-center py-6 basis-1/4">
                 {feature.label}
               </td>
-              {Object.values(data).map((plan) => {
-                // Sprawdź, czy właściwość plan[feature.key] jest obiektem, jeśli tak, wybierz odpowiednią wartość
+              {data.map((plan) => {
                 const featureValue =
                   plan[feature.key as keyof SubscriptionPlan];
+
+                // Obsługa wyświetlania ceny miesięcznej i rocznej
+                if (feature.key === "price") {
+                  return (
+                    <td
+                      key={plan.name}
+                      className="border border-borderPrimary py-6 text-center basis-1/4"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <p>{plan.monthlyPrice}zł/Miesiąc</p>
+                        <p>{plan.yearlyPrice}zł/Rocznie</p>
+                      </div>
+                    </td>
+                  );
+                }
+
+                // Jeśli wartość jest typu boolean, wyświetl "Tak" lub "Nie"
                 const displayValue =
-                  typeof featureValue === "object" && featureValue !== null
-                    ? featureValue.monthly // np. "monthly" lub "yearly"
+                  typeof featureValue === "boolean"
+                    ? featureValue
+                      ? "Tak"
+                      : "Nie"
                     : featureValue;
 
                 return (

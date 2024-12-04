@@ -9,29 +9,68 @@ datasource db {
 }
 
 model User {
-  id             Int             @id @default(autoincrement())
-  email          String?         @unique
-  passwordHash   String?
-  firstName      String?
-  lastName       String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  isActive       Boolean         @default(true)
-  emailVerified  Boolean?
-  image          String?
-  name           String?
-  planId          String?   // Identyfikator planu
-  subscriptionStart DateTime? // Data rozpoczęcia subskrypcji
-  subscriptionEnd   DateTime? // Data zakończenia subskrypcji
-  accounts       Account[]
-  favoriteMovies FavoriteMovie[]
-  favoriteShows  FavoriteShow[]
-  sessions       Session[]
-  toWatchMovies  ToWatchMovie[]
-  toWatchShows   ToWatchShow[]
-  movieRating    MovieRating[]
-  showRating    ShowRating[]
+  id               Int            @id @default(autoincrement())
+  email            String?        @unique
+  passwordHash     String?
+  firstName        String?
+  lastName         String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  isActive         Boolean        @default(true)
+  emailVerified    Boolean?
+  image            String?
+  name             String?
+
+  // Relacja do subskrypcji (tablica, bo użytkownik może mieć więcej niż jedną subskrypcję)
+  subscriptions    Subscription[] // Relacja do modelu Subscription
+  accounts         Account[]      // Powiązane konta
+  favoriteMovies   FavoriteMovie[] 
+  favoriteShows    FavoriteShow[] 
+  toWatchMovies    ToWatchMovie[] 
+  toWatchShows     ToWatchShow[] 
+  movieRating      MovieRating[]  
+  showRating       ShowRating[]   
 }
+
+
+model Plan {
+  id            Int  @id @default(autoincrement())
+  name          String
+  description   String
+  monthlyPrice  Float
+  yearlyPrice   Float
+  content       String
+  devicesNumber Int
+  trialPeriod   Int
+  cancelAllowed Boolean
+  HDR           Boolean
+  DolbyAtmos    Boolean
+  adsFree       Boolean
+  offlineView   Boolean
+  familySharing Boolean
+  popular       Boolean  
+  subscriptions    Subscription[]   // Odwrotna relacja
+
+}
+
+model Subscription {
+  id               Int       @id @default(autoincrement()) // Unikalny identyfikator subskrypcji
+  userId           Int       // Identyfikator użytkownika (relacja do tabeli User)
+  planId   Int    // Identyfikator planu subskrypcji (relacja do tabeli Plan)
+  subscriptionStart DateTime  // Data rozpoczęcia subskrypcji
+  subscriptionEnd   DateTime  // Data zakończenia subskrypcji
+  status           String    // Status subskrypcji, np. 'active', 'expired'
+  isPaid           Boolean   // Czy subskrypcja jest opłacona?
+  trialPeriod      Boolean   // Czy subskrypcja jest w okresie próbnym?
+  createdAt        DateTime  @default(now()) // Data utworzenia subskrypcji
+  updatedAt        DateTime  @updatedAt       // Data ostatniej aktualizacji subskrypcji
+  
+  // Relacje
+  user             User      @relation(fields: [userId], references: [id]) // Relacja do użytkownika
+  plan             Plan      @relation(fields: [planId], references: [id]) // Relacja do planu
+}
+
+
 
 model FavoriteMovie {
   id      Int   @id @default(autoincrement())
@@ -139,13 +178,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Session {
-  id           Int      @id @default(autoincrement())
-  sessionToken String   @unique
-  userId       Int
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
 model VerificationToken {
   identifier String
@@ -155,20 +187,3 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Plan {
-  id            String  @id @unique
-  name          String
-  description   String
-  monthlyPrice  Float
-  yearlyPrice   Float
-  content       String
-  devicesNumber Int
-  trialPeriod   Int
-  cancelAllowed Boolean
-  HDR           Boolean
-  DolbyAtmos    Boolean
-  adsFree       Boolean
-  offlineView   Boolean
-  familySharing Boolean
-  popular       Boolean  
-}

@@ -2,43 +2,61 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ProfileSize } from "@/app/lib/types";
+import { useSession } from "next-auth/react";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess } from "@/app//lib/toast";
+import "react-toastify/dist/ReactToastify.css";
 
-const AvatarPicker = ({ avatarList }: { avatarList: string[] }) => {
+const AvatarPicker = () => {
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null); // Przechowuje wybrany awatar
+  const { update } = useSession();
 
   const handleAvatarSelect = (avatar: string) => {
     setSelectedAvatar(avatar); // Ustawia wybrany awatar
   };
 
-  const handleAvatarSubmit = () => {
+  const handleAvatarSubmit = async () => {
     if (selectedAvatar) {
-      alert("Avatar selected successfully!"); // Możesz tu dodać logikę do backendu
+      const saveAvatar = await fetch("/api/user/saveAvatar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imagePath: selectedAvatar }),
+      });
 
-      setSelectedAvatar(null);
+      await update({ user: { image: selectedAvatar } });
+
+      if (saveAvatar.ok) {
+        notifySuccess("Avatar zmieniony pomyślnie !");
+        setSelectedAvatar(null);
+      }
     }
   };
 
-  const avatarUrl = (path: string) => {
-    return `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${path}`;
+  const avatarPath = (avatarNumber: number) => {
+    return `/avatars/avatar${avatarNumber}.jpg`;
   };
 
   return (
     <div className="flex flex-col items-center space-y-6">
+      <div>
+        <ToastContainer theme="dark" autoClose={3000} />
+      </div>
       <h2 className="text-xl font-semibold text-gray-700">Dostępne avatary</h2>
 
       {/* Sekcja wyświetlania dostępnych awatarów */}
       <div className="grid grid-cols-5 gap-4">
-        {avatarList.map((avatar, index) => (
+        {Array.from({ length: 10 }).map((avatar, index) => (
           <button
             key={index}
-            onClick={() => handleAvatarSelect(avatar)}
-            className={`border-2 rounded-lg p-1 ${
+            onClick={() => handleAvatarSelect(avatarPath(index + 1))}
+            className={`border-2 rounded-lg p-1 hover:border-blue-600 ${
               selectedAvatar === avatar ? "border-blue-500" : "border-gray-300"
             }`}
           >
             <Image
-              src={avatarUrl(avatar)}
+              src={avatarPath(index + 1)}
               alt={`Avatar ${index + 1}`}
               width={185}
               height={320}
@@ -51,9 +69,9 @@ const AvatarPicker = ({ avatarList }: { avatarList: string[] }) => {
       {/* Podgląd wybranego awatara */}
       {selectedAvatar && (
         <div className="flex flex-col items-center">
-          <h3 className="text-lg text-gray-600">Selected Avatar:</h3>
+          <h3 className="text-lg text-gray-600">WybierzAvatar:</h3>
           <Image
-            src={avatarUrl(selectedAvatar)}
+            src={selectedAvatar}
             alt="Selected Avatar"
             width={185}
             height={320}
@@ -72,7 +90,7 @@ const AvatarPicker = ({ avatarList }: { avatarList: string[] }) => {
             : "hover:bg-blue-700"
         }`}
       >
-        Confirm Avatar
+        Zatwierdź
       </button>
     </div>
   );

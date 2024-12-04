@@ -1,4 +1,4 @@
-import { Genre, MediaCategory, MediaType, TimeWindow } from "./types";
+import { Genre, MediaCategory, MediaType, TimeWindow } from "../types";
 
 export const fetchResultsByQuery = async (query: string, page?: number) => {
   try {
