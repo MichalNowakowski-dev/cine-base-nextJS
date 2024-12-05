@@ -3,13 +3,13 @@ import {
   Genre,
   MediaResponse,
   GenreWithImages,
-} from "@/app/lib/types";
-import GenreCardsSection from "./GenreCardsSection";
+} from "@/app/types/types";
 import {
   fetchGenresList,
   fetchMovieListByGenre,
   fetchSeriesListByGenre,
 } from "@/app/lib/api/tmdbApi";
+import SwiperGenres from "../Swiper/SwiperGenres";
 
 async function getGenresWithImages(
   mediaType: MediaType
@@ -46,8 +46,12 @@ export default async function GenreCardsContainer({
 }) {
   const genresListWithImages = await getGenresWithImages(mediaType);
   return (
-    <GenreCardsSection genresList={genresListWithImages} mediaType={mediaType}>
+    <SwiperGenres
+      genreList={genresListWithImages}
+      swiperId="genres"
+      mediaType={mediaType}
+    >
       {children}
-    </GenreCardsSection>
+    </SwiperGenres>
   );
 }

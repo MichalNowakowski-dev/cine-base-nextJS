@@ -1,6 +1,6 @@
 import { fetchTrendingList } from "../lib/api/tmdbApi";
 import Image from "next/image";
-import { MediaItem, PosterSize } from "../lib/types";
+import { MediaItem, PosterSize } from "../types/types";
 import SupportForm from "./SupportForm";
 import AccordionList from "../components/faqList/FaqList";
 import FreeTrialCta from "../components/ui/freeTrialCta/FreeTrialCta";

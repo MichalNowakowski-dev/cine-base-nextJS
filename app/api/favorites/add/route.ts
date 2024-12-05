@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
-import { MediaItem, MediaType } from "@/app/lib/types";
+import { MediaItem, MediaType } from "@/app/types/types";
 import { ensureMediaExists } from "@/app/lib/api/userApi";
 
 export async function POST(request: NextRequest) {

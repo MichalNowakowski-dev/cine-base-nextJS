@@ -1,5 +1,5 @@
 import { prisma } from "@/app/prisma";
-import { type MediaItem, type MediaType } from "../types";
+import { type MediaItem, type MediaType } from "../../types/types";
 
 export const handleAddToWatchlist = async (
   mediaData: MediaItem,

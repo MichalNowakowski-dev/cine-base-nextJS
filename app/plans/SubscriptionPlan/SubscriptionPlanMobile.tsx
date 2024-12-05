@@ -1,6 +1,6 @@
 "use client";
 
-import { SubscriptionPlan } from "@/app/lib/types";
+import { SubscriptionPlan } from "@/app/types/types";
 import React, { useState } from "react";
 
 export default function SubscriptionPlanMobile({

@@ -1,7 +1,7 @@
 import React from "react";
 import { fetchResultsByQuery } from "../lib/api/tmdbApi";
 import SearchResult from "./SearchResult";
-import { SearchItem } from "../lib/types";
+import { SearchItem } from "../types/types";
 import Pagination from "../genre/Pagination";
 
 export default async function SearchResults({

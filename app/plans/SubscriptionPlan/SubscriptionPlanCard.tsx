@@ -11,7 +11,7 @@ export default function SubscriptionPlanCard({
   planName: string;
   priceCycle: string;
   planDesc: string;
-  planId: string;
+  planId: number;
   planPrice: { monthly: number; yearly: number };
 }) {
   // Sprawdzamy czy wartości są poprawne

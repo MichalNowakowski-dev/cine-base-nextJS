@@ -1,6 +1,6 @@
 import SubscriptionTable from "./SubscriptionPlanTable";
 import SubscriptionPlanMobile from "./SubscriptionPlanMobile";
-import { type SubscriptionPlan } from "@/app/lib/types";
+import { type SubscriptionPlan } from "@/app/types/types";
 
 export default function SubscriptionPlanInfo({
   plansData,

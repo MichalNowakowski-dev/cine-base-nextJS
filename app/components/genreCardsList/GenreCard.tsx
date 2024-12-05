@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 // import { getImgUrl } from "@/app/lib/utils";
-import { PosterSize } from "@/app/lib/types";
+import { PosterSize } from "@/app/types/types";
 
 type GenreWithImages = {
   id: number;

@@ -1,5 +1,5 @@
 "use client";
-import { MediaType } from "@/app/lib/types";
+import { MediaType } from "@/app/types/types";
 import { useState } from "react";
 
 const MediaList = ({

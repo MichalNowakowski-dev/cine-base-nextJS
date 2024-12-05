@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NoPosterImg from "@/public/no-poster-img.webp";
 import NoProfileImg from "@/public/no-profile-img.png";
-import { PosterSize, SearchItem } from "../lib/types";
+import { PosterSize, SearchItem } from "../types/types";
 
 const SearchResult = ({ result }: { result: SearchItem }) => {
   const isPerson = result.media_type === "person";

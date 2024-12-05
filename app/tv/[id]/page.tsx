@@ -22,7 +22,7 @@ import SeasonItem from "@/app/tv/[id]/SeasonItem";
 import ImageModal from "@/app/components/imageModal/ImageModal";
 import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
-import { BackdropSize, LogoSize, ProfileSize } from "@/app/lib/types";
+import { BackdropSize, LogoSize, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";

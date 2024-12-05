@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react";
 import bcrypt from "bcryptjs";
-import { MediaPerson } from "./types";
+import { MediaPerson } from "../types/types";
 import { getSeasonDetails } from "./api/tmdbApi";
 
 export const moveMediaList = (

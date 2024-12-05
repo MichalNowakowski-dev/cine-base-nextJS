@@ -1,6 +1,6 @@
 import { FaGamepad, FaLaptop, FaMobile, FaTablet, FaTv } from "react-icons/fa6";
 import Card from "../ui/card/Card";
-import { DeviceCardType } from "@/app/lib/types";
+import { DeviceCardType } from "@/app/types/types";
 import { BsHeadsetVr } from "react-icons/bs";
 
 const devicesData: DeviceCardType[] = [

@@ -96,7 +96,7 @@ export type SeasonItemType = {
 };
 
 export type SubscriptionPlan = {
-  id: string;
+  id: number;
   popular: boolean;
   name: string;
   monthlyPrice: number;

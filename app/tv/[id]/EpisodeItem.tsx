@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Episode, StillSize } from "../../lib/types";
+import { Episode, StillSize } from "../../types/types";
 
 type EpisodeItemProps = {
   episode: Episode;

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { handleAddOrUpdateRating } from "@/app/lib/api/userApi";
-import { MediaItem, MediaType } from "@/app/lib/types";
+import { MediaItem, MediaType } from "@/app/types/types";
 
 interface RateMediaButtonProps {
   isRated: boolean;

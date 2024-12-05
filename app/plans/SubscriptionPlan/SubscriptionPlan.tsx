@@ -1,6 +1,6 @@
 "use client";
 import SubscriptionPlanCard from "./SubscriptionPlanCard";
-import { type SubscriptionPlan } from "@/app/lib/types";
+import { type SubscriptionPlan } from "@/app/types/types";
 
 import React, { useState } from "react";
 

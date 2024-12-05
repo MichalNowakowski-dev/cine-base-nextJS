@@ -1,12 +1,12 @@
 import Image from "next/image";
 import HeaderImgDesktop from "@/public/HeroImageCineBase.png";
-import GenresCardsSectionContainer from "./components/genreCardsList/GenreCardsContainer";
 import DeviceCardsList from "./components/deviceList/DeviceCardsList";
 import FaqList from "./components/faqList/FaqList";
 import FreeTrialCta from "./components/ui/freeTrialCta/FreeTrialCta";
 import SubscriptionPlan from "./plans/SubscriptionPlan/SubscriptionPlan";
 import CtaLink from "./components/ui/ctaLink/CtaLink";
 import { prisma } from "./prisma";
+import GenreCardsContainer from "./components/genreCardsList/GenreCardsContainer";
 
 export default async function Home() {
   const plans = await prisma.plan.findMany();
@@ -42,7 +42,7 @@ export default async function Home() {
       </header>
       <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16 ">
         <section className="px-4">
-          <GenresCardsSectionContainer mediaType="movie">
+          <GenreCardsContainer mediaType="movie">
             <header>
               <h2 className="text-2xl mb-2">
                 Eksploruj nasz szeroki wybór kategorii
@@ -53,7 +53,7 @@ export default async function Home() {
                 pozwoli Ci dowiedzieć się czegoś nowego
               </p>
             </header>
-          </GenresCardsSectionContainer>
+          </GenreCardsContainer>
         </section>
 
         <section className="px-4">

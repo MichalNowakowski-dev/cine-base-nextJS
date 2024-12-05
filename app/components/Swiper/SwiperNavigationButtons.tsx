@@ -4,7 +4,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 export default function SwiperNavigationButtons({
   swiperId,
 }: {
-  swiperId: number;
+  swiperId: string;
 }) {
   return (
     <div className="hidden w-max lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary">
@@ -13,7 +13,7 @@ export default function SwiperNavigationButtons({
       </button>
       <div
         id={`pagination-${swiperId}`}
-        className="custom-pagination h-fullitems-center flex space-x-2 "
+        className="custom-pagination h-full items-center flex gap-x-[2px] "
       ></div>
       <button id={`next-${swiperId}`} className="custom-next">
         <FaArrowRight />

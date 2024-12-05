@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { MediaPerson, ProfileSize } from "../../lib/types";
+import { MediaPerson, ProfileSize } from "../../types/types";
 import Image from "next/image";
 import Link from "next/link";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
@@ -19,7 +19,7 @@ const SwiperPeople = ({
 }: {
   personList: MediaPerson[];
   listLabel: string;
-  swiperId: number;
+  swiperId: string;
 }) => {
   const swiperRef = useRef<null>(null);
   return (
@@ -40,12 +40,13 @@ const SwiperPeople = ({
           clickable: true,
         }}
         className="my-swiper"
+        spaceBetween={20}
         breakpoints={{
-          320: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 30 },
-          480: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 35 },
-          640: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 40 },
-          768: { slidesPerView: 5, slidesPerGroup: 5, spaceBetween: 20 },
-          1080: { slidesPerView: 6, slidesPerGroup: 6, spaceBetween: 50 },
+          320: { slidesPerView: 2, slidesPerGroup: 2 },
+          480: { slidesPerView: 3, slidesPerGroup: 3 },
+          640: { slidesPerView: 4, slidesPerGroup: 4 },
+          768: { slidesPerView: 5, slidesPerGroup: 5 },
+          1080: { slidesPerView: 6, slidesPerGroup: 6 },
         }}
       >
         {personList.map((person) => (

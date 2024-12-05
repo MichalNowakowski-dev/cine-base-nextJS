@@ -14,7 +14,7 @@ import { calculateAge } from "@/app/lib/utils";
 import ImageModal from "@/app/components/imageModal/ImageModal";
 import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
-import { MediaItem, ProfileSize } from "@/app/lib/types";
+import { MediaItem, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 
 export default async function Page({

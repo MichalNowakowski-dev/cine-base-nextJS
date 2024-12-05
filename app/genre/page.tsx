@@ -5,7 +5,7 @@ import {
 } from "../lib/api/tmdbApi";
 import MediaGenreList from "./MediaGenreList";
 import Pagination from "./Pagination";
-import { MediaType } from "../lib/types";
+import { MediaType } from "../types/types";
 
 interface GenrePageProps {
   searchParams: Promise<{
@@ -39,11 +39,7 @@ const GenrePage = async ({ searchParams }: GenrePageProps) => {
         <h1 className="text-2xl font-bold text-white">
           {media === "movie" ? `Filmy - ${name}` : `Seriale - ${name}`}
         </h1>
-
-        {/* Komponent do wyświetlania filmów/seriali */}
         <MediaGenreList mediaList={mediaList} mediaType={media} />
-
-        {/* Komponent do paginacji */}
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       </div>
     </main>

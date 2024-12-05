@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { fetchMediaList } from "@/app/lib/api/tmdbApi";
 import Image from "next/image";
-import { MediaItem, PosterSize } from "@/app/lib/types";
+import { MediaItem, PosterSize } from "@/app/types/types";
 
 export default async function FreeTrialCta() {
   const movies = await fetchMediaList("movie", "top_rated");

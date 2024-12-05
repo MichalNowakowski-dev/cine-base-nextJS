@@ -10,12 +10,10 @@ import { CiCalendar } from "react-icons/ci";
 import { PiTranslate, PiFilmScript } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
-
-import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
-import VideoModalContainer from "@/app/components/ui/VideoCarousel/VideoModalConainer";
+import { v4 as uuid } from "uuid";
 import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
 import ImageModal from "@/app/components/imageModal/ImageModal";
-import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
+
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import {
   BackdropSize,
@@ -23,7 +21,7 @@ import {
   LogoSize,
   MediaItem,
   ProfileSize,
-} from "@/app/lib/types";
+} from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
@@ -32,6 +30,9 @@ import { auth } from "@/app/auth";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
 import { styles } from "@/app/styles";
 import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
+import SwiperList from "@/app/components/Swiper/SwiperList";
+import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
+import SwiperVideo from "@/app/components/Swiper/SwiperVideo";
 
 export default async function Page({
   params,
@@ -291,23 +292,26 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
           <section className="mb-5">
-            <CastCarousel list={mediaMembers.cast}>
-              <h3 className="text-secondary">Obsada</h3>
-            </CastCarousel>
+            <SwiperPeople
+              listLabel="Obsada"
+              personList={mediaMembers.cast}
+              swiperId={uuid()}
+            />
           </section>
           <section className="mb-5">
-            <VideoModalContainer list={videoList.results}>
-              <h3 className="text-secondary">Zwiastuny i ciekawostki</h3>
-            </VideoModalContainer>
+            <SwiperVideo
+              listLabel="Zwiastuny i ciekawostki"
+              videoList={videoList.results}
+              swiperId={uuid()}
+            />
           </section>
           <section className="mb-5">
-            <MediaListController
+            <SwiperList
               mediaType="movie"
-              list={mediaRecommendationsList.results}
-              itemsPerViewNumber={5}
-            >
-              <h3 className="text-secondary">Rekomendacje</h3>
-            </MediaListController>
+              mediaList={mediaRecommendationsList.results}
+              listLabel="Rekomendacje"
+              swiperId={uuid()}
+            />
           </section>
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">

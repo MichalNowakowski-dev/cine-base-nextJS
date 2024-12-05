@@ -1,25 +1,25 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
-import { MediaType, PosterSize, type MediaItem } from "../../types/types";
-import Link from "next/link";
+import { GenreWithImages, MediaType } from "../../types/types";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./swiper.css";
 import { useRef } from "react";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
+import { v4 as uuid } from "uuid";
+import GenreCard from "../genreCardsList/GenreCard";
 
 const SwiperList = ({
-  mediaList,
-  listLabel,
+  genreList,
+  children,
   mediaType,
   swiperId,
 }: {
-  mediaList: MediaItem[];
-  listLabel: string;
+  genreList: GenreWithImages[];
+  children: React.ReactNode;
   mediaType: MediaType;
   swiperId: string;
 }) => {
@@ -27,7 +27,7 @@ const SwiperList = ({
   return (
     <div className="relative">
       <header className="flex justify-between items-center mb-6">
-        <h3 className="text-h3">{listLabel}</h3>
+        {children}
         <SwiperNavigationButtons swiperId={swiperId} />
       </header>
       <Swiper
@@ -51,30 +51,9 @@ const SwiperList = ({
           1080: { slidesPerView: 5, slidesPerGroup: 5 },
         }}
       >
-        {mediaList.map((item) => (
-          <SwiperSlide key={item.id}>
-            <Link
-              href={`/${mediaType}/${item.id}`}
-              className="relative block group"
-            >
-              <Image
-                alt="media image"
-                width={185}
-                height={320}
-                quality={100}
-                className="aspect-[2/3] rounded-lg transition-transform duration-300 ease-in-out group-hover:blur-sm"
-                src={
-                  item.poster_path
-                    ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${item.poster_path}`
-                    : "/no-poster-img.webp"
-                }
-              />
-              <div className="absolute rounded-lg inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-white text-lg font-bold text-center">
-                  {item.title || item.name}
-                </span>
-              </div>
-            </Link>
+        {genreList.map((genre: GenreWithImages) => (
+          <SwiperSlide key={genre.id}>
+            <GenreCard key={uuid()} genre={genre} mediaType={mediaType} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import EpisodeItem from "./EpisodeItem";
-import { Season } from "../../lib/types";
+import { Season } from "../../types/types";
 import { v4 as uuid } from "uuid";
 
 type SeasonItemProps = {

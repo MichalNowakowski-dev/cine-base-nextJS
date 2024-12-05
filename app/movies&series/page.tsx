@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { fetchTrendingList } from "../lib/api/tmdbApi";
-import { MediaType } from "../lib/types";
+import { MediaType } from "../types/types";
 import GenreCardsSectionContainer from "../components/genreCardsList/GenreCardsContainer";
 import HeaderSection from "./HeaderSection";
 import Tabs from "./Tabs";

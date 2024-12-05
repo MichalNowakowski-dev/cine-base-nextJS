@@ -6,6 +6,7 @@
   border-radius: 999px;
   transition: background-color 0.5s ease;
   cursor: pointer;
+  margin: 0 !important;
 }
 
 .swiper-pagination-bullet-active {

@@ -6,7 +6,7 @@ import {
   handleAddToFavorites,
   handleRemoveFromFavorites,
 } from "@/app/lib/api/userApi";
-import { MediaItem, MediaType } from "@/app/lib/types";
+import { MediaItem, MediaType } from "@/app/types/types";
 
 interface FavoriteButtonProps {
   isFavorite: boolean; // Czy element jest ulubiony

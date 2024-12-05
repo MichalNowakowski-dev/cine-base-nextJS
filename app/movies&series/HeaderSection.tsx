@@ -7,7 +7,7 @@ import CtaLink from "../components/ui/ctaLink/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../components/ui/switchPaginatedListButtons/SwitchPaginatedListButtons";
 import { usePagination } from "../hooks/usePagination";
-import { BackdropSize, MediaItem } from "../lib/types";
+import { BackdropSize, MediaItem } from "../types/types";
 import { styles } from "../styles";
 
 export default function HeaderSection({ list }: { list: MediaItem[] }) {

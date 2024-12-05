@@ -1,7 +1,7 @@
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { MediaItem, MediaType } from "@/app/lib/types";
+import { MediaItem, MediaType } from "@/app/types/types";
 import { ensureMediaExists } from "@/app/lib/api/userApi";
 
 // Funkcja do obsługi walidacji oceny

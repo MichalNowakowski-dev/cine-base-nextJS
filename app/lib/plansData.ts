@@ -1,4 +1,4 @@
-import { SubscriptionPlanData } from "./types";
+import { SubscriptionPlanData } from "../types/types";
 
 export const plansData: SubscriptionPlanData = {
   basic: {
