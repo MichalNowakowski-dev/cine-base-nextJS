@@ -12,6 +12,9 @@ const config: Config = {
       height: {
         "screen-minus-nav": `calc(100vh - 80px)`,
       },
+      screens: {
+        xs: "480px",
+      },
       backgroundImage: {
         "fade-black-to-red": `linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
                            radial-gradient(circle at top right, rgba(255, 0, 0, 0.3), transparent),

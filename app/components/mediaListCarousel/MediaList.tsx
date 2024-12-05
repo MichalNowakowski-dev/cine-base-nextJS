@@ -29,12 +29,15 @@ export default function MediaList({
             ({ id, poster_path, vote_average, media_type, character, job }) => (
               <li
                 key={uuidv4()}
-                className="text-sm bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400  relative"
+                className="flex flex-col flex-shrink-0 cursor-pointer space-y-1 relative"
               >
-                <Link href={`/${mediaType || media_type}/${id}`}>
+                <Link
+                  className="flex flex-col justify-center items-center w-[clamp(6rem,20vw,140px)]"
+                  href={`/${mediaType || media_type}/${id}`}
+                >
                   <div className="mb-2">
                     <Image
-                      className="rounded-md aspect-[2/3] "
+                      className="rounded-md aspect-[2/3] w-full h-auto "
                       src={
                         poster_path
                           ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.LARGE}${poster_path}`

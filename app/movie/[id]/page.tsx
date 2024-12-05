@@ -304,7 +304,7 @@ export default async function Page({
             <MediaListController
               mediaType="movie"
               list={mediaRecommendationsList.results}
-              itemsPerViewNumber={4}
+              itemsPerViewNumber={5}
             >
               <h3 className="text-secondary">Rekomendacje</h3>
             </MediaListController>
