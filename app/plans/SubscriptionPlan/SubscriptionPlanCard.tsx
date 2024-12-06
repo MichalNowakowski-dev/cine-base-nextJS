@@ -39,7 +39,7 @@ export default function SubscriptionPlanCard({
           Okres próbny
         </Link>
         <Link
-          href={`plans/summary?id=${planId}&price-cycle=${priceCycle}&trial=false`}
+          href={`plans/summary?id=${planId}&priceCycle=${priceCycle}&trial=false`}
           className={`${buttonClass} bg-primary`}
         >
           Wybierz Plan

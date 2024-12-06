@@ -19,7 +19,7 @@ const providers: Provider[] = [
       const { email, password } = credentials;
 
       if (!email || !password) {
-        return null;
+        throw new AuthError("Empty fields");
       }
 
       const user = await verifyUser(email as string, password as string);

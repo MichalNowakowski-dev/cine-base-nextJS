@@ -7,6 +7,7 @@ import { prisma } from "../prisma";
 const DashboardPage = async () => {
   const session = await auth();
   if (!session) redirect("/sign-in");
+
   const userInfo = await prisma.user.findUnique({
     where: {
       id: Number(session.user.id),

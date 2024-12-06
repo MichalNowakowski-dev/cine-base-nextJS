@@ -1,8 +1,3 @@
-"use client";
-
-import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
-import { plansData } from "@/app/lib/plansData";
 import { HiCloudDownload } from "react-icons/hi";
 import { FaVolumeUp } from "react-icons/fa";
 import {
@@ -17,14 +12,21 @@ import Link from "next/link";
 import Image from "next/image";
 import bg from "@/public/summaryBg-lg.jpg";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
+import { prisma } from "@/app/prisma";
 
-const SubscriptionSummaryContent = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const plan = searchParams.get("id") || "standard";
-  const priceCycle = searchParams.get("price-cycle") || "monthly";
+export default async function SubscriptionSummary({
+  searchParams,
+}: {
+  searchParams: Promise<{ id: string; priceCycle: string; trial: string }>;
+}) {
+  const { id, priceCycle, trial } = await searchParams;
 
-  const selectedPlan = plansData[plan as keyof typeof plansData];
+  const getPlanInfo = async (planId: number) => {
+    const plan = await prisma.plan.findUnique({ where: { id: planId } });
+    return !plan ? null : plan;
+  };
+
+  const selectedPlan = await getPlanInfo(Number(id));
 
   if (!selectedPlan) {
     return (
@@ -48,43 +50,43 @@ const SubscriptionSummaryContent = () => {
     {
       icon: MdFamilyRestroom,
       label: "Rodzinna subskrypcja",
-      value: selectedPlan.familySharing,
+      value: selectedPlan.familySharing ? "Tak" : "Nie",
       color: "text-purple-500",
     },
     {
       icon: HiCloudDownload,
       label: "Oglądanie offline",
-      value: selectedPlan.offlineView,
+      value: selectedPlan.offlineView ? "Tak" : "Nie",
       color: "text-green-500",
     },
     {
       icon: MdHdrOn,
       label: "HDR",
-      value: selectedPlan.HDR,
+      value: selectedPlan.HDR ? "Tak" : "Nie",
       color: "text-yellow-500",
     },
     {
       icon: FaVolumeUp,
       label: "Dolby Atmos",
-      value: selectedPlan.DolbyAtmos,
+      value: selectedPlan.DolbyAtmos ? "Tak" : "Nie",
       color: "text-red-500",
     },
     {
       icon: MdBlock,
       label: "Brak reklam",
-      value: selectedPlan.adsFree,
+      value: selectedPlan.adsFree ? "Tak" : "Nie",
       color: "text-orange-500",
     },
     {
       icon: MdCancel,
       label: "Możliwość anulowania",
-      value: selectedPlan.cancelAllowed,
+      value: selectedPlan.cancelAllowed ? "Tak" : "Nie",
       color: "text-gray-500",
     },
   ];
 
   return (
-    <PageContainer className="relative overflow-hidden">
+    <PageContainer className="relative overflow-hidden !max-w-full">
       <Image
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 "
         alt="Background image cinema"
@@ -103,8 +105,8 @@ const SubscriptionSummaryContent = () => {
             <p className="text-secondary">Cena:</p>
             <p className="text-xl">
               {priceCycle === "monthly"
-                ? `${selectedPlan.price.monthly} zł / miesiąc`
-                : `${selectedPlan.price.yearly} zł / rok`}
+                ? `${selectedPlan.monthlyPrice} zł / miesiąc`
+                : `${selectedPlan.yearlyPrice} zł / rok`}
             </p>
           </div>
 
@@ -136,11 +138,7 @@ const SubscriptionSummaryContent = () => {
 
           {/* Przycisk akcji */}
           <div className="flex gap-4 justify-self-end">
-            <Link
-              href={`/plans`}
-              onClick={() => router.push(`/plans`)}
-              className={`bg-backgroundLight ${linkClass}`}
-            >
+            <Link href={`/plans`} className={`bg-backgroundLight ${linkClass}`}>
               Wróć do wyboru planu
             </Link>
             <Link href={`/payment`} className={`bg-primary ${linkClass}`}>
@@ -150,13 +148,5 @@ const SubscriptionSummaryContent = () => {
         </div>
       </div>
     </PageContainer>
-  );
-};
-
-export default function SubscriptionSummary() {
-  return (
-    <Suspense>
-      <SubscriptionSummaryContent />
-    </Suspense>
   );
 }

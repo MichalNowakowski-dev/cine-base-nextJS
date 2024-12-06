@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./swiper.css";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
+import { PiPlayCircleThin } from "react-icons/pi";
 
 const SwiperVideo = ({
   videoList,
@@ -60,7 +61,7 @@ const SwiperVideo = ({
             <SwiperSlide key={video.id}>
               <div
                 onClick={() => openModal(video.key)}
-                className="cursor-pointer"
+                className="cursor-pointer relative"
               >
                 <Image
                   src={thumbnailSrc}
@@ -69,8 +70,14 @@ const SwiperVideo = ({
                   height={180}
                   width={320}
                 />
-                <h4 className="text-center mt-2 truncate">{video.name}</h4>
+                <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full rounded-md cursor-pointer hover:bg-black/40 transition-all duration-300 ease-linear group ">
+                  <PiPlayCircleThin
+                    size={"50%"}
+                    className="transition-all duration-300 ease-linear group-hover:rotate-[360deg] group-hover:text-red-700"
+                  />
+                </div>
               </div>
+              <h4 className="text-center mt-2 truncate">{video.name}</h4>
             </SwiperSlide>
           );
         })}

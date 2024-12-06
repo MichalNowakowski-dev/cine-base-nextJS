@@ -20,13 +20,13 @@ export default function GenreCard({
   const { id, name, images } = genre;
 
   return (
-    <li className="bg-backgroundLight rounded-lg p-3 border border-transparent hover:border-zinc-400">
+    <li className="bg-backgroundLight rounded-lg p-3 border border-transparent  hover:border-zinc-400 xs:w-max">
       <Link href={`/genre?media=${mediaType}&name=${name}&id=${id}&page=1`}>
-        <ul className="flex flex-wrap w-48 gap-1 mb-2 relative">
+        <ul className="grid grid-cols-2 w-full gap-1 mb-2 relative">
           {images.map((path: string) => (
-            <li key={path} className="h-20 w-20 relative flex-grow">
+            <li key={path} className="h-32 xs:h-24 w-32 xs:w-24 relative ">
               <Image
-                className="object-cover rounded-md"
+                className="object-cover aspect-square rounded-md"
                 fill
                 sizes="80px"
                 src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}

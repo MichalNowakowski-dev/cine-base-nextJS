@@ -41,21 +41,21 @@ const SwiperList = ({
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
-        spaceBetween={20}
+        spaceBetween={18}
         className="my-swiper"
         breakpoints={{
           320: { slidesPerView: 2, slidesPerGroup: 2 },
           480: { slidesPerView: 3, slidesPerGroup: 3 },
           640: { slidesPerView: 3, slidesPerGroup: 3 },
           768: { slidesPerView: 4, slidesPerGroup: 4 },
-          1080: { slidesPerView: 5, slidesPerGroup: 5 },
+          1080: { slidesPerView: 6, slidesPerGroup: 6 },
         }}
       >
         {mediaList.map((item) => (
           <SwiperSlide key={item.id}>
             <Link
               href={`/${mediaType}/${item.id}`}
-              className="relative block group"
+              className="relative inline-block group "
             >
               <Image
                 alt="media image"
@@ -69,7 +69,7 @@ const SwiperList = ({
                     : "/no-poster-img.webp"
                 }
               />
-              <div className="absolute rounded-lg inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute rounded-lg inset-0  flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-white text-lg font-bold text-center">
                   {item.title || item.name}
                 </span>

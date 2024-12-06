@@ -40,15 +40,17 @@ async function getGenresWithImages(
 export default async function GenreCardsContainer({
   mediaType,
   children,
+  swiperId,
 }: {
   mediaType: MediaType;
   children: React.ReactNode;
+  swiperId: string;
 }) {
   const genresListWithImages = await getGenresWithImages(mediaType);
   return (
     <SwiperGenres
       genreList={genresListWithImages}
-      swiperId="genres"
+      swiperId={swiperId}
       mediaType={mediaType}
     >
       {children}

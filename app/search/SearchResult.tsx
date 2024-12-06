@@ -24,7 +24,7 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
           height={750}
           quality={100}
           alt={name || title || "Brak nazwy"}
-          className="rounded-md mb-2 aspect-[2/3]"
+          className="rounded-md mb-2 aspect-[2/3] object-cover"
         />
         <h2 className="font-semibold">{title || name}</h2>
         {first_air_date && (

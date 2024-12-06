@@ -11,8 +11,6 @@ import { CiCalendar } from "react-icons/ci";
 import { PiTranslate } from "react-icons/pi";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FaRegStar, FaScroll } from "react-icons/fa";
-import CastCarousel from "@/app/components/personListCarousel/PersonListCarousel";
-import VideoModalContainer from "@/app/components/ui/VideoCarousel/VideoModalConainer";
 import {
   fetchAllSeasonsData,
   getPersonImagePathFromList,
@@ -20,7 +18,6 @@ import {
 import CtaLink from "@/app/components/ui/ctaLink/CtaLink";
 import SeasonItem from "@/app/tv/[id]/SeasonItem";
 import ImageModal from "@/app/components/imageModal/ImageModal";
-import MediaListController from "@/app/components/mediaListCarousel/MediaListController";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
@@ -30,6 +27,10 @@ import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
 import { auth } from "@/app/auth";
 import { styles } from "@/app/styles";
+import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
+import SwiperVideo from "@/app/components/Swiper/SwiperVideo";
+import SwiperList from "@/app/components/Swiper/SwiperList";
+import { v4 as uuid } from "uuid";
 
 export default async function Page({
   params,
@@ -87,14 +88,17 @@ export default async function Page({
               mediaData={seriesDetails}
               mediaType="tv"
               rating={ratingStatus as number}
+              userId={Number(session?.user.id)}
             />
             <AddToWatchlistButton
               isInWatchlist={watchlistStatus}
               mediaData={seriesDetails}
               mediaType="tv"
+              userId={Number(session?.user.id)}
             />
             <FavoriteButton
               isFavorite={favoriteStatus}
+              userId={Number(session?.user.id)}
               mediaData={seriesDetails}
               mediaType="tv"
             />
@@ -260,24 +264,27 @@ export default async function Page({
           )}
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2 border border-borderPrimary">
-          <section className="mb-8">
-            <CastCarousel list={mediaMembers.cast}>
-              <h3 className="text-secondary ">Obsada</h3>
-            </CastCarousel>
+          <section className="mb-5">
+            <SwiperPeople
+              listLabel="Obsada"
+              personList={mediaMembers.cast}
+              swiperId={uuid()}
+            />
           </section>
-          <section className="mb-8">
-            <VideoModalContainer list={videoList.results}>
-              <h3 className="text-secondary ">Zwiastuny i ciekawostki</h3>
-            </VideoModalContainer>
+          <section className="mb-5">
+            <SwiperVideo
+              listLabel="Zwiastuny i ciekawostki"
+              videoList={videoList.results}
+              swiperId={uuid()}
+            />
           </section>
-          <section className="mb-8">
-            <MediaListController
-              mediaType="tv"
-              list={mediaRecommendationsList.results}
-              itemsPerViewNumber={4}
-            >
-              <h3 className="text-secondary">Rekomendacje</h3>
-            </MediaListController>
+          <section className="mb-5">
+            <SwiperList
+              mediaType="movie"
+              mediaList={mediaRecommendationsList.results}
+              listLabel="Rekomendacje"
+              swiperId={uuid()}
+            />
           </section>
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-start-3 border border-borderPrimary">

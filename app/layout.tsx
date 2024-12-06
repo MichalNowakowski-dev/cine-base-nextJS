@@ -4,6 +4,8 @@ import { Roboto, Montserrat, Oswald } from "next/font/google";
 import Navigation from "./components/navigation/Navigation";
 import "./globals.css";
 import Footer from "./components/footer/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const roboto = Roboto({
   weight: ["400", "100", "300", "500", "700"],
@@ -42,7 +44,7 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Navigation />
-
+          <ToastContainer theme="dark" autoClose={3000} />
           {children}
           <Footer />
         </SessionProvider>

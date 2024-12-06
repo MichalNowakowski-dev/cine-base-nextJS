@@ -76,7 +76,7 @@ model FavoriteMovie {
   id      Int   @id @default(autoincrement())
   userId  Int
   movieId Int
-  movie   Movie @relation(fields: [movieId], references: [id])
+  movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
   user    User  @relation(fields: [userId], references: [id])
 }
 
@@ -84,7 +84,7 @@ model FavoriteShow {
   id     Int  @id @default(autoincrement())
   userId Int
   showId Int
-  show   Show @relation(fields: [showId], references: [id])
+  show   Show @relation(fields: [showId], references: [id], onDelete: Cascade)
   user   User @relation(fields: [userId], references: [id])
 }
 
@@ -92,7 +92,7 @@ model ToWatchMovie {
   id      Int   @id @default(autoincrement())
   userId  Int
   movieId Int
-  movie   Movie @relation(fields: [movieId], references: [id])
+  movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
   user    User  @relation(fields: [userId], references: [id])
 }
 
@@ -100,7 +100,7 @@ model ToWatchShow {
   id     Int  @id @default(autoincrement())
   userId Int
   showId Int
-  show   Show @relation(fields: [showId], references: [id])
+  show   Show @relation(fields: [showId], references: [id], onDelete: Cascade)
   user   User @relation(fields: [userId], references: [id])
 }
 
@@ -110,7 +110,7 @@ model MovieRating {
   movieId  Int
   rating   Float
   user     User   @relation(fields: [userId], references: [id])
-  movie    Movie  @relation(fields: [movieId], references: [id])
+  movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([userId, movieId])
@@ -122,7 +122,7 @@ model ShowRating {
   showId   Int
   rating   Float
   user     User   @relation(fields: [userId], references: [id])
-  show     Show   @relation(fields: [showId], references: [id])
+  show     Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@unique([userId, showId])
@@ -133,6 +133,7 @@ model Movie {
   title       String
   overview    String
   releaseDate DateTime
+  posterPath String?
   favorites   FavoriteMovie[]
   toWatch     ToWatchMovie[]
   movieRating MovieRating[]
@@ -143,6 +144,7 @@ model Show {
   name         String
   overview     String
   firstAirDate DateTime
+  posterPath String?           
   favorites    FavoriteShow[]
   toWatch      ToWatchShow[]
   showRating   ShowRating[]

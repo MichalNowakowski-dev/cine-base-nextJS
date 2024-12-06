@@ -12,7 +12,7 @@ import SwiperNavigationButtons from "./SwiperNavigationButtons";
 import { v4 as uuid } from "uuid";
 import GenreCard from "../genreCardsList/GenreCard";
 
-const SwiperList = ({
+const SwiperGenres = ({
   genreList,
   children,
   mediaType,
@@ -41,14 +41,15 @@ const SwiperList = ({
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
-        spaceBetween={20}
+        // spaceBetween={30}
         className="my-swiper"
         breakpoints={{
-          320: { slidesPerView: 2, slidesPerGroup: 2 },
-          480: { slidesPerView: 3, slidesPerGroup: 3 },
-          640: { slidesPerView: 3, slidesPerGroup: 3 },
-          768: { slidesPerView: 4, slidesPerGroup: 4 },
-          1080: { slidesPerView: 5, slidesPerGroup: 5 },
+          320: { slidesPerView: 1, slidesPerGroup: 1 },
+          480: { slidesPerView: 2, slidesPerGroup: 2 },
+          640: { slidesPerView: 2, slidesPerGroup: 2 },
+          768: { slidesPerView: 3, slidesPerGroup: 3 },
+          1080: { slidesPerView: 4, slidesPerGroup: 4 },
+          1200: { slidesPerView: 5, slidesPerGroup: 5 },
         }}
       >
         {genreList.map((genre: GenreWithImages) => (
@@ -61,4 +62,4 @@ const SwiperList = ({
   );
 };
 
-export default SwiperList;
+export default SwiperGenres;

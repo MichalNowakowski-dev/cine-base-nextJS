@@ -26,7 +26,7 @@ export default async function SignInPage() {
           <div className="mt-4 text-center">
             <p className="text-sm">
               Nie masz konta?{" "}
-              <a href="/sign-in" className="text-blue-600">
+              <a href="/sign-up" className="text-blue-600">
                 Dołącz do CineBase
               </a>
             </p>

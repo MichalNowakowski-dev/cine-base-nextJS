@@ -7,6 +7,7 @@ export default function UpdateSession() {
   const { update } = useSession();
   useEffect(() => {
     update();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <></>;

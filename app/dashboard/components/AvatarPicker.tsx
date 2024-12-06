@@ -3,9 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { ToastContainer } from "react-toastify";
 import { notifySuccess } from "@/app//lib/toast";
-import "react-toastify/dist/ReactToastify.css";
 
 const AvatarPicker = () => {
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null); // Przechowuje wybrany awatar
@@ -40,9 +38,6 @@ const AvatarPicker = () => {
 
   return (
     <div className="flex flex-col items-center space-y-6">
-      <div>
-        <ToastContainer theme="dark" autoClose={3000} />
-      </div>
       <h2 className="text-xl font-semibold text-gray-700">Dostępne avatary</h2>
 
       {/* Sekcja wyświetlania dostępnych awatarów */}

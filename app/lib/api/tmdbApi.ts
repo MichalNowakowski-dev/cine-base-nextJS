@@ -344,3 +344,41 @@ export async function fetchMediaData(id: string, type: MediaType) {
     imagesList,
   };
 }
+
+export async function fetchMoviesAndSeriesData() {
+  const results = await Promise.allSettled([
+    fetchMediaList("movie", "top_rated", 1),
+    fetchMediaList("movie", "popular", 1),
+    fetchTrendingList("movie", "week"),
+    fetchMediaList("tv", "top_rated", 1),
+    fetchMediaList("tv", "popular", 1),
+    fetchTrendingList("tv", "week"),
+  ]);
+
+  // Obsługa wyników
+  const [
+    topRatedMovies,
+    popularMovies,
+    trendingMovies,
+    topRatedSeries,
+    popularSeries,
+    trendingSeries,
+  ] = results.map((result, index) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    } else {
+      console.error(`Promise ${index + 1} failed:`, result.reason);
+      return null; // Wartość domyślna w przypadku błędu
+    }
+  });
+
+  // Zwróć dane w formie obiektu
+  return {
+    topRatedMovies,
+    popularMovies,
+    trendingMovies,
+    topRatedSeries,
+    popularSeries,
+    trendingSeries,
+  };
+}

@@ -89,16 +89,19 @@ export default async function Page({
               mediaData={movieDetails}
               mediaType="movie"
               rating={ratingStatus as number}
+              userId={Number(session?.user.id)}
             />
             <AddToWatchlistButton
               isInWatchlist={watchlistStatus}
               mediaData={movieDetails}
               mediaType="movie"
+              userId={Number(session?.user.id)}
             />
             <FavoriteButton
               isFavorite={favoriteStatus}
               mediaData={movieDetails}
               mediaType="movie"
+              userId={Number(session?.user.id)}
             />
           </div>
         </div>

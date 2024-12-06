@@ -1,19 +1,35 @@
 "use client";
 
-import { FaThumbsUp, FaRegHeart } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
-
 import CtaLink from "../components/ui/ctaLink/CtaLink";
 import Image from "next/image";
 import SwitchListButtons from "../components/ui/switchPaginatedListButtons/SwitchPaginatedListButtons";
 import { usePagination } from "../hooks/usePagination";
 import { BackdropSize, MediaItem } from "../types/types";
 import { styles } from "../styles";
+import RateMediaButton from "../components/ui/RateMediaBtn/RateMediaBtn";
+import AddToWatchlistButton from "../components/ui/addToWatchBtn/AddToWatchlistButton";
+import FavoriteButton from "../components/ui/addToFavBtn/AddToFavoriteBtn";
 
-export default function HeaderSection({ list }: { list: MediaItem[] }) {
+export default function HeaderSection({
+  list,
+  userListsStatus,
+  userId,
+}: {
+  list: MediaItem[];
+  userListsStatus: {
+    favoriteStatus: boolean;
+    watchlistStatus: boolean;
+    ratingStatus: number | null;
+  }[];
+  userId: number;
+}) {
   const { activePage, showList, handleMoveList } = usePagination(list, 1);
 
   const { title, name, overview, id } = list[activePage - 1];
+  const { ratingStatus, watchlistStatus, favoriteStatus } =
+    userListsStatus[activePage - 1];
+
+  const activeMovie = list[activePage - 1];
 
   return (
     <section className={styles.headerSection}>
@@ -22,9 +38,7 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
           showList ? "opacity-100" : "opacity-0"
         }`}
         alt="movie image"
-        src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${
-          list[activePage - 1].backdrop_path
-        }`}
+        src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${activeMovie.backdrop_path}`}
         width={1600}
         height={900}
         priority
@@ -49,16 +63,26 @@ export default function HeaderSection({ list }: { list: MediaItem[] }) {
         >
           Oglądaj
         </CtaLink>
-        <div className="flex gap-x-3 ">
-          <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-green-500">
-            <FaThumbsUp size={20} />
-          </button>
-          <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-yellow-500">
-            <IoMdAdd size={20} />
-          </button>
-          <button className="bg-[#0F0F0F] p-3 rounded-md flex items-center justify-center border border-zinc-800 hover:text-red-500">
-            <FaRegHeart size={20} />
-          </button>
+        <div className="flex gap-x-3">
+          <RateMediaButton
+            isRated={Boolean(ratingStatus)}
+            mediaData={activeMovie}
+            mediaType="movie"
+            rating={ratingStatus as number}
+            userId={userId}
+          />
+          <AddToWatchlistButton
+            isInWatchlist={watchlistStatus}
+            mediaData={activeMovie}
+            mediaType="movie"
+            userId={userId}
+          />
+          <FavoriteButton
+            userId={userId}
+            isFavorite={favoriteStatus}
+            mediaData={activeMovie}
+            mediaType="movie"
+          />
         </div>
       </div>
       <SwitchListButtons

@@ -8,7 +8,7 @@ export default async function page() {
   if (!session) redirect("/sign-in");
   if (!session.user.planId) redirect("/plans");
   return (
-    <div className="mx-auto bg-mediaPlayBg bg-contain bg-center bg-no-repeat">
+    <div className="mx-auto w-screen bg-mediaPlayBg bg-center bg-no-repeat !max-w-full">
       <UnavailableMedia />
     </div>
   );

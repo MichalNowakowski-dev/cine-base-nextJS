@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
-import { handleAddOrUpdateRating } from "@/app/lib/api/userApi";
 import { MediaItem, MediaType } from "@/app/types/types";
+import { setOrUnsetRating } from "@/app/lib/actions";
 
 interface RateMediaButtonProps {
   isRated: boolean;
   mediaData: MediaItem;
   mediaType: MediaType;
   rating?: number;
+  userId: number;
 }
 
 const RateMediaButton = ({
@@ -17,6 +18,7 @@ const RateMediaButton = ({
   rating,
   mediaData,
   mediaType,
+  userId,
 }: RateMediaButtonProps) => {
   const [rated, setRated] = useState(isRated);
   const [selectedRating, setSelectedRating] = useState(rating || 0);
@@ -27,7 +29,7 @@ const RateMediaButton = ({
   };
 
   const handleRatingChange = async (newRating: number) => {
-    await handleAddOrUpdateRating(mediaData, mediaType, newRating);
+    await setOrUnsetRating(mediaType, mediaData, userId, newRating);
     setSelectedRating(newRating);
     setRated(true);
     setShowRatingOptions(false);

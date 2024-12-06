@@ -6,6 +6,7 @@ export const notifySuccess = (message: string) => {
   toast.success(message, {
     theme: "dark",
     autoClose: 3000,
+    position: "bottom-right",
   });
 };
 
@@ -13,5 +14,6 @@ export const notifyError = (message: string) => {
   toast.error(message, {
     theme: "dark",
     autoClose: 3000,
+    position: "bottom-right",
   });
 };
