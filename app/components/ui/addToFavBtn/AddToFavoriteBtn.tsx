@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MediaItem, MediaType } from "@/app/types/types";
 import { notifySuccess } from "@/app/lib/toast";
-import { addFavorite, removeFavorite } from "@/app/lib/actions";
+import { addFavorite, removeItemFromUserList } from "@/app/lib/actions";
 
 interface FavoriteButtonProps {
   isFavorite: boolean; // Czy element jest ulubiony
@@ -23,7 +23,12 @@ const FavoriteButton = ({
 
   const toggleFavorite = async () => {
     if (favorite) {
-      await removeFavorite(mediaData.id, userId, mediaType);
+      await removeItemFromUserList(
+        mediaData.id,
+        userId,
+        mediaType,
+        "favorites"
+      );
       notifySuccess("Usunięto z ulubionych.");
       setFavorite(false);
     } else {

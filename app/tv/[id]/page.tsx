@@ -21,7 +21,7 @@ import ImageModal from "@/app/components/imageModal/ImageModal";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
-import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
+import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import { fetchUserMediaStatus } from "@/app/lib/api/userApi";

@@ -162,3 +162,35 @@ export type Season = {
   season_number: number;
   vote_average: number;
 };
+
+export type UserMovieItem = {
+  id: number;
+  userId: number;
+  movieId: number;
+};
+export type UserShowItem = {
+  id: number;
+  userId: number;
+  showId: number;
+};
+
+export type UserRatingMovieItem = UserMovieItem & {
+  rating?: number;
+};
+
+export type UserRatingShowItem = UserShowItem & {
+  rating?: number;
+};
+
+export type MediaItemPrisma = {
+  id: number;
+  title?: string;
+  name?: string;
+  overview: string;
+  posterPath: string | null;
+  releaseDate?: string | Date;
+  firstAirDate?: string | Date;
+};
+export type RatedMediaItemPrisma = MediaItemPrisma & {
+  rating: number;
+};

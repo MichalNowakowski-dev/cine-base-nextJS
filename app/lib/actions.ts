@@ -1,16 +1,147 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { messageSchema } from "./schemas/messageSchema";
+import nameSchema from "./schemas/nameSchema";
 import { z } from "zod";
 import registerSchema from "./schemas/registerSchema";
-import { saltAndHashPassword } from "./utils";
+import { comparePassword, saltAndHashPassword } from "./utils";
 import { redirect } from "next/navigation";
-import { signIn } from "@/app/auth";
+import { auth, signIn } from "@/app/auth";
 import { AuthError } from "next-auth";
 import { MediaItem, MediaType } from "../types/types";
 import { revalidatePath } from "next/cache";
 import { prisma } from "../prisma";
 import { ensureMediaExists } from "./api/userApi";
+import passwordSchema from "./schemas/passwordSchema";
+
+export async function changeUserName(_prevState: unknown, data: FormData) {
+  const prisma = new PrismaClient();
+  const session = await auth();
+
+  const formData = {
+    firstName: data.get("firstName"),
+    lastName: data.get("lastName"),
+  };
+  let isError = false;
+
+  try {
+    const validatedData = nameSchema.parse(formData);
+    const newName = await prisma.user.update({
+      where: {
+        id: Number(session?.user.id),
+      },
+      data: {
+        name: `${validatedData.firstName} ${validatedData.lastName}`,
+        firstName: validatedData.firstName,
+        lastName: validatedData.lastName,
+      },
+    });
+    console.log("Nowa nazwa:", newName);
+
+    return { success: true, message: "Nazwa zmieniona" };
+  } catch (error) {
+    isError = true;
+    if (error instanceof z.ZodError) {
+      // Mapowanie błędów Zod na klucze pól
+      const fieldErrors = error.errors.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {} as Record<string, string>);
+
+      return { success: false, errors: fieldErrors, fields: formData };
+    }
+    console.error("Błąd podczas zmieny nazwy:", error);
+    return {
+      success: false,
+      message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    };
+  } finally {
+    if (!isError) {
+      // revalidatePath("/dashboard/profile");
+      redirect("/dashboard/profile");
+    }
+  }
+}
+export async function changeUserPassword(_prevState: unknown, data: FormData) {
+  const prisma = new PrismaClient();
+  const session = await auth();
+
+  const formData = {
+    currentPassword: data.get("currentPassword"),
+    newPassword: data.get("newPassword"),
+  };
+
+  // Sprawdzenie, czy pola nie są puste
+  if (!formData.currentPassword || !formData.newPassword) {
+    return { success: false, message: "Musisz uzupełnić oba pola." };
+  }
+
+  try {
+    // Pobranie hasła użytkownika z bazy danych
+    const userPassword = await prisma.user.findUnique({
+      where: { id: Number(session?.user.id) },
+      select: { passwordHash: true },
+    });
+
+    // Jeśli użytkownik nie ma hasła, walidujemy nowe hasło i tworzymy je
+    if (!userPassword?.passwordHash) {
+      // Walidacja nowego hasła
+      const validatedData = passwordSchema.parse(formData.newPassword);
+
+      // Haszowanie nowego hasła
+      const hashedPassword = await saltAndHashPassword(validatedData);
+
+      // Tworzymy nowe hasło
+      await prisma.user.update({
+        where: { id: Number(session?.user.id) },
+        data: { passwordHash: hashedPassword },
+      });
+
+      return { success: true, message: "Hasło zostało ustawione pomyślnie." };
+    }
+
+    // Jeśli użytkownik ma hasło, porównujemy je z `currentPassword`
+    const isMatch = await comparePassword(
+      formData.currentPassword as string,
+      userPassword.passwordHash
+    );
+
+    if (!isMatch) {
+      return { success: false, message: "Obecne hasło jest niepoprawne." };
+    }
+
+    // Walidacja nowego hasła
+    const validatedData = passwordSchema.parse(formData.newPassword);
+
+    // Haszowanie nowego hasła
+    const hashedPassword = await saltAndHashPassword(validatedData);
+
+    // Aktualizacja hasła w bazie danych
+    await prisma.user.update({
+      where: { id: Number(session?.user.id) },
+      data: { passwordHash: hashedPassword },
+    });
+
+    return { success: true, message: "Hasło zmienione pomyślnie." };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Mapowanie błędów dla `newPassword`
+      const fieldErrors: Record<string, string> = {};
+      for (const err of error.errors) {
+        fieldErrors["newPassword"] = err.message; // Każdy błąd dotyczy pola `newPassword`
+      }
+
+      return { success: false, errors: fieldErrors, fields: formData };
+    }
+
+    // Obsługa innych błędów
+    console.error("Błąd podczas zmiany hasła:", error);
+    return {
+      success: false,
+      message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    };
+  }
+}
 
 export async function sendSupportMessage(_prevState: unknown, data: FormData) {
   const prisma = new PrismaClient();
@@ -135,30 +266,65 @@ export async function loginUser(
   }
 }
 
-export const removeFavorite = async (
+export const removeItemFromUserList = async (
   id: number,
   userId: number,
-  mediaType: MediaType
+  mediaType: MediaType,
+  listType: "favorites" | "toWatch" | "ratings"
 ) => {
   if (!userId) {
     throw new Error("user not logged in");
   }
   try {
-    if (mediaType === "movie") {
-      await prisma.favoriteMovie.deleteMany({
+    if (listType === "favorites") {
+      if (mediaType === "movie") {
+        await prisma.favoriteMovie.deleteMany({
+          where: {
+            userId: Number(userId),
+            movieId: Number(id),
+          },
+        });
+      }
+
+      await prisma.favoriteShow.deleteMany({
         where: {
           userId: Number(userId),
-          movieId: Number(id),
+          showId: Number(id),
+        },
+      });
+    } else if (listType === "ratings") {
+      if (mediaType === "movie") {
+        await prisma.movieRating.deleteMany({
+          where: {
+            userId: Number(userId),
+            movieId: Number(id),
+          },
+        });
+      }
+
+      await prisma.showRating.deleteMany({
+        where: {
+          userId: Number(userId),
+          showId: Number(id),
+        },
+      });
+    } else {
+      if (mediaType === "movie") {
+        await prisma.toWatchMovie.deleteMany({
+          where: {
+            userId: Number(userId),
+            movieId: Number(id),
+          },
+        });
+      }
+
+      await prisma.toWatchShow.deleteMany({
+        where: {
+          userId: Number(userId),
+          showId: Number(id),
         },
       });
     }
-
-    await prisma.favoriteShow.deleteMany({
-      where: {
-        userId: Number(userId),
-        showId: Number(id),
-      },
-    });
     revalidatePath("/dashboard/lists");
   } catch (error) {
     console.error(error);

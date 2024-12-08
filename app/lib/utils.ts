@@ -41,6 +41,19 @@ export async function saltAndHashPassword(password: string) {
   }
 }
 
+export async function comparePassword(
+  password: string,
+  hashedPassword: string
+) {
+  try {
+    const isMatch = await bcrypt.compare(password, hashedPassword);
+    return isMatch;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw new Error("Błąd podczas porównywania hasła: " + error.message);
+  }
+}
+
 export function removeSpaces(str: string) {
   return str.replace(/\s+/g, "");
 }

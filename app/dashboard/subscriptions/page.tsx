@@ -1,6 +1,10 @@
+import { auth } from "@/app/auth";
 import SubscriptionCard from "../components/SubscriptionCard";
+import { redirect } from "next/navigation";
 
-const Subscriptions = () => {
+const Subscriptions = async () => {
+  const session = await auth();
+  if (!session) return redirect("/");
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">

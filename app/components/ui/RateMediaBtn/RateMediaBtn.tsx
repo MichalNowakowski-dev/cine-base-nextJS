@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { MediaItem, MediaType } from "@/app/types/types";
 import { setOrUnsetRating } from "@/app/lib/actions";
+import { notifySuccess } from "@/app/lib/toast";
 
 interface RateMediaButtonProps {
   isRated: boolean;
@@ -33,6 +34,7 @@ const RateMediaButton = ({
     setSelectedRating(newRating);
     setRated(true);
     setShowRatingOptions(false);
+    notifySuccess("Pomyślnie dodano ocenę");
   };
 
   return (

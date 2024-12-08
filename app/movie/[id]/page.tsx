@@ -29,7 +29,7 @@ import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
 import { auth } from "@/app/auth";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
 import { styles } from "@/app/styles";
-import RateMediaButton from "@/app/components/ui/RateMediaBtn/RateMediaBtn";
+import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaBtn";
 import SwiperList from "@/app/components/Swiper/SwiperList";
 import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
 import SwiperVideo from "@/app/components/Swiper/SwiperVideo";

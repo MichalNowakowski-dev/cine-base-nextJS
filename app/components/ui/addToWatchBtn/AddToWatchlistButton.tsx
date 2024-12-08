@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { MediaItem, MediaType } from "@/app/types/types";
 import { IoMdAdd } from "react-icons/io";
-import { addToWatch, removeToWatch } from "@/app/lib/actions";
+import { addToWatch, removeItemFromUserList } from "@/app/lib/actions";
 import { notifySuccess } from "@/app/lib/toast";
 
 interface WatchlistButtonProps {
@@ -24,7 +24,7 @@ const AddToWatchlistButton = ({
 
   const toggleWatchList = async () => {
     if (inWatchList) {
-      await removeToWatch(mediaData.id, userId, mediaType);
+      await removeItemFromUserList(mediaData.id, userId, mediaType, "toWatch");
       notifySuccess("Usunięto z listy do obejrzenia.");
       setInWatchlist(false);
     } else {

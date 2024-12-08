@@ -6,21 +6,23 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
     { href: "/dashboard", label: "Panel" },
     { href: "/dashboard/subscriptions", label: "Plan subskrypcji" },
     { href: "/dashboard/profile", label: "Profil" },
-    { href: "/dashboard/password", label: "Zmiana hasła" },
     { href: "/dashboard/lists", label: "Moje listy" },
+    { href: "/dashboard/ratings", label: "Ocenione filmy/seriale" },
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-200">
+    <div className="flex flex-col md:flex-row min-h-screen  text-gray-200 rounded-lg">
       {/* Sidebar */}
-      <aside className="w-1/4 bg-gray-800 p-6">
-        <h2 className="text-xl font-semibold mb-6">Panel użytkownika</h2>
+      <aside className="w-full md:w-1/4  p-6 md:min-h-screen">
+        <h2 className="text-xl font-semibold mb-6 text-center md:text-left">
+          Panel użytkownika
+        </h2>
         <ul className="space-y-4">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`block py-2 px-4 rounded transition  text-white hover:bg-gray-700`}
+                className={`block py-2 px-4 rounded transition text-white hover:bg-gray-700`}
               >
                 {link.label}
               </Link>
@@ -30,7 +32,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
       </aside>
 
       {/* Main Content */}
-      <main className="w-3/4 p-6">{children}</main>
+      <main className="w-full md:w-3/4 p-2 md:p-6">{children}</main>
     </div>
   );
 };
