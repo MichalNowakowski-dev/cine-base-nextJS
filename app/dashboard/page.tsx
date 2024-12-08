@@ -1,5 +1,5 @@
 import { auth } from "@/app/auth";
-
+import { redirect } from "next/navigation";
 import { prisma } from "../prisma";
 import UserLists from "./components/UserLists";
 import UserSubscriptionInfo from "./components/UserSubscriptionInfo";
@@ -9,8 +9,7 @@ import UpdateSession from "../components/updateSession/UpdateSession";
 
 const DashboardPage = async () => {
   const session = await auth();
-
-  if (!session) return;
+  if (!session?.user) return redirect("/sign-in");
 
   const userName = await getUserName(Number(session.user.id));
 

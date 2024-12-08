@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/app/prisma";
 import verifyUser from "./lib/verifyUser";
 import Credentials from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
+import { getUserByEmail } from "./lib/api/userApi";
 
 // Define the User interface using optional chaining for avatarUrl
 
@@ -111,19 +111,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return session;
     },
-    authorized: async ({ request, auth }) => {
-      const url = request.nextUrl;
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") return true;
 
-      // Zabezpieczanie tylko określonych tras
-      if (url.pathname.includes("/dashboard")) {
-        // Jeśli nie ma autoryzacji, przekieruj do logowania
-        if (!auth) {
-          return NextResponse.redirect(new URL("/sign-in", url.origin)); // Pamiętaj o `return`
-        }
-      }
-
-      // Jeśli użytkownik jest autoryzowany, kontynuuj
-      return NextResponse.next();
+      const existingUser = await getUserByEmail(user.email as string);
+      // Prevent sign in without email verification
+      if (!existingUser?.emailVerified) return false;
+      return true;
     },
   },
 });

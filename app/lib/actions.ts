@@ -1,5 +1,4 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
 import { messageSchema } from "./schemas/messageSchema";
 import nameSchema from "./schemas/nameSchema";
 import { z } from "zod";
@@ -10,12 +9,13 @@ import { auth, signIn } from "@/app/auth";
 import { AuthError } from "next-auth";
 import { MediaItem, MediaType } from "../types/types";
 import { revalidatePath } from "next/cache";
-import { prisma } from "../prisma";
-import { ensureMediaExists } from "./api/userApi";
+import { prisma } from "@/app/prisma";
+import { ensureMediaExists, getUserByEmail } from "./api/userApi";
 import passwordSchema from "./schemas/passwordSchema";
+import { generateVerificationToken } from "./api/tokens";
+import { sendVerificationEmail } from "./mail";
 
 export async function changeUserName(_prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
   const session = await auth();
 
   const formData = {
@@ -63,7 +63,6 @@ export async function changeUserName(_prevState: unknown, data: FormData) {
   }
 }
 export async function changeUserPassword(_prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
   const session = await auth();
 
   const formData = {
@@ -144,8 +143,6 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
 }
 
 export async function sendSupportMessage(_prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
-
   // Pobranie danych z formularza
   const formData = {
     firstName: data.get("firstName"),
@@ -192,18 +189,13 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
   }
 }
 
-export async function addUserToDb(_prevState: unknown, data: FormData) {
-  const prisma = new PrismaClient();
-
-  // Pobranie danych z formularza
+export async function registerUser(_prevState: unknown, data: FormData) {
   const registerFormData = {
     firstName: data.get("firstName"),
     lastName: data.get("lastName"),
     email: data.get("email"),
     password: data.get("password"),
   };
-
-  // Tworzenie nowej wiadomości
 
   try {
     const validatedData = registerSchema.parse(registerFormData);
@@ -216,7 +208,19 @@ export async function addUserToDb(_prevState: unknown, data: FormData) {
         passwordHash: hashedPassword,
       },
     });
+
+    const verificationToken = await generateVerificationToken(
+      validatedData.email
+    );
+
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
+
     console.log("uzytkownik zarejestrowany pomyslnie");
+
+    return { success: true, message: "Potwierdzający e-mail został wysłany!" };
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Mapowanie błędów Zod na klucze pól
@@ -233,7 +237,6 @@ export async function addUserToDb(_prevState: unknown, data: FormData) {
       message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
     };
   }
-  redirect("/sign-in");
 }
 
 export async function loginUser(
@@ -243,6 +246,26 @@ export async function loginUser(
 ) {
   const formObject = Object.fromEntries(formData.entries());
   let errorOccurred = false;
+
+  const existingUser = await getUserByEmail(formObject.email as string);
+  if (existingUser) {
+    if (!existingUser.emailVerified) {
+      const verificationToken = await generateVerificationToken(
+        existingUser.email as string
+      );
+
+      await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token
+      );
+
+      return {
+        success: true,
+        message: "Email weryfikacyjny wysłany ponownie.",
+      };
+    }
+  }
+
   try {
     await signIn("credentials", formObject);
   } catch (error) {
