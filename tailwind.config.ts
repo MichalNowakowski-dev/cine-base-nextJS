@@ -16,6 +16,7 @@ const config: Config = {
         xs: "480px",
       },
       backgroundImage: {
+        "star-gradient": "linear-gradient(180deg, #0d1117, #000000)",
         "fade-black-to-red": `linear-gradient(270deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
                            radial-gradient(circle at top right, rgba(255, 0, 0, 0.3), transparent),
                            linear-gradient(to bottom, #111, #222)`,
@@ -29,6 +30,8 @@ const config: Config = {
           "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(229,0,0,0.7) 100%)",
         "fade-to-dark":
           "linear-gradient(to bottom, rgba(20, 20, 20, 0)50%,  #141414)",
+        "fade-to-transparent":
+          "linear-gradient(180deg, rgba(0,0,0,1) 30%, rgba(255,255,255,0) 100%)",
         "fadeout-bottom":
           "linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #1A1A1A 100%)",
         notFoundBg: "url('/notFoundBg.png')",
@@ -39,6 +42,7 @@ const config: Config = {
         background: "var(--background)",
         backgroundLight: "var(--background-light)",
         backgroundFooter: "var(--background-footer)",
+        backgroundDashboardCard: "var(--background-dashboard-card)",
         foreground: "var(--foreground)",
         primary: "#E50000",
         secondary: "#999999",
@@ -57,9 +61,25 @@ const config: Config = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(calc(-100% + 100px))" }, // Dostosuj szerokość `100px` do swoich potrzeb
         },
+        twinkle: {
+          "0%, 100%": { opacity: "0.5" },
+          "50%": { opacity: "1" },
+        },
+        fallingStar: {
+          "0%": {
+            transform: "translateX(0) translateY(0)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translateX(50px) translateY(100vh)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         scroll: "scroll 5s linear infinite",
+        twinkle: "twinkle 3s infinite alternate",
+        fallingStar: "fallingStar 5s linear infinite",
       },
     },
   },

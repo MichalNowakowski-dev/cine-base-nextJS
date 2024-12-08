@@ -15,7 +15,7 @@ const NameForm = () => {
           type="text"
           name="firstName"
           defaultValue={state?.fields?.firstName as string}
-          className="mt-1 p-2 w-full bg-gray-800 text-white rounded"
+          className="mt-1 p-2 w-full bg-backgroundDashboardCard text-white rounded"
         />
       </div>
       <div>
@@ -24,7 +24,7 @@ const NameForm = () => {
           type="text"
           name="lastName"
           defaultValue={state?.fields?.lastName as string}
-          className="mt-1 p-2 w-full bg-gray-800 text-white rounded"
+          className="mt-1 p-2 w-full bg-backgroundDashboardCard text-white rounded"
         />
       </div>
       <div className="w-full flex justify-between">

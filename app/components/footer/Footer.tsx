@@ -36,9 +36,13 @@ const footerSocials = [
   },
 ];
 
-const Footer = () => {
+const Footer = ({ background }: { background?: string }) => {
   return (
-    <footer className="flex flex-col items-center justify-between w-full min-h-[25vh] bg-backgroundFooter py-8">
+    <footer
+      className={`flex flex-col items-center justify-between w-full min-h-[25vh] py-8 ${
+        background ? background : ""
+      }`}
+    >
       <ul className="flex justify-between w-[clamp(15rem,80%,500px)] mb-4">
         {footerLinks.map((link) => (
           <li key={link.name}>

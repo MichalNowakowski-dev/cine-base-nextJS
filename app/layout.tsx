@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "CineBase to Twoje osobiste centrum filmowe. Dodawaj do ulubionych, przeglądaj rekomendacje, oceniaj filmy i seriale. Dołącz do społeczności kinomaniaków!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body
-        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable} `}
+        className={`${roboto.variable} ${montserrat.variable} ${oswald.variable}`}
       >
         <SessionProvider>
           <Navigation />

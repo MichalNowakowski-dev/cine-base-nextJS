@@ -6,7 +6,7 @@ const ProfileCard = ({
   user: { firstName: string; avatarUrl: string };
 }) => {
   return (
-    <div className="flex items-center space-x-4 bg-gray-800 p-4 rounded-md">
+    <div className="flex items-center space-x-4 bg-backgroundDashboardCard p-4 rounded-md">
       <Image
         src={user.avatarUrl || "/default-avatar.png"}
         alt="User Avatar"

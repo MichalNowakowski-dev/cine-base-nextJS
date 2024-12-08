@@ -8,7 +8,7 @@ export const navigationStyles = {
     `w-full h-20 fixed flex items-center py-3 z-50 transition-transform duration-300 ${
       isDisplayed ? "translate-y-0" : "-translate-y-full"
     }`,
-  navBackground: "bg-[#00000070] backdrop-blur-sm",
+  navBackground: "bg-fade-to-transparent backdrop-blur-sm",
   logo: "w-[17vw] max-w-28",
   desktopNav: "hidden lg:flex gap-2 p-2 rounded-md",
   navItem: (isActive: boolean) =>

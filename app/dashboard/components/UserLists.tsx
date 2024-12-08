@@ -12,7 +12,7 @@ export default function UserLists({
   };
 }) {
   return (
-    <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+    <div className="bg-backgroundDashboardCard  p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold text-white">Twoje listy</h2>
       <p className="text-gray-300 mt-2">
         Ulubione filmy:{" "}

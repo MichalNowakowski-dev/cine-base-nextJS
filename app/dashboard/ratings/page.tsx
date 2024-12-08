@@ -12,7 +12,7 @@ const RatingsPage = async () => {
   const { ratedMovies, ratedShows } = await getUserRatingLists(userId);
 
   return (
-    <div className="p-6 bg-gray-900 text-gray-200 ">
+    <div className="p-6 text-gray-200 ">
       <RatingList mediaList={ratedMovies} mediaType="movie" userId={userId} />
       <RatingList mediaList={ratedShows} mediaType="tv" userId={userId} />
     </div>

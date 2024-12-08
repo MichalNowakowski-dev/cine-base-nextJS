@@ -5,21 +5,21 @@ const ProfileForm = () => {
         <label className="block text-sm">Adres email</label>
         <input
           type="text"
-          className="mt-1 p-2 w-full bg-gray-800 text-white rounded"
+          className="mt-1 p-2 w-full bg-backgroundDashboardCard text-white rounded"
         />
       </div>
       <div>
         <label className="block text-sm">Hasło</label>
         <input
           type="password"
-          className="mt-1 p-2 w-full bg-gray-800 text-white rounded"
+          className="mt-1 p-2 w-full bg-backgroundDashboardCard text-white rounded"
         />
       </div>
       <div>
         <label className="block text-sm">Nazwa</label>
         <input
           type="text"
-          className="mt-1 p-2 w-full bg-gray-800 text-white rounded"
+          className="mt-1 p-2 w-full bg-backgroundDashboardCard text-white rounded"
         />
       </div>
       <button

@@ -24,6 +24,7 @@
   --foreground: #ffffff;
   --background-light: #1a1a1a;
   --background-footer: #0f0f0f;
+  --background-dashboard-card: #18223165;
 }
 
 body {

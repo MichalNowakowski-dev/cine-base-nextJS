@@ -22,7 +22,7 @@ const PasswordForm = () => {
             type={toggleCurrentPassword ? "text" : "password"} // Dynamiczny typ
             name="currentPassword"
             defaultValue={state?.fields?.currentPassword as string}
-            className="mt-1 p-2 pr-10 w-full bg-gray-800 text-white rounded"
+            className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
           />
           <button
             onClick={(e) => {
@@ -52,7 +52,7 @@ const PasswordForm = () => {
             type={toggleNewPassword ? "text" : "password"} // Dynamiczny typ
             name="newPassword"
             defaultValue={state?.fields?.newPassword as string}
-            className="mt-1 p-2 pr-10 w-full bg-gray-800 text-white rounded"
+            className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
           />
           <button
             onClick={(e) => {

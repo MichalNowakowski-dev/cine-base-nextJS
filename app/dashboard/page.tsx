@@ -1,5 +1,5 @@
 import { auth } from "@/app/auth";
-import { redirect } from "next/navigation";
+
 import { prisma } from "../prisma";
 import UserLists from "./components/UserLists";
 import UserSubscriptionInfo from "./components/UserSubscriptionInfo";
@@ -9,7 +9,8 @@ import UpdateSession from "../components/updateSession/UpdateSession";
 
 const DashboardPage = async () => {
   const session = await auth();
-  if (!session?.user) redirect("/sign-in");
+
+  if (!session) return;
 
   const userName = await getUserName(Number(session.user.id));
 
@@ -51,7 +52,7 @@ const DashboardPage = async () => {
     <div>
       <UpdateSession />
       <div className="space-y-6">
-        <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+        <div className="bg-backgroundDashboardCard p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-semibold text-white">
             Witaj ponownie{" "}
             {session.user.name?.split(" ")[0] || session.user.email}

@@ -57,9 +57,9 @@ export default function Navigation() {
     <nav
       className={`${navigationStyles.nav(isMobileNavDisplayed)} ${
         navigationStyles.navBackground
-      }`}
+      } `}
     >
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center w-full px-4 relative">
+      <div className=" mx-auto flex justify-between items-center w-full px-4 relative">
         <Link href={"/"} className={navigationStyles.logo}>
           <Image src={Logo} alt="CineBase Logo" />
         </Link>

@@ -52,7 +52,7 @@ const Lists = async () => {
   ] = (await getLists(userLists)) || [];
 
   return (
-    <div className="p-0 sm:p-6 bg-gray-900 text-white min-h-screen">
+    <div className="p-0 sm:p-6  text-white min-h-screen">
       <h2 className="text-3xl font-bold text-center text-white mb-8">
         Moje listy
       </h2>

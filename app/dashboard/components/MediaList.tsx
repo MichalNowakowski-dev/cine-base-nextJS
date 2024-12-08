@@ -25,7 +25,7 @@ const FavoritesMedia = ({
       {mediaList.map((media) => (
         <li
           key={media.id}
-          className="flex items-start p-2 md:p-4 bg-gray-800 rounded-lg shadow-md overflow-hidden"
+          className="flex items-start p-2 md:p-4 bg-backgroundDashboardCard rounded-lg shadow-md overflow-hidden"
         >
           <Link
             href={`/${mediaType}/${media.id}`}

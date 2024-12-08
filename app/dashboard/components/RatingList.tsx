@@ -27,7 +27,7 @@ export default function RatingList({
   const isMovie = mediaType === "movie";
 
   return (
-    <div className="p-6 bg-gray-900 text-gray-200">
+    <div className="p-6  text-gray-200">
       <h1 className="text-2xl font-bold mb-4">
         {isMovie ? "Ocenione filmy" : "Ocenione seriale"}
       </h1>
@@ -40,7 +40,7 @@ export default function RatingList({
           id={"sort" + "_" + mediaType}
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
-          className="bg-gray-800 text-white px-3 py-2 rounded"
+          className="bg-backgroundDashboardCard text-white px-3 py-2 rounded"
         >
           <option value="desc">Malejąco</option>
           <option value="asc">Rosnąco</option>
@@ -56,7 +56,7 @@ export default function RatingList({
             {sortedMediaList.map((media) => (
               <li
                 key={media.id}
-                className="flex items-start p-2 md:p-4 bg-gray-800 rounded-lg shadow-md overflow-hidden"
+                className="flex items-start p-2 md:p-4 bg-backgroundDashboardCard rounded-lg shadow-md overflow-hidden"
               >
                 <Link
                   href={`/${mediaType}/${media.id}`}

@@ -41,7 +41,7 @@ const SwiperGenres = ({
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
-        // spaceBetween={30}
+        spaceBetween={30}
         className="my-swiper"
         breakpoints={{
           320: { slidesPerView: 1, slidesPerGroup: 1 },
