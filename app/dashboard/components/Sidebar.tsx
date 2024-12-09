@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const links = [
     { href: "/dashboard", label: "Panel" },
     { href: "/dashboard/subscriptions", label: "Plan subskrypcji" },
-    { href: "/dashboard/profile", label: "Profil" },
+    { href: "/dashboard/profile", label: "Edytuj profil" },
     { href: "/dashboard/lists", label: "Moje listy" },
     { href: "/dashboard/ratings", label: "Ocenione filmy/seriale" },
   ];

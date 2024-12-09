@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
     if (newPage >= 1 && newPage <= totalPages) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", newPage.toString());
-      router.push(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   };
 

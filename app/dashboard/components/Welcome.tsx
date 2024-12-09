@@ -11,7 +11,8 @@ export default function Welcome({
         Witaj ponownie {username?.split(" ")[0] || email || ""}
       </h1>
       <p className="text-gray-300 mt-2">
-        Mozesz tutaj zarządzać swoimi subskrypcjami oraz profilem.
+        Mozesz tutaj zarządzać swoimi subskrypcjami, listami, ocenami oraz
+        profilem.
       </p>
     </div>
   );

@@ -42,7 +42,7 @@ export default async function Home() {
       </header>
       <main className=" xl:max-w-screen-xl mx-auto flex flex-col gap-16 ">
         <section className="px-4">
-          <GenreCardsContainer mediaType="movie">
+          <GenreCardsContainer mediaType="movie" swiperId="genreMovies">
             <header>
               <h2 className="text-2xl mb-2">
                 Eksploruj nasz szeroki wybór kategorii

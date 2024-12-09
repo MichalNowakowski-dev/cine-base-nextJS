@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 import { changeUserName } from "@/app/lib/actions";
+import Spinner from "@/app/components/ui/spinner/Spinner";
 
 const NameForm = () => {
   const router = useRouter();
@@ -29,16 +30,18 @@ const NameForm = () => {
       </div>
       <div className="w-full flex justify-between">
         <button
-          type="submit"
           disabled={isPending}
-          className="mt-4 p-2 bg-green-800 hover:bg-green-500 text-black rounded w-[45%]"
+          className={`mt-4 px-6 py-2 rounded bg-green-600 text-white font-medium flex items-center gap-3 w-[45%] justify-center ${
+            isPending ? "opacity-50 cursor-not-allowed" : "hover:bg-green-700"
+          }`}
         >
-          {isPending ? "Zapisywanie..." : "Zapisz"}
+          {isPending ? "Zmiana hasła..." : "Zatwierdź"}
+          {isPending && <Spinner size={20} />}
         </button>
         <button
           onClick={() => router.back()}
           type="button"
-          className="mt-4 p-2 bg-black/30 hover:bg-black/50 text-white rounded w-[45%]"
+          className="mt-4 p-2 bg-zinc-700 hover:bg-zinc-800 text-white rounded w-[45%]"
         >
           Anuluj
         </button>

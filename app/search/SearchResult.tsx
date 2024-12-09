@@ -12,7 +12,7 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
   const { id, name, title, media_type, release_date, first_air_date } = result;
 
   return (
-    <li className="bg-zinc-800 text-white p-4 rounded-lg hover:shadow-lg hover:shadow-white hover:cursor-pointer transition-shadow">
+    <li className=" text-white p-4 rounded-lg hover:scale-105 hover:cursor-pointer transition-transform duration-100">
       <Link href={`/${media_type}/${id}`}>
         <Image
           src={
@@ -26,9 +26,9 @@ const SearchResult = ({ result }: { result: SearchItem }) => {
           alt={name || title || "Brak nazwy"}
           className="rounded-md mb-2 aspect-[2/3] object-cover"
         />
-        <h2 className="font-semibold">{title || name}</h2>
+        <h2 className="font-semibold truncate">{title || name}</h2>
         {first_air_date && (
-          <span className="text-sm text-gray-500 capitalize">
+          <span className="text-sm text-gray-500 capitalize ">
             {first_air_date.slice(0, 4)}
           </span>
         )}

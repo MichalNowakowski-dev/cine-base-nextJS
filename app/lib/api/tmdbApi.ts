@@ -94,6 +94,50 @@ export const fetchTrendingList = async (
   }
 };
 
+export const fetchSearchListByFilters = async (
+  mediaType: string,
+  query: URLSearchParams,
+  page?: number,
+  sortBy?: string
+) => {
+  try {
+    const url = `${
+      process.env.NEXT_PUBLIC_DB_URL
+    }/3/discover/${mediaType}?include_adult=true&${
+      mediaType === "tv" && "include_null_first_air_dates=false&"
+    }include_video=false&language=pl&page=${page || 1}&sort_by=${
+      sortBy ? sortBy : "popularity.desc"
+    }${
+      query.has("yearFrom")
+        ? `&first_air_date.gte=${query.get("yearFrom")}-01-01`
+        : ""
+    }${
+      query.has("yearTo")
+        ? `&first_air_date.lte=${query.get("yearTo")}-12-31`
+        : ""
+    }${
+      query.has("ratingFrom")
+        ? `&vote_average.gte=${query.get("ratingFrom")}`
+        : ""
+    }${
+      query.has("ratingTo") ? `&vote_average.lte=${query.get("ratingTo")}` : ""
+    }${query.has("genres") ? `&with_genres=${query.get("genres")}` : ""}${
+      query.has("productionCountry")
+        ? `&with_original_language=${query.get("productionCountry")}`
+        : ""
+    }&api_key=${process.env.TMDB_API_KEY}`;
+
+    console.log(url);
+
+    const resp = await fetch(url);
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch movie list by filters.`);
+  }
+};
+
 export const fetchMovieListByGenre = async (
   genreId: string,
   page: number = 1

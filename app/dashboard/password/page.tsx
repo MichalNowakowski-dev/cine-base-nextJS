@@ -6,8 +6,8 @@ const Password = async () => {
   const session = await auth();
   if (!session) return redirect("/");
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Change Your Password</h2>
+    <div className="flex flex-col justify-center items-center">
+      <h2 className="text-2xl font-semibold mb-4">Zmień swoje hasło</h2>
       <PasswordForm />
     </div>
   );

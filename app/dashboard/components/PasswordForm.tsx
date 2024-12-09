@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { changeUserPassword } from "@/app/lib/actions";
+import Spinner from "@/app/components/ui/spinner/Spinner";
 
 const PasswordForm = () => {
   const router = useRouter();
@@ -82,16 +83,18 @@ const PasswordForm = () => {
       )}
       <div className="w-full flex justify-between">
         <button
-          type="submit"
           disabled={isPending}
-          className="mt-4 p-2 bg-green-800 hover:bg-green-500 text-black rounded w-[45%]"
+          className={`mt-4 px-6 py-2 rounded bg-blue-600 text-white font-medium flex items-center gap-3 w-[45%] justify-center ${
+            isPending ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
+          }`}
         >
-          {isPending ? "Zmieniam hasło..." : "Zmień"}
+          {isPending ? "Zmiana hasła..." : "Zatwierdź"}
+          {isPending && <Spinner size={20} />}
         </button>
         <button
           onClick={() => router.back()}
           type="button"
-          className="mt-4 p-2 bg-black/30 hover:bg-black/50 text-white rounded w-[45%]"
+          className="mt-4 p-2 bg-zinc-400 hover:bg-zinc-500 text-white rounded w-[45%]"
         >
           Anuluj
         </button>

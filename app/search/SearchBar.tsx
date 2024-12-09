@@ -20,8 +20,7 @@ export default function SearchBar() {
   }, 300);
 
   return (
-    <div className="flex flex-col gap-3 max-w-lg w-full mx-auto">
-      <label htmlFor="search">Czego szukasz?</label>
+    <div className="flex flex-col gap-3 w-full max-w-screen-md">
       <input
         id="search"
         type="text"

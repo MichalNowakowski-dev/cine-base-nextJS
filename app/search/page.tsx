@@ -1,26 +1,53 @@
+import AdvancedSearch from "./AdvancedSearch";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
-import { Suspense } from "react";
+import SwitchButton from "./SwitchButton";
+
+type SearchParamsProps = {
+  type: string;
+  mediaType: string;
+  query?: string;
+  yearFrom?: string;
+  yearTo?: string;
+  ratingFrom?: string;
+  ratingTo?: string;
+  genres?: string;
+  productionCountry?: string;
+  page?: string;
+};
 
 export default async function SearchPage(props: {
-  searchParams?: Promise<{ page?: string; query?: string }>;
+  searchParams: Promise<SearchParamsProps>;
 }) {
   const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
+
+  const isFiltersOn = searchParams.type === "filters";
+  const query = searchParams.query;
 
   return (
     <main className="min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl flex flex-col gap-5">
-      <div className="flex flex-col gap-10">
-        <SearchBar />
-        {query && (
+      <div className="flex flex-col items-center justify-center gap-10">
+        <div className="flex flex-col justify-between items-center gap-10 w-full max-w-screen-md">
+          <div className="flex justify-center items-center gap-2">
+            <span>Wyszukaj po frazie</span>
+            <SwitchButton />
+            <span>Wyszukaj po filtrach</span>
+          </div>
+        </div>
+
+        {isFiltersOn ? <AdvancedSearch /> : <SearchBar />}
+        {query && !isFiltersOn && (
           <h1 className="text-xl font-bold">
             Wyniki wyszukiwania dla: {`"${query}"`}
           </h1>
         )}
-        <Suspense fallback={"Loading..."}>
-          <SearchResults page={currentPage} query={query} />
-        </Suspense>
+        {isFiltersOn && (
+          <h1 className="text-xl font-bold">
+            Wyniki wyszukiwania prez filtry:
+          </h1>
+        )}
+
+        <SearchResults searchParams={searchParams} />
       </div>
     </main>
   );

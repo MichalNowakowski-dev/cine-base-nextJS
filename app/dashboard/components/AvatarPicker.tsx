@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { notifySuccess } from "@/app//lib/toast";
+import Spinner from "@/app/components/ui/spinner/Spinner";
 
 const AvatarPicker = () => {
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null); // Przechowuje wybrany awatar
@@ -83,14 +84,15 @@ const AvatarPicker = () => {
             />
             <button
               onClick={handleAvatarSubmit}
-              disabled={!selectedAvatar}
-              className={`mt-4 px-6 py-2 rounded bg-blue-600 text-white font-medium ${
-                !selectedAvatar
+              disabled={isChanging}
+              className={`mt-4 px-6 py-2 rounded bg-blue-600 text-white font-medium flex items-center gap-3 ${
+                isChanging
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:bg-blue-700"
               }`}
             >
               {isChanging ? "Zmieniam..." : "Zatwierdź"}
+              {isChanging && <Spinner size={20} />}
             </button>
           </div>
         )}

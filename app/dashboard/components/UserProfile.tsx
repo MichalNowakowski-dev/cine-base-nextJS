@@ -9,15 +9,17 @@ export default function UserProfile({
   userEmail: string;
 }) {
   return (
-    <div className="bg-backgroundDashboardCard  p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-white">Twój profil</h2>
-      <p className="text-gray-300 mt-2">
-        Imię i nazwisko:{" "}
-        <span className="font-bold">{username || "Brak danych"}</span>
-      </p>
-      <p className="text-gray-300">
-        Email: <span className="font-bold">{userEmail}</span>
-      </p>
+    <div className="bg-backgroundDashboardCard p-6 rounded-lg shadow-md flex flex-col justify-between">
+      <div>
+        <h2 className="text-xl font-semibold text-white">Twój profil</h2>
+        <p className="text-gray-300 mt-2">
+          Imię i nazwisko:{" "}
+          <span className="font-bold">{username || "Brak danych"}</span>
+        </p>
+        <p className="text-gray-300">
+          Email: <span className="font-bold">{userEmail}</span>
+        </p>
+      </div>
       <Link
         href={"/dashboard/profile"}
         className=" block w-max mt-4 p-2 bg-green-600 text-white rounded"

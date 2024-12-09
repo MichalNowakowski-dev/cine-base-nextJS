@@ -51,7 +51,6 @@ export async function changeUserName(_prevState: unknown, data: FormData) {
   } catch (error) {
     isError = true;
     if (error instanceof z.ZodError) {
-      // Mapowanie błędów Zod na klucze pól
       const fieldErrors = error.errors.reduce((acc, curr) => {
         acc[curr.path[0]] = curr.message;
         return acc;
@@ -66,7 +65,6 @@ export async function changeUserName(_prevState: unknown, data: FormData) {
     };
   } finally {
     if (!isError) {
-      // revalidatePath("/dashboard/profile");
       redirect("/dashboard/profile");
     }
   }
@@ -79,27 +77,21 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
     newPassword: data.get("newPassword"),
   };
 
-  // Sprawdzenie, czy pola nie są puste
   if (!formData.currentPassword || !formData.newPassword) {
     return { success: false, message: "Musisz uzupełnić oba pola." };
   }
 
   try {
-    // Pobranie hasła użytkownika z bazy danych
     const userPassword = await prisma.user.findUnique({
       where: { id: Number(session?.user.id) },
       select: { passwordHash: true },
     });
 
-    // Jeśli użytkownik nie ma hasła, walidujemy nowe hasło i tworzymy je
     if (!userPassword?.passwordHash) {
-      // Walidacja nowego hasła
       const validatedData = passwordSchema.parse(formData.newPassword);
 
-      // Haszowanie nowego hasła
       const hashedPassword = await saltAndHashPassword(validatedData);
 
-      // Tworzymy nowe hasło
       await prisma.user.update({
         where: { id: Number(session?.user.id) },
         data: { passwordHash: hashedPassword },
@@ -108,7 +100,6 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
       return { success: true, message: "Hasło zostało ustawione pomyślnie." };
     }
 
-    // Jeśli użytkownik ma hasło, porównujemy je z `currentPassword`
     const isMatch = await comparePassword(
       formData.currentPassword as string,
       userPassword.passwordHash
@@ -118,13 +109,10 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
       return { success: false, message: "Obecne hasło jest niepoprawne." };
     }
 
-    // Walidacja nowego hasła
     const validatedData = passwordSchema.parse(formData.newPassword);
 
-    // Haszowanie nowego hasła
     const hashedPassword = await saltAndHashPassword(validatedData);
 
-    // Aktualizacja hasła w bazie danych
     await prisma.user.update({
       where: { id: Number(session?.user.id) },
       data: { passwordHash: hashedPassword },
@@ -133,16 +121,14 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
     return { success: true, message: "Hasło zmienione pomyślnie." };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Mapowanie błędów dla `newPassword`
       const fieldErrors: Record<string, string> = {};
       for (const err of error.errors) {
-        fieldErrors["newPassword"] = err.message; // Każdy błąd dotyczy pola `newPassword`
+        fieldErrors["newPassword"] = err.message;
       }
 
       return { success: false, errors: fieldErrors, fields: formData };
     }
 
-    // Obsługa innych błędów
     console.error("Błąd podczas zmiany hasła:", error);
     return {
       success: false,
@@ -152,7 +138,6 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
 }
 
 export async function sendSupportMessage(_prevState: unknown, data: FormData) {
-  // Pobranie danych z formularza
   const formData = {
     firstName: data.get("firstName"),
     lastName: data.get("lastName"),
@@ -160,10 +145,8 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
     subject: data.get("subject"),
     phoneNumber: data.get("phoneNumber")?.toString().trim() || undefined,
     message: data.get("message"),
-    privacyPolicy: data.get("privacyPolicy") === "on", // Konwersja na boolean
+    privacyPolicy: data.get("privacyPolicy") === "on",
   };
-
-  // Tworzenie nowej wiadomości
 
   try {
     const validatedData = messageSchema.parse(formData);
@@ -182,7 +165,6 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
     return { success: true, message: "Dziękujemy za wysłanie wiadomości" };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Mapowanie błędów Zod na klucze pól
       const fieldErrors = error.errors.reduce((acc, curr) => {
         acc[curr.path[0]] = curr.message;
         return acc;
@@ -198,7 +180,6 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
   }
 }
 export async function sendResetEmail(_prevState: unknown, data: FormData) {
-  // Pobranie danych z formularza
   const email = data.get("email");
 
   try {
@@ -225,7 +206,6 @@ export async function sendResetEmail(_prevState: unknown, data: FormData) {
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Pobranie błędu tylko dla pola "email"
       const emailError = error.errors.find(
         (err) => err.path[0] === "email"
       )?.message;
@@ -233,11 +213,10 @@ export async function sendResetEmail(_prevState: unknown, data: FormData) {
       return {
         success: false,
         errors: { email: emailError || "Nieznany błąd" },
-        fields: { email }, // Zwraca wprowadzone dane dla pola "email"
+        fields: { email },
       };
     }
 
-    // Obsługa innych błędów
     console.error("Błąd podczas wysyłania e-maila:", error);
 
     return {
@@ -288,7 +267,6 @@ export async function setUserNewPassword(
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Mapowanie błędów Zod na klucze pól
       const fieldErrors = error.errors.reduce((acc, curr) => {
         acc[curr.path[0]] = curr.message;
         return acc;
@@ -338,7 +316,6 @@ export async function registerUser(_prevState: unknown, data: FormData) {
     return { success: true, message: "Potwierdzający e-mail został wysłany!" };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Mapowanie błędów Zod na klucze pól
       const fieldErrors = error.errors.reduce((acc, curr) => {
         acc[curr.path[0]] = curr.message;
         return acc;
@@ -354,11 +331,7 @@ export async function registerUser(_prevState: unknown, data: FormData) {
   }
 }
 
-export async function loginUser(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _prevState: any,
-  formData: FormData
-) {
+export async function loginUser(_prevState: unknown, formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   let errorOccurred = false;
 

@@ -115,7 +115,7 @@ export default function Navigation() {
 
         <div className="flex items-center gap-5">
           <Link
-            href={"/search"}
+            href={"/search?type=query"}
             className="p-2 flex gap-2 items-center bg-transparent  
              rounded-full hover:bg-white "
           >
