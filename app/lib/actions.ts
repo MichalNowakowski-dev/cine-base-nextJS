@@ -10,10 +10,19 @@ import { AuthError } from "next-auth";
 import { MediaItem, MediaType } from "../types/types";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/app/prisma";
-import { ensureMediaExists, getUserByEmail } from "./api/userApi";
+import {
+  ensureMediaExists,
+  getPasswordResetTokenByToken,
+  getUserByEmail,
+} from "./api/userApi";
 import passwordSchema from "./schemas/passwordSchema";
-import { generateVerificationToken } from "./api/tokens";
-import { sendVerificationEmail } from "./mail";
+import {
+  generatePasswordResetToken,
+  generateVerificationToken,
+} from "./api/tokens";
+import { sendResetPasswordEmail, sendVerificationEmail } from "./mail";
+import resetPasswordEmailSchema from "./schemas/resetPasswordEmailSchema";
+import { resetPasswordSchema } from "./schemas/resetPasswordPasswordSchema";
 
 export async function changeUserName(_prevState: unknown, data: FormData) {
   const session = await auth();
@@ -188,6 +197,112 @@ export async function sendSupportMessage(_prevState: unknown, data: FormData) {
     };
   }
 }
+export async function sendResetEmail(_prevState: unknown, data: FormData) {
+  // Pobranie danych z formularza
+  const email = data.get("email");
+
+  try {
+    const validatedData = resetPasswordEmailSchema.parse({ email });
+    console.log(validatedData);
+
+    const userExists = await getUserByEmail(validatedData.email);
+
+    if (userExists) {
+      const passwordResetToken = await generatePasswordResetToken(
+        validatedData.email
+      );
+
+      await sendResetPasswordEmail(
+        passwordResetToken.email,
+        passwordResetToken.token
+      );
+    }
+
+    return {
+      success: true,
+      message:
+        "Jeśli istnieje konto powiązane z tym adresem e-mail, wysłaliśmy wiadomość z linkiem do resetu hasła.",
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Pobranie błędu tylko dla pola "email"
+      const emailError = error.errors.find(
+        (err) => err.path[0] === "email"
+      )?.message;
+
+      return {
+        success: false,
+        errors: { email: emailError || "Nieznany błąd" },
+        fields: { email }, // Zwraca wprowadzone dane dla pola "email"
+      };
+    }
+
+    // Obsługa innych błędów
+    console.error("Błąd podczas wysyłania e-maila:", error);
+
+    return {
+      success: false,
+      message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    };
+  }
+}
+export async function setUserNewPassword(
+  _prevState: unknown,
+  data: FormData,
+  token: string
+) {
+  const formData = {
+    password: data.get("password"),
+    confirmPassword: data.get("confirmPassword"),
+  };
+
+  try {
+    const validatedData = resetPasswordSchema.parse(formData);
+
+    const resetPasswordToken = await getPasswordResetTokenByToken(token);
+
+    const hashedPassword = await saltAndHashPassword(
+      validatedData.confirmPassword
+    );
+
+    await prisma.user.update({
+      where: {
+        email: resetPasswordToken?.email,
+      },
+      data: {
+        passwordHash: hashedPassword,
+      },
+    });
+
+    await prisma.passwordResetToken.delete({
+      where: {
+        token,
+      },
+    });
+
+    console.log("Zmiana hasła pomyślna:");
+    return {
+      success: true,
+      message: "Zmieniono hasło",
+      redirectTo: "/sign-in",
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Mapowanie błędów Zod na klucze pól
+      const fieldErrors = error.errors.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {} as Record<string, string>);
+
+      return { success: false, errors: fieldErrors, fields: formData };
+    }
+    console.error("Błąd podczas rejestracji:", error);
+    return {
+      success: false,
+      message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    };
+  }
+}
 
 export async function registerUser(_prevState: unknown, data: FormData) {
   const registerFormData = {
@@ -272,7 +387,11 @@ export async function loginUser(
     if (error instanceof AuthError) {
       errorOccurred = true;
       if (error.message.includes("Invalid credentials")) {
-        return { success: false, message: "Błędne dane logowania." };
+        return {
+          success: false,
+          message: "Błędne dane logowania.",
+          fields: formObject,
+        };
       } else if (error.message.includes("Empty fields")) {
         return {
           success: false,

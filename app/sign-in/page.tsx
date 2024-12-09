@@ -23,11 +23,17 @@ export default async function SignInPage() {
 
           <LoginForm />
 
-          <div className="mt-4 text-center">
-            <p className="text-sm">
+          <div className="mt-4 text-center ">
+            <p className="text-sm mb-2">
               Nie masz konta?{" "}
               <a href="/sign-up" className="text-blue-600">
                 Dołącz do CineBase
+              </a>
+            </p>
+            <p className="text-sm">
+              Zapomniałeś hasła?{" "}
+              <a href="/forgot-password" className="text-blue-600">
+                Zresetuj hasło
               </a>
             </p>
           </div>

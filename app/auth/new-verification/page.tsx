@@ -11,13 +11,11 @@ async function verifyToken(token: string) {
     throw new Error("Nieprawidłowy lub wygasły token.");
   }
 
-  // Zaktualizuj użytkownika, ustawiając `emailVerified` na true
   await prisma.user.update({
     where: { email: tokenEntry.email },
     data: { emailVerified: true },
   });
 
-  // Usuń token po użyciu
   await prisma.verificationToken.delete({
     where: { token },
   });

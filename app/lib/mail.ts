@@ -12,3 +12,13 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     html: `<p>Kliknij <a href="${confirmLink}">TUTAJ</a> aby potwierdzić e-mail.</p>`,
   });
 };
+export const sendResetPasswordEmail = async (email: string, token: string) => {
+  const confirmLink = `${process.env.BASE_URL}/reset-password?token=${token}`;
+
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Zresetuj swoje hasło w CineBase",
+    html: `<p>Kliknij <a href="${confirmLink}">TUTAJ</a> aby potwierdzić e-mail.</p><br/><p>Jeśli nie Ty wysyłałeś prośbę o zmianę hasła, zignoruj tę wiadomość.</p>`,
+  });
+};
