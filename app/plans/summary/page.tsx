@@ -13,13 +13,15 @@ import Image from "next/image";
 import bg from "@/public/summaryBg-lg.jpg";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import { prisma } from "@/app/prisma";
+import { auth } from "@/app/auth";
 
 export default async function SubscriptionSummary({
   searchParams,
 }: {
   searchParams: Promise<{ id: string; priceCycle: string; trial: string }>;
 }) {
-  const { id, priceCycle, trial } = await searchParams;
+  const { id, priceCycle } = await searchParams;
+  const session = await auth();
 
   const getPlanInfo = async (planId: number) => {
     const plan = await prisma.plan.findUnique({ where: { id: planId } });
@@ -27,6 +29,12 @@ export default async function SubscriptionSummary({
   };
 
   const selectedPlan = await getPlanInfo(Number(id));
+
+  const paymentUrl = `${
+    priceCycle === "monthly"
+      ? selectedPlan?.monthlyPaymentLink
+      : selectedPlan?.yearlyPaymentLink
+  }?prefilled_email=${session?.user.email}`;
 
   if (!selectedPlan) {
     return (
@@ -141,7 +149,10 @@ export default async function SubscriptionSummary({
             <Link href={`/plans`} className={`bg-backgroundLight ${linkClass}`}>
               Wróć do wyboru planu
             </Link>
-            <Link href={`/payment`} className={`bg-primary ${linkClass}`}>
+            <Link
+              href={session?.user ? paymentUrl : "/sign-in"}
+              className={`bg-primary ${linkClass}`}
+            >
               Wybierz plan
             </Link>
           </div>

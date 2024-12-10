@@ -101,6 +101,10 @@ export type SubscriptionPlan = {
   name: string;
   monthlyPrice: number;
   yearlyPrice: number;
+  monthlyPaymentLink: string;
+  yearlyPaymentLink: string;
+  monthlyPriceId: string;
+  yearlyPriceId: string;
   description: string;
   content: string;
   devicesNumber: number;

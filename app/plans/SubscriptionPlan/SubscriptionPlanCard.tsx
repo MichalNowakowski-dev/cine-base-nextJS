@@ -1,21 +1,16 @@
+import { SubscriptionPlan } from "@/app/types/types";
 import Link from "next/link";
 import React from "react";
 
 export default function SubscriptionPlanCard({
-  planName,
-  planId,
+  plan,
   priceCycle,
-  planDesc,
-  planPrice,
 }: {
-  planName: string;
+  plan: SubscriptionPlan;
   priceCycle: string;
-  planDesc: string;
-  planId: number;
-  planPrice: { monthly: number; yearly: number };
 }) {
   // Sprawdzamy czy wartości są poprawne
-  const price = priceCycle === "monthly" ? planPrice.monthly : planPrice.yearly;
+  const price = priceCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
   const priceLabel = priceCycle === "monthly" ? "/miesiąc" : "/rok";
 
   const buttonClass =
@@ -24,8 +19,8 @@ export default function SubscriptionPlanCard({
   return (
     <li className="p-4 bg-backgroundLight border  border-[#262626] rounded-md basis-1/3">
       <header className="flex flex-wrap gap-4 mb-5">
-        <h3 className="text-h3">{planName}</h3>
-        <p>{planDesc}</p>
+        <h3 className="text-h3">{plan.name}</h3>
+        <p>{plan.description}</p>
         <h3 className="text-h3 w-full">
           <span>{price}zł</span>
           <span className="text-sm text-secondary">{priceLabel}</span>
@@ -33,13 +28,13 @@ export default function SubscriptionPlanCard({
       </header>
       <div className="flex justify-between gap-3">
         <Link
-          href={`plans/summary?id=${planId}&trial=true`}
+          href={`plans/summary?id=${plan.id}&priceCycle=${priceCycle}&trial=true`}
           className={`${buttonClass}  bg-backgroundFooter`}
         >
           Okres próbny
         </Link>
         <Link
-          href={`plans/summary?id=${planId}&priceCycle=${priceCycle}&trial=false`}
+          href={`plans/summary?id=${plan.id}&priceCycle=${priceCycle}`}
           className={`${buttonClass} bg-primary`}
         >
           Wybierz Plan

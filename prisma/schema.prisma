@@ -39,6 +39,10 @@ model Plan {
   description   String
   monthlyPrice  Float
   yearlyPrice   Float
+  monthlyPaymentLink String
+  yearlyPaymentLink String
+  monthlyPriceId String
+  yearlyPriceId String
   content       String
   devicesNumber Int
   trialPeriod   Int

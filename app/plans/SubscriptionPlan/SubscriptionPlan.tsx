@@ -13,14 +13,7 @@ export default function SubscriptionPlan({
 
   function renderPlanOptions(plansList: SubscriptionPlan[]) {
     return plansList.map((plan) => (
-      <SubscriptionPlanCard
-        key={plan.id}
-        planDesc={plan.description}
-        planName={plan.name}
-        planId={plan.id}
-        planPrice={{ monthly: plan.monthlyPrice, yearly: plan.yearlyPrice }}
-        priceCycle={priceCycle}
-      />
+      <SubscriptionPlanCard key={plan.id} plan={plan} priceCycle={priceCycle} />
     ));
   }
 
