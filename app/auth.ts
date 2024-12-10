@@ -112,11 +112,47 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async signIn({ user, account }) {
-      if (account?.provider !== "credentials") return true;
+      // if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserByEmail(user.email as string);
       // Prevent sign in without email verification
-      if (!existingUser?.emailVerified) return false;
+      if (!existingUser?.emailVerified && account?.provider === "credentials")
+        return false;
+
+      // Sprawdzamy, czy użytkownik loguje się przez Google
+      if (account?.provider === "google") {
+        if (!existingUser) {
+          // Tworzymy nowego użytkownika, jeśli nie istnieje
+          await prisma.user.create({
+            data: {
+              email: user.email,
+              name: user.name,
+              // Inne dane użytkownika
+            },
+          });
+        }
+
+        // Tworzymy powiązanie z Google w tabeli Account, jeśli nie istnieje
+        const existingAccount = await prisma.account.findFirst({
+          where: {
+            provider: "google",
+            providerAccountId: account.providerAccountId,
+          },
+        });
+
+        if (!existingAccount) {
+          // Tworzymy nowe konto powiązane z Google
+          await prisma.account.create({
+            data: {
+              userId: existingUser ? existingUser.id : Number(user.id),
+              type: "user",
+              provider: "google",
+              providerAccountId: account.providerAccountId,
+              // Przechowywanie innych informacji o dostawcy
+            },
+          });
+        }
+      }
       return true;
     },
   },

@@ -59,6 +59,7 @@ model Plan {
 
 model Subscription {
   id               Int       @id @default(autoincrement()) // Unikalny identyfikator subskrypcji
+  stripeSubscriptionId String?
   userId           Int       // Identyfikator użytkownika (relacja do tabeli User)
   planId   Int    // Identyfikator planu subskrypcji (relacja do tabeli Plan)
   subscriptionStart DateTime  // Data rozpoczęcia subskrypcji
