@@ -66,7 +66,6 @@ export default function Navigation() {
 
         <ul className={navigationStyles.desktopNav}>
           {navLinks.map(({ label, href }) => {
-            if (href === "/sign-in") return;
             return (
               <li
                 key={label}
@@ -109,6 +108,20 @@ export default function Navigation() {
                   <Link href={href}>{label}</Link>
                 </li>
               ))}
+              <li
+                className={` ${navigationStyles.mobileNavItem(
+                  pathname === "/sign-in"
+                )} bg-red-600 xs:hidden `}
+              >
+                <Link href={"/sign-in"}>Zaloguj się</Link>
+              </li>
+              <li
+                className={` ${navigationStyles.mobileNavItem(
+                  pathname === "/sign-up"
+                )}bg-blue-500 xs:hidden`}
+              >
+                <Link href={"/sign-up"}>Dołącz do nas</Link>
+              </li>
             </ul>
           </div>
         )}

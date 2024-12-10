@@ -20,11 +20,7 @@ export const navigationStyles = {
             isOpen ? "translate-y-0" : "-translate-y-[110%]"
           }`,
   mobileNavItem: (isActive: boolean) =>
-    `${
-      isActive
-        ? "text-white bg-gradient-to-r from-gray-700 via-gray-800 to-black shadow-lg"
-        : "text-white "
-    } 
+    `${isActive && "text-white underline underline-offset-4"} 
          p-2 rounded-lg text-md font-semibold `,
   mobileButton:
     "p-3 bg-backgroundLight border-2 border-gray-600 rounded-md flex items-center justify-center md:hidden",

@@ -9,10 +9,10 @@ export default function UserAccountNav() {
   return (
     <>
       {!session ? (
-        <ul className="flex gap-3">
+        <ul className="hidden xs:flex  gap-3">
           <li>
             <Link
-              className="p-3 text-white bg-red-600 hover:bg-red-800 rounded-lg"
+              className="p-2 xs:p-3 text-sm  text-white bg-red-600 hover:bg-red-800 rounded-lg"
               href={"/sign-in"}
             >
               Zaloguj się
@@ -20,7 +20,7 @@ export default function UserAccountNav() {
           </li>
           <li>
             <Link
-              className="p-3 text-white bg-blue-500 hover:bg-blue-800 rounded-lg"
+              className="p-2 xs:p-3 text-sm  text-white bg-blue-500 hover:bg-blue-800 rounded-lg"
               href={"/sign-up"}
             >
               Dołącz do nas

@@ -14,7 +14,8 @@ type SearchParamsProps = {
   yearTo?: string;
   ratingFrom?: string;
   ratingTo?: string;
-  genres?: string;
+  movieGenres?: string;
+  tvGenres?: string;
   productionCountry?: string;
   page?: string;
 };
@@ -31,6 +32,11 @@ export default async function SearchResults({
 
   const params = new URLSearchParams(searchParams);
   params.delete("mediaType");
+  if (mediaType === "movie") {
+    params.delete("tv-genres");
+  } else {
+    params.delete("movie-genres");
+  }
   const newParams = params;
 
   const filtersResults = await fetchSearchListByFilters(

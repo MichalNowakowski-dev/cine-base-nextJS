@@ -143,3 +143,18 @@ export const tvGenresList = [
     name: "Western",
   },
 ];
+
+export const countriesAndLanguages = [
+  { name: "Polska", lang: "pl" },
+  { name: "Stany Zjednoczone", lang: "en" },
+  { name: "Francja", lang: "fr" },
+  { name: "Niemcy", lang: "de" },
+  { name: "Hiszpania", lang: "es" },
+  { name: "Włochy", lang: "it" },
+  { name: "Japonia", lang: "ja" },
+  { name: "Korea Południowa", lang: "ko" },
+  { name: "Indie", lang: "hi" },
+  { name: "Chiny", lang: "zh" },
+  { name: "Rosja", lang: "ru" },
+  { name: "Brazylia", lang: "pt" },
+];
