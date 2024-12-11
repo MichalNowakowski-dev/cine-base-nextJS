@@ -127,10 +127,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             data: {
               email: user.email,
               name: user.name,
+              firstName: user.name?.split(" ")[0],
+              lastName: user.name?.split(" ")[1],
               // Inne dane użytkownika
             },
           });
         }
+
+        const newUser = await prisma.user.findFirst({
+          where: { email: user.email },
+        });
 
         // Tworzymy powiązanie z Google w tabeli Account, jeśli nie istnieje
         const existingAccount = await prisma.account.findFirst({
@@ -144,7 +150,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           // Tworzymy nowe konto powiązane z Google
           await prisma.account.create({
             data: {
-              userId: existingUser ? existingUser.id : Number(user.id),
+              userId: existingUser ? existingUser.id : newUser!.id,
               type: "user",
               provider: "google",
               providerAccountId: account.providerAccountId,

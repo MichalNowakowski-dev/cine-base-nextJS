@@ -6,7 +6,7 @@ import SwitchListButtons from "../components/ui/switchPaginatedListButtons/Switc
 import { usePagination } from "../hooks/usePagination";
 import { BackdropSize, MediaItem } from "../types/types";
 import { styles } from "../styles";
-import RateMediaButton from "../components/ui/rateMediaBtn/RateMediaBtn";
+import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaBtn";
 import AddToWatchlistButton from "../components/ui/addToWatchBtn/AddToWatchlistButton";
 import FavoriteButton from "../components/ui/addToFavBtn/AddToFavoriteBtn";
 

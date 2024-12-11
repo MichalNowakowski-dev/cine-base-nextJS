@@ -64,6 +64,7 @@ model Subscription {
   planId   Int    // Identyfikator planu subskrypcji (relacja do tabeli Plan)
   subscriptionStart DateTime  // Data rozpoczęcia subskrypcji
   subscriptionEnd   DateTime  // Data zakończenia subskrypcji
+  interval          String   @default("month") // Domyślny interwał
   status           String    // Status subskrypcji, np. 'active', 'expired'
   isPaid           Boolean   // Czy subskrypcja jest opłacona?
   trialPeriod      Boolean   // Czy subskrypcja jest w okresie próbnym?

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Spinner from "../components/ui/spinner/Spinner";
-import { setUserNewPassword } from "../lib/actions";
+import { resetUserPassword } from "../lib/actions";
 import { useActionState, useEffect, useState } from "react";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
@@ -10,7 +10,7 @@ export default function ResetForm({ token }: { token: string }) {
   const [toggleNewPassword, setToggleNewPassword] = useState(false);
 
   const [state, formAction, isPending] = useActionState(
-    (state: unknown, data: FormData) => setUserNewPassword(state, data, token),
+    (state: unknown, data: FormData) => resetUserPassword(state, data, token),
     null
   );
 

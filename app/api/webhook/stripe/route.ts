@@ -56,12 +56,14 @@ export async function POST(req: NextRequest) {
 
         console.log(session.metadata);
 
-        const planId = parseInt(session.metadata?.planId || "0", 10); // Zakładamy, że ID planu jest w metadata
+        const planId = parseInt(session.metadata?.planId || "0", 10);
+        const interval = session.metadata?.interval;
 
         await prisma.subscription.create({
           data: {
             userId: user.id,
             planId,
+            interval,
             stripeSubscriptionId: subscriptionId,
             subscriptionStart: new Date(),
             subscriptionEnd: new Date(
@@ -77,6 +79,23 @@ export async function POST(req: NextRequest) {
         break;
       }
 
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const stripeSubscriptionId = subscription.id;
+
+        await prisma.subscription.updateMany({
+          where: { stripeSubscriptionId },
+          data: {
+            status: "canceled", // Ustawienie statusu na "canceled"
+          },
+        });
+
+        console.log(
+          `Subscription canceled, but plan is up till the end od subscription: ${stripeSubscriptionId}`
+        );
+
+        break;
+      }
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
 

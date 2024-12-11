@@ -5,38 +5,42 @@ import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { changeUserPassword } from "@/app/lib/actions";
 import Spinner from "@/app/components/ui/spinner/Spinner";
 
-const PasswordForm = () => {
+const PasswordForm = ({ hasPassword }: { hasPassword: boolean }) => {
   const router = useRouter();
+
   const [state, formAction, isPending] = useActionState(
     changeUserPassword,
     null
   );
-  const [toggleCurrentPassword, setToggleCurrentPassword] = useState(false);
-  const [toggleNewPassword, setToggleNewPassword] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isNewOrConfirmPasswordVisible, setIsNewOrConfirmPasswordVisible] =
+    useState(false);
 
   return (
     <form action={formAction} className="space-y-4 w-full max-w-[500px]">
       <div>
-        <label className="block text-sm">Aktualne hasło *</label>
+        <label className="block text-sm">
+          {hasPassword ? "Obecne haslo*" : "Nowe hasło"}
+        </label>
         <div className="relative">
           <input
-            type={toggleCurrentPassword ? "text" : "password"} // Dynamiczny typ
-            name="currentPassword"
+            type={isPasswordVisible ? "text" : "password"} // Dynamiczny typ
+            name={hasPassword ? "currentPassword" : "password"}
             defaultValue={state?.fields?.currentPassword as string}
             className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
           />
           <button
             onClick={(e) => {
               e.preventDefault();
-              setToggleCurrentPassword((prev) => !prev);
+              setIsPasswordVisible((prev) => !prev);
             }}
             type="button"
             className="absolute top-1/2 right-3 -translate-y-1/2"
           >
-            {toggleCurrentPassword ? (
-              <BsEyeFill size={20} />
-            ) : (
+            {isPasswordVisible ? (
               <BsEyeSlashFill size={20} className="text-zinc-200" />
+            ) : (
+              <BsEyeFill size={20} />
             )}
           </button>
         </div>
@@ -47,26 +51,28 @@ const PasswordForm = () => {
         }
       </div>
       <div>
-        <label className="block text-sm">Nowe hasło *</label>
+        <label className="block text-sm">
+          {hasPassword ? "Nowe hasło*" : "Powtórz hasło"}
+        </label>
         <div className="relative">
           <input
-            type={toggleNewPassword ? "text" : "password"} // Dynamiczny typ
-            name="newPassword"
+            type={isNewOrConfirmPasswordVisible ? "text" : "password"} // Dynamiczny typ
+            name={hasPassword ? "newPassword" : "confirmPassword"}
             defaultValue={state?.fields?.newPassword as string}
             className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
           />
           <button
             onClick={(e) => {
               e.preventDefault();
-              setToggleNewPassword((prev) => !prev);
+              setIsNewOrConfirmPasswordVisible((prev) => !prev);
             }}
             type="button"
             className="absolute top-1/2 right-3 -translate-y-1/2"
           >
-            {toggleNewPassword ? (
-              <BsEyeFill size={20} />
-            ) : (
+            {isNewOrConfirmPasswordVisible ? (
               <BsEyeSlashFill size={20} className="text-zinc-200" />
+            ) : (
+              <BsEyeFill size={20} />
             )}
           </button>
         </div>

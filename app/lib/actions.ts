@@ -23,6 +23,7 @@ import {
 import { sendResetPasswordEmail, sendVerificationEmail } from "./mail";
 import resetPasswordEmailSchema from "./schemas/resetPasswordEmailSchema";
 import { resetPasswordSchema } from "./schemas/resetPasswordPasswordSchema";
+import Stripe from "stripe";
 
 export async function changeUserName(_prevState: unknown, data: FormData) {
   const session = await auth();
@@ -69,6 +70,48 @@ export async function changeUserName(_prevState: unknown, data: FormData) {
     }
   }
 }
+export async function setUserPassword(_prevState: unknown, data: FormData) {
+  const session = await auth();
+
+  const formData = {
+    password: data.get("password"),
+    confirmPassword: data.get("confirmPassword"),
+  };
+
+  if (!formData.password || !formData.confirmPassword) {
+    return { success: false, message: "Musisz uzupełnić oba pola." };
+  }
+
+  try {
+    const validatedData = resetPasswordSchema.parse(formData);
+
+    const hashedPassword = await saltAndHashPassword(
+      validatedData.confirmPassword
+    );
+
+    await prisma.user.update({
+      where: { id: Number(session?.user.id) },
+      data: { passwordHash: hashedPassword },
+    });
+
+    return { success: true, message: "Hasło zostało ustawione pomyślnie." };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const fieldErrors: Record<string, string> = {};
+      for (const err of error.errors) {
+        fieldErrors["confirmPassword"] = err.message;
+      }
+
+      return { success: false, errors: fieldErrors, fields: formData };
+    }
+
+    console.error("Błąd podczas zmiany hasła:", error);
+    return {
+      success: false,
+      message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.",
+    };
+  }
+}
 export async function changeUserPassword(_prevState: unknown, data: FormData) {
   const session = await auth();
 
@@ -86,19 +129,8 @@ export async function changeUserPassword(_prevState: unknown, data: FormData) {
       where: { id: Number(session?.user.id) },
       select: { passwordHash: true },
     });
-
-    if (!userPassword?.passwordHash) {
-      const validatedData = passwordSchema.parse(formData.newPassword);
-
-      const hashedPassword = await saltAndHashPassword(validatedData);
-
-      await prisma.user.update({
-        where: { id: Number(session?.user.id) },
-        data: { passwordHash: hashedPassword },
-      });
-
-      return { success: true, message: "Hasło zostało ustawione pomyślnie." };
-    }
+    if (!userPassword?.passwordHash)
+      return { success: false, message: "Brak obecnego hasła w bazie." };
 
     const isMatch = await comparePassword(
       formData.currentPassword as string,
@@ -225,7 +257,7 @@ export async function sendResetEmail(_prevState: unknown, data: FormData) {
     };
   }
 }
-export async function setUserNewPassword(
+export async function resetUserPassword(
   _prevState: unknown,
   data: FormData,
   token: string
@@ -615,3 +647,17 @@ export const setOrUnsetRating = async (
     throw new Error("Error occured while setting rating");
   }
 };
+
+export async function cancelSubscription(stripeSubscriptionId: string) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+  try {
+    await stripe.subscriptions.update(stripeSubscriptionId, {
+      cancel_at_period_end: true, // Ustawienie, by anulować subskrypcję na koniec bieżącego okresu
+    });
+
+    return { message: "Success" };
+  } catch (error) {
+    console.error("Error canceling subscription:", error);
+    throw error;
+  }
+}

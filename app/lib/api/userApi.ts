@@ -344,3 +344,24 @@ export const getPasswordResetTokenByEmail = async (email: string) => {
     return null;
   }
 };
+
+export const getUserPassword = async (userId: number) => {
+  const userPassword = await prisma.user.findUnique({ where: { id: userId } });
+  return userPassword?.passwordHash;
+};
+export const getUserSubscriptionInfo = async (userId: number) => {
+  const userSubscription = await prisma.subscription.findFirst({
+    where: { userId, status: "active" },
+    include: {
+      plan: {
+        select: {
+          name: true,
+          monthlyPrice: true,
+          yearlyPrice: true,
+        },
+      },
+    },
+  });
+
+  return userSubscription;
+};
