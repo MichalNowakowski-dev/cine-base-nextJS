@@ -7,6 +7,7 @@ import SubscriptionPlan from "./plans/SubscriptionPlan/SubscriptionPlan";
 import CtaLink from "./components/ui/ctaLink/CtaLink";
 import { prisma } from "./prisma";
 import GenreCardsContainer from "./components/genreCardsList/GenreCardsContainer";
+import CookieConsent from "./components/cookiesPopup/cookiesPopup";
 
 export default async function Home() {
   const plans = await prisma.plan.findMany();
@@ -96,6 +97,7 @@ export default async function Home() {
         <section className="px-4 mb-16">
           <FreeTrialCta />
         </section>
+        <CookieConsent />
       </main>
     </>
   );
