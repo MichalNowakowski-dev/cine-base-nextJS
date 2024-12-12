@@ -9,6 +9,8 @@ export default async function FreeTrialCta() {
     return movie.poster_path;
   });
 
+  const PLAN_ID_TO_REDIRECT = "2";
+
   return (
     <div
       className={`px-4 py-12 border border-[#262626] rounded-md text-center md:text-left md:flex md:justify-between md:items-center relative overflow-hidden `}
@@ -24,7 +26,7 @@ export default async function FreeTrialCta() {
       </header>
 
       <Link
-        href={`/plans/summary?id=standard&trial=true&price-cycle=monthly`}
+        href={`/plans/summary?id=${PLAN_ID_TO_REDIRECT}&trial=true&priceCycle=month`}
         className=" px-6 md:basis-[20%] text-center py-3 bg-primary rounded-md border-[#262626] border"
       >
         Wypróbuj teraz!

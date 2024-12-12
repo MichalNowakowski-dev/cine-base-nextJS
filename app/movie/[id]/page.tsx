@@ -209,7 +209,10 @@ export default async function Page({
                     </li>
                   )
                 )}
-              {}
+              <li className="p-2 bg-background rounded-md border border-zinc-700">
+                <p>TMDB</p>
+                <p className="text-primary">{movieDetails.vote_average}</p>
+              </li>
             </ul>
           </section>
           <section className="mb-5">

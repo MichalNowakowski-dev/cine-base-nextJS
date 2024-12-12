@@ -1,7 +1,7 @@
 import AdvancedSearch from "./AdvancedSearch";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
-import SwitchButton from "./SwitchButton";
+import SearchToggle from "./SearchToggle";
 
 type SearchParamsProps = {
   type: string;
@@ -30,7 +30,7 @@ export default async function SearchPage(props: {
         <div className="flex flex-col justify-between items-center gap-10 w-full max-w-screen-md">
           <div className="flex justify-center items-center gap-2">
             <span>Wyszukaj po frazie</span>
-            <SwitchButton />
+            <SearchToggle />
             <span>Wyszukaj po filtrach</span>
           </div>
         </div>

@@ -57,7 +57,10 @@ const Lists = async () => {
         Moje listy
       </h2>
       <section className="mb-12">
-        <Accordion noNumber title="Ulubione filmy">
+        <Accordion
+          number={String(favoriteMovies.length) || "0"}
+          title="Ulubione filmy"
+        >
           {favoriteMovies.length > 0 ? (
             <MediaList
               listType="favorites"
@@ -71,7 +74,10 @@ const Lists = async () => {
         </Accordion>
       </section>
       <section className="mb-12">
-        <Accordion noNumber title="Ulubione seriale">
+        <Accordion
+          number={String(favoriteShows.length) || "0"}
+          title="Ulubione seriale"
+        >
           {favoriteShows.length > 0 ? (
             <MediaList
               listType="favorites"
@@ -85,7 +91,10 @@ const Lists = async () => {
         </Accordion>
       </section>
       <section className="mb-12">
-        <Accordion noNumber title="Filmy, które chce obejrzeć">
+        <Accordion
+          number={String(toWatchMovies.length) || "0"}
+          title="Filmy, które chce obejrzeć"
+        >
           {toWatchMovies.length > 0 ? (
             <MediaList
               listType="toWatch"
@@ -99,7 +108,10 @@ const Lists = async () => {
         </Accordion>
       </section>
       <section className="mb-12">
-        <Accordion noNumber title="Seriale, które chce obejrzeć">
+        <Accordion
+          number={String(toWatchShows.length) || "0"}
+          title="Seriale, które chce obejrzeć"
+        >
           {toWatchShows.length > 0 ? (
             <MediaList
               listType="toWatch"

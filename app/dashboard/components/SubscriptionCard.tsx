@@ -19,10 +19,10 @@ const SubscriptionCard = async () => {
 
   const paymentTimeLeftMessage =
     paymentTimeLeftInDays === 1
-      ? `Twoja subskrypcja kończy się za ${Math.ceil(
+      ? `Twoja następna płatność będzie za ${Math.ceil(
           paymentTimeLeftInDays
         )} dzień.`
-      : `Twoja subskrypcja kończy się za ${Math.ceil(
+      : `Twoja następna płatność będzie za ${Math.ceil(
           paymentTimeLeftInDays
         )} dni.`;
 

@@ -13,7 +13,7 @@ export const navigationStyles = {
   desktopNav: "hidden lg:flex gap-2 p-2 rounded-md",
   navItem: (isActive: boolean) =>
     `${isActive ? "text-white bg-white/10" : "text-secondary bg-none"} 
-         rounded-md flex items-center hover:bg-zinc-600`,
+         rounded-md flex items-center hover:bg-zinc-600 hover:text-white`,
   mobileNav: (isOpen: boolean) =>
     `flex flex-col w-[50vw] rounded-lg w-max p-4 justify-start space-y-4 bg-[#1E212690] backdrop-blur-sm 
           text-center transform transition-transform duration-500 ease-in-out ${

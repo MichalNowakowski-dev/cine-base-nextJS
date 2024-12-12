@@ -198,3 +198,26 @@ export type MediaItemPrisma = {
 export type RatedMediaItemPrisma = MediaItemPrisma & {
   rating: number;
 };
+
+export type PlanDetails = {
+  name: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+};
+
+// Typ subskrypcji z relacją do planu
+export type UserSubscription = {
+  id: number;
+  stripeSubscriptionId: string | null;
+  userId: number;
+  planId: number;
+  subscriptionStart: Date;
+  subscriptionEnd: Date;
+  interval: string;
+  status: string; // np. 'active', 'expired'
+  isPaid: boolean;
+  trialPeriod: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  plan: PlanDetails; // Włączenie szczegółów planu
+};

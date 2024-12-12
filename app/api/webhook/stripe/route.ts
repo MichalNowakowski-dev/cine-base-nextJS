@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
               id: activeSubscription.id,
             },
             data: {
-              status: "cancelled",
+              status: "canceled",
               subscriptionEnd: new Date(),
             },
           });

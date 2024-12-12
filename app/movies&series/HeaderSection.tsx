@@ -1,7 +1,7 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import Image from "next/image";
 import CtaLink from "../components/ui/ctaLink/CtaLink";
 import { BackdropSize, MediaItem } from "../types/types";
@@ -25,7 +25,7 @@ export default function HeaderSection({
   return (
     <section className="relative w-full h-[70vh] mb-6">
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation]}
         navigation
         pagination={{ clickable: true }}
         loop

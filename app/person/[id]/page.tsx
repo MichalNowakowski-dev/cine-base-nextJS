@@ -15,7 +15,7 @@ import ImageModal from "@/app/components/imageModal/ImageModal";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { MediaPerson, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
-import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
+import SwiperList from "@/app/components/Swiper/SwiperList";
 
 export default async function Page({
   params,
@@ -27,6 +27,8 @@ export default async function Page({
   const personDetails = await fetchPersonById(Number(id));
   const personCredits = await fetchPersonCredits(Number(id));
   const personImages = await fetchPersonImages(Number(id));
+
+  console.log(removeNoProfilePerson(personCredits.cast));
 
   const styles = {
     headerSection:
@@ -75,7 +77,9 @@ export default async function Page({
                       personDetails.deathday.slice(0, 4) -
                       personDetails.birthday.slice(0, 4)
                     } lat`
-                  : `${calculateAge(personDetails.birthday.slice(0, 4))} lata`}
+                  : `${calculateAge(
+                      personDetails.birthday.slice(0, 4)
+                    )} lat/lata`}
               </span>
 
               <span>{personDetails.place_of_birth}</span>
@@ -93,30 +97,26 @@ export default async function Page({
         </div>
         <div className="overflow-hidden p-7 bg-backgroundLight rounded-md md:col-span-2">
           <section className="mb-5">
-            <SwiperPeople
+            <SwiperList
+              mediaList={personCredits.cast.slice(0, 30)}
               listLabel={
                 personDetails.gender === 2
                   ? "Znany z filmów/seriali"
                   : "Znana z filmów/seriali"
               }
-              personList={removeNoProfilePerson(
-                personCredits.cast.slice(0, 30)
-              )}
               swiperId={uuid()}
-            ></SwiperPeople>
+            ></SwiperList>
           </section>
           <section className="mb-5">
-            <SwiperPeople
-              personList={removeNoProfilePerson(
-                personCredits.crew.slice(0, 30)
-              )}
+            <SwiperList
+              mediaList={personCredits.crew.slice(0, 30)}
               swiperId={uuid()}
               listLabel={
                 personDetails.gender === 2
                   ? "Brał udział w produkcji"
                   : "Brała udział w produkcji"
               }
-            ></SwiperPeople>
+            ></SwiperList>
           </section>
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">

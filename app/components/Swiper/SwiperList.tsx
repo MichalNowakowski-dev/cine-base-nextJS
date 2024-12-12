@@ -11,6 +11,7 @@ import "swiper/css/pagination";
 import "./swiper.css";
 import { useRef } from "react";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
+import MediaRoundedRating from "../ui/mediaRoundedRating/MediaRoundedRating";
 
 const SwiperList = ({
   mediaList,
@@ -20,7 +21,7 @@ const SwiperList = ({
 }: {
   mediaList: MediaItem[];
   listLabel: string;
-  mediaType: MediaType;
+  mediaType?: MediaType;
   swiperId: string;
 }) => {
   const swiperRef = useRef<null>(null);
@@ -54,21 +55,27 @@ const SwiperList = ({
         {mediaList.map((item) => (
           <SwiperSlide key={item.id}>
             <Link
-              href={`/${mediaType}/${item.id}`}
+              href={`/${mediaType || item.media_type}/${item.id}`}
               className="relative inline-block group "
             >
-              <Image
-                alt="media image"
-                width={185}
-                height={320}
-                quality={100}
-                className="aspect-[2/3] object-cover rounded-lg transition-transform duration-300 ease-in-out group-hover:blur-sm"
-                src={
-                  item.poster_path
-                    ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${item.poster_path}`
-                    : "/no-poster-img.webp"
-                }
-              />
+              <div className="relative">
+                <Image
+                  alt="media image"
+                  width={185}
+                  height={320}
+                  quality={100}
+                  className="aspect-[2/3] object-cover rounded-lg transition-transform duration-300 ease-in-out group-hover:blur-sm"
+                  src={
+                    item.poster_path
+                      ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${item.poster_path}`
+                      : "/no-poster-img.webp"
+                  }
+                />
+                <MediaRoundedRating
+                  rating={item.vote_average}
+                  className="absolute bottom-0 right-0"
+                />
+              </div>
               <div className="absolute rounded-lg inset-0  flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-white text-lg font-bold text-center">
                   {item.title || item.name}

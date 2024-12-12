@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type MediaRoundedRatingProps = {
   rating: number;
@@ -7,12 +7,12 @@ type MediaRoundedRatingProps = {
   className?: string;
 };
 
-const MediaRoundedRating: React.FC<MediaRoundedRatingProps> = ({
+const MediaRoundedRating = ({
   rating,
   size = 30,
   strokeWidth = 3,
   className,
-}) => {
+}: MediaRoundedRatingProps) => {
   const [isClient, setIsClient] = useState(false);
   const [sizeByViewport, setSizeByVievport] = useState(size);
 

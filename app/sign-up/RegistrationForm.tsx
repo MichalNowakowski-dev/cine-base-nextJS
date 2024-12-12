@@ -12,7 +12,7 @@ export default function RegistrationForm() {
     <form
       noValidate
       action={registerAction}
-      className="space-y-10 md:space-y-8 w-full"
+      className="space-y-4 md:space-y-8 w-full"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
         <div>
@@ -91,7 +91,7 @@ export default function RegistrationForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="px-8 py-3 bg-blue-500 w-full text-white rounded-lg hover:bg-primary-dark transition-all flex items-center gap-4 justify-center"
+        className="px-8 py-3 bg-blue-500 hover:bg-blue-700 w-full text-white rounded-lg hover:bg-primary-dark transition-all flex items-center gap-4 justify-center tracking-wider uppercase"
       >
         {isPending ? "Trwa rejestracja" : "Zarejestruj"}
         {isPending && <Spinner size={20} />}

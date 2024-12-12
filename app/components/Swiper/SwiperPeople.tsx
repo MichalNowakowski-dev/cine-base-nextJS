@@ -22,6 +22,8 @@ const SwiperPeople = ({
   swiperId: string;
 }) => {
   const swiperRef = useRef<null>(null);
+  console.log(personList);
+
   return (
     <div className="relative">
       <header className="flex justify-between items-center mb-6">

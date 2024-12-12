@@ -4,19 +4,12 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 
 interface AccordionProps {
   number?: string;
-  noNumber?: boolean;
   title: string;
   children: React.ReactNode;
   className?: string;
 }
 
-const Accordion = ({
-  number,
-  title,
-  children,
-  className,
-  noNumber,
-}: AccordionProps) => {
+const Accordion = ({ number, title, children, className }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [childrenHeight, setChildrenHeight] = useState("0px");
@@ -44,11 +37,9 @@ const Accordion = ({
         onClick={toggleAccordion}
       >
         <div className="flex items-center">
-          {!noNumber && (
-            <span className="bg-backgroundLight rounded-lg w-12 h-12 flex items-center justify-center mr-3">
-              {number}
-            </span>
-          )}
+          <span className="bg-backgroundLight rounded-lg w-12 h-12 flex items-center justify-center mr-3">
+            {number}
+          </span>
 
           <h3 className="font-normal text-lg">{title}</h3>
         </div>

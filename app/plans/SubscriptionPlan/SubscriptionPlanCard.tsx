@@ -10,8 +10,8 @@ export default function SubscriptionPlanCard({
   priceCycle: string;
 }) {
   // Sprawdzamy czy wartości są poprawne
-  const price = priceCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice;
-  const priceLabel = priceCycle === "monthly" ? "/miesiąc" : "/rok";
+  const price = priceCycle === "month" ? plan.monthlyPrice : plan.yearlyPrice;
+  const priceLabel = priceCycle === "month" ? "/miesiąc" : "/rok";
 
   const buttonClass =
     "text-center content-center hover:scale-105 transition-all duration-150  px-6 py-4 border-[#262626] border rounded-md";

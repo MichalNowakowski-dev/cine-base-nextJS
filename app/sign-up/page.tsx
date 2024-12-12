@@ -6,7 +6,7 @@ const Register = async () => {
   const session = await auth();
   if (session) redirect("/dashboard");
   return (
-    <div className="lg:min-h-screen mx-auto pt-20 lg:pt-28 lg:px-4 max-w-screen-xl">
+    <div className="lg:min-h-screen mx-auto pt-20 lg:pt-28 lg:px-4 max-w-screen-xl mb-10">
       <div className="flex flex-col lg:flex-row items-center lg:h-[800px] bg-white text-white w-full">
         <div className="hidden lg:block basis-1/2 lg:bg-signupBg bg-no-repeat bg-center bg-cover h-full px-20 pt-10 ">
           <h1 className="text-h1 mb-10">

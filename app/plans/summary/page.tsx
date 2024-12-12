@@ -14,6 +14,7 @@ import bg from "@/public/summaryBg-lg.jpg";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
+import IntervalToggle from "./IntervalToggle";
 
 export default async function SubscriptionSummary({
   searchParams,
@@ -31,7 +32,7 @@ export default async function SubscriptionSummary({
   const selectedPlan = await getPlanInfo(Number(id));
 
   const paymentUrl = `${
-    priceCycle === "monthly"
+    priceCycle === "month"
       ? selectedPlan?.monthlyPaymentLink
       : selectedPlan?.yearlyPaymentLink
   }?prefilled_email=${session?.user.email}`;
@@ -109,13 +110,16 @@ export default async function SubscriptionSummary({
             Typ planu: {selectedPlan.name}
           </h2>
 
-          <div className="mb-4">
-            <p className="text-secondary">Cena:</p>
-            <p className="text-xl">
-              {priceCycle === "monthly"
-                ? `${selectedPlan.monthlyPrice} zł / miesiąc`
-                : `${selectedPlan.yearlyPrice} zł / rok`}
-            </p>
+          <div className="mb-4 flex justify-between items-center">
+            <header>
+              <p className="text-secondary">Cena:</p>
+              <p className="text-xl">
+                {priceCycle === "month"
+                  ? `${selectedPlan.monthlyPrice} zł / miesiąc`
+                  : `${selectedPlan.yearlyPrice} zł / rok`}
+              </p>
+            </header>
+            <IntervalToggle />
           </div>
 
           {/* Sekcja funkcji */}

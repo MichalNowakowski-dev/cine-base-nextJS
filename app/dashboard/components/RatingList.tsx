@@ -50,7 +50,7 @@ export default function RatingList({
       {mediaList.length > 0 ? (
         <Accordion
           title={isMovie ? "Twoje oceny filmów" : "Twoje oceny seriali"}
-          noNumber
+          number={String(sortedMediaList.length) || "0"}
         >
           <ul className="space-y-4">
             {sortedMediaList.map((media) => (
