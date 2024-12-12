@@ -81,7 +81,7 @@ const SubscriptionCard = async () => {
             ? `${userSubscriptionInfo?.plan.name} - ${
                 isMonthly ? "miesięczny" : "roczny"
               }`
-            : "Brak aktywnego planu -> Wybierz swój plan"}
+            : "Brak aktywnego planu "}
         </p>
       </div>
       {userSubscriptionInfo?.stripeSubscriptionId && (

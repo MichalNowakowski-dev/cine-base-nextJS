@@ -51,8 +51,33 @@ export async function POST(req: NextRequest) {
           break;
         }
 
+        const activeSubscription = await prisma.subscription.findFirst({
+          where: {
+            userId: user.id,
+            status: "active",
+          },
+        });
+
+        if (activeSubscription) {
+          await prisma.subscription.update({
+            where: {
+              id: activeSubscription.id,
+            },
+            data: {
+              status: "cancelled",
+              subscriptionEnd: new Date(),
+            },
+          });
+        }
+
         const planId = parseInt(session.metadata?.planId || "0", 10);
         const interval = session.metadata?.interval;
+        const monthLater = new Date(
+          new Date().setMonth(new Date().getMonth() + 1)
+        );
+        const yearLater = new Date(
+          new Date().setFullYear(new Date().getFullYear() + 1)
+        );
 
         await prisma.subscription.create({
           data: {
@@ -61,9 +86,7 @@ export async function POST(req: NextRequest) {
             interval,
             stripeSubscriptionId: subscriptionId,
             subscriptionStart: new Date(),
-            subscriptionEnd: new Date(
-              new Date().setMonth(new Date().getMonth() + 1)
-            ),
+            subscriptionEnd: interval === "month" ? monthLater : yearLater,
             status: "active",
             isPaid: true,
             trialPeriod: false,

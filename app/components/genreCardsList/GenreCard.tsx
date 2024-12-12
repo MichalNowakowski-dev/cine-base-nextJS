@@ -24,11 +24,11 @@ export default function GenreCard({
       <Link href={`/genre?media=${mediaType}&name=${name}&id=${id}&page=1`}>
         <ul className="grid grid-cols-2 w-full gap-1 mb-2 relative">
           {images.map((path: string) => (
-            <li key={path} className="h-32 xs:h-24 w-32 xs:w-24 relative ">
+            <li key={path} className="xs:max-h-24  xs:max-w-24 relative ">
               <Image
                 className="object-cover aspect-square rounded-md"
-                fill
-                sizes="80px"
+                width={185}
+                height={320}
                 src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${path}`}
                 alt="poster image"
               />
