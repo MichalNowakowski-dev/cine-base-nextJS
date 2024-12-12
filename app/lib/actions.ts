@@ -652,7 +652,7 @@ export async function cancelSubscription(stripeSubscriptionId: string) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
   try {
     await stripe.subscriptions.update(stripeSubscriptionId, {
-      cancel_at_period_end: true, // Ustawienie, by anulować subskrypcję na koniec bieżącego okresu
+      cancel_at_period_end: true,
     });
 
     return { message: "Success" };

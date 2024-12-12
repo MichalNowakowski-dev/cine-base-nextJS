@@ -77,16 +77,18 @@ export async function POST(req: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription;
         const stripeSubscriptionId = subscription.id;
 
-        await prisma.subscription.updateMany({
-          where: { stripeSubscriptionId },
-          data: {
-            status: "canceled",
-          },
-        });
+        if (subscription.cancel_at_period_end) {
+          await prisma.subscription.updateMany({
+            where: { stripeSubscriptionId },
+            data: {
+              status: "canceled",
+            },
+          });
 
-        console.log(
-          `Subscription canceled, but plan is up till the end od subscription: ${stripeSubscriptionId}`
-        );
+          console.log(
+            `Subscription canceled, but plan is up till the end od subscription: ${stripeSubscriptionId}`
+          );
+        }
 
         break;
       }

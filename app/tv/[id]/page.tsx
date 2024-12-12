@@ -130,64 +130,77 @@ export default async function Page({
             </p>
             <div>{seriesDetails.first_air_date.slice(0, 4)}</div>
           </section>
+
           <section className="mb-5 ">
             <p className="text-secondary flex gap-1 items-center mb-3">
               {" "}
               <PiTranslate size={20} /> Dostępne języki
             </p>
-            <ul className="flex gap-2 flex-wrap">
-              {seriesDetails?.spoken_languages?.map(
-                (lang: { name: string }) => (
-                  <li
-                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                    key={lang.name}
-                  >
-                    {lang.name}
-                  </li>
-                )
-              )}
-            </ul>
+            {seriesDetails?.spoken_languages ? (
+              <ul className="flex gap-2 flex-wrap">
+                {seriesDetails?.spoken_languages?.map(
+                  (lang: { name: string }) => (
+                    <li
+                      className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                      key={lang.name}
+                    >
+                      {lang.name}
+                    </li>
+                  )
+                )}
+              </ul>
+            ) : (
+              <p className="text-secondary">Brak dostępnych informacji</p>
+            )}
           </section>
           <section className="mb-5">
             <p className="text-secondary flex gap-1 items-center mb-3">
               {" "}
               <FaRegStar size={20} /> Oceny
             </p>
-            <ul className="flex gap-2 flex-wrap">
-              {seriesDetailsFromOmdb?.Ratings?.map(
-                (rating: { Source: string; Value: string }) => (
-                  <li
-                    className="p-2 bg-background rounded-md border border-zinc-700"
-                    key={rating.Source}
-                  >
-                    <p>
-                      {rating.Source.includes("Internet")
-                        ? "IMDb"
-                        : rating.Source}
-                    </p>
-                    <p className="text-primary">{rating.Value}</p>
-                  </li>
-                )
-              )}
-            </ul>
+            {seriesDetailsFromOmdb?.Ratings ? (
+              <ul className="flex gap-2 flex-wrap">
+                {seriesDetailsFromOmdb?.Ratings?.map(
+                  (rating: { Source: string; Value: string }) => (
+                    <li
+                      className="p-2 bg-background rounded-md border border-zinc-700"
+                      key={rating.Source}
+                    >
+                      <p>
+                        {rating.Source.includes("Internet")
+                          ? "IMDb"
+                          : rating.Source}
+                      </p>
+                      <p className="text-primary">{rating.Value}</p>
+                    </li>
+                  )
+                )}
+              </ul>
+            ) : (
+              <p className="text-secondary">Brak dostępnych informacji</p>
+            )}
           </section>
           <section className="mb-5">
             <p className="text-secondary flex gap-1 items-center mb-3">
               {" "}
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
-            <ul className="flex gap-2 flex-wrap">
-              {seriesDetails?.genres?.map(
-                (genre: { id: number; name: string }) => (
-                  <li
-                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                    key={genre.id}
-                  >
-                    {genre.name}
-                  </li>
-                )
-              )}
-            </ul>
+            {seriesDetails?.genres ? (
+              <ul className="flex gap-2 flex-wrap">
+                {seriesDetails?.genres?.map(
+                  (genre: { id: number; name: string }) => (
+                    <li
+                      className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                      key={genre.id}
+                    >
+                      {genre.name}
+                    </li>
+                  )
+                )}
+              </ul>
+            ) : (
+              <p className="text-secondary">Brak dostępnych informacji</p>
+            )}
           </section>
           {seriesDetailsFromOmdb?.Writer !== "N/A" && (
             <section className="mb-5">
@@ -195,39 +208,43 @@ export default async function Page({
                 {" "}
                 <FaScroll size={20} /> Scenariusz
               </p>
-              <ul>
-                {seriesDetailsFromOmdb?.Writer?.split(", ").map(
-                  (writer: string) => (
-                    <li
-                      key={writer}
-                      className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
-                    >
-                      <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
-                        <Image
-                          alt="Director image"
-                          src={
-                            getPersonImagePathFromList(
-                              writer,
-                              mediaMembers.crew
-                            )
-                              ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
-                                  ProfileSize.MEDIUM
-                                }${getPersonImagePathFromList(
-                                  writer,
-                                  mediaMembers.crew
-                                )}`
-                              : NoProfilePicture
-                          }
-                          fill
-                          className="object-cover rounded-md"
-                          sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
-                        />
-                      </div>
-                      <p className="flex items-center">{writer}</p>
-                    </li>
-                  )
-                )}
-              </ul>
+              {seriesDetailsFromOmdb?.Writer ? (
+                <ul>
+                  {seriesDetailsFromOmdb?.Writer?.split(", ").map(
+                    (writer: string) => (
+                      <li
+                        key={writer}
+                        className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
+                      >
+                        <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
+                          <Image
+                            alt="Director image"
+                            src={
+                              getPersonImagePathFromList(
+                                writer,
+                                mediaMembers.crew
+                              )
+                                ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                                    ProfileSize.MEDIUM
+                                  }${getPersonImagePathFromList(
+                                    writer,
+                                    mediaMembers.crew
+                                  )}`
+                                : NoProfilePicture
+                            }
+                            fill
+                            className="object-cover rounded-md"
+                            sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
+                          />
+                        </div>
+                        <p className="flex items-center">{writer}</p>
+                      </li>
+                    )
+                  )}
+                </ul>
+              ) : (
+                <p className="text-secondary">Brak dostępnych informacji</p>
+              )}
             </section>
           )}
         </div>
@@ -239,6 +256,7 @@ export default async function Page({
           {providers.results?.PL?.flatrate ? (
             <div>
               <h3 className="text-secondary mb-3">Gdzie zobaczyć:</h3>
+
               <ul className="flex gap-3">
                 {providers?.results?.PL?.flatrate?.map(
                   (item: { provider_id: number; logo_path: string }) => (
@@ -287,22 +305,30 @@ export default async function Page({
         </div>
         <div className="p-7 bg-backgroundLight rounded-md md:col-start-3 border border-borderPrimary">
           <h3 className="text-secondary mb-4">Tła</h3>
-          <ul className="flex flex-wrap gap-4">
-            {imagesList.backdrops
-              .slice(0, 16)
-              .map(
-                (img: { file_path: string; height: number; width: number }) => (
-                  <li className=" hover:cursor-pointer" key={img.file_path}>
-                    <ImageModal
-                      altText="backdrop image"
-                      imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
-                      height={img.height}
-                      width={img.width}
-                    />
-                  </li>
-                )
-              )}
-          </ul>
+          {imagesList.backdrops ? (
+            <ul className="flex flex-wrap gap-4">
+              {imagesList.backdrops
+                .slice(0, 16)
+                .map(
+                  (img: {
+                    file_path: string;
+                    height: number;
+                    width: number;
+                  }) => (
+                    <li className=" hover:cursor-pointer" key={img.file_path}>
+                      <ImageModal
+                        altText="backdrop image"
+                        imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
+                        height={img.height}
+                        width={img.width}
+                      />
+                    </li>
+                  )
+                )}
+            </ul>
+          ) : (
+            <p className="text-secondary">Brak dostępnych teł</p>
+          )}
         </div>
       </section>
       <section className="mb-20">
