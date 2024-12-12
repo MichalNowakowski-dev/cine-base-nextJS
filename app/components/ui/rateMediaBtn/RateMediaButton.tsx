@@ -4,7 +4,8 @@ import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { MediaItem, MediaType } from "@/app/types/types";
 import { setOrUnsetRating } from "@/app/lib/actions";
-import { notifySuccess } from "@/app/lib/toast";
+import { notifyInfo, notifySuccess } from "@/app/lib/toast";
+import { useSession } from "next-auth/react";
 
 interface RateMediaButtonProps {
   isRated: boolean;
@@ -24,12 +25,14 @@ const RateMediaButton = ({
   const [rated, setRated] = useState(isRated);
   const [selectedRating, setSelectedRating] = useState(rating || 0);
   const [showRatingOptions, setShowRatingOptions] = useState(false);
+  const { data: session } = useSession();
 
   const toggleRatingOptions = () => {
     setShowRatingOptions((prev) => !prev);
   };
 
   const handleRatingChange = async (newRating: number) => {
+    if (!session?.user) return notifyInfo("Zaloguj się aby dodać do listy.");
     await setOrUnsetRating(mediaType, mediaData, userId, newRating);
     setSelectedRating(newRating);
     setRated(true);

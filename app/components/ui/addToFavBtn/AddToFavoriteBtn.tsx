@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MediaItem, MediaType } from "@/app/types/types";
-import { notifySuccess } from "@/app/lib/toast";
+import { notifyInfo, notifySuccess } from "@/app/lib/toast";
 import { addFavorite, removeItemFromUserList } from "@/app/lib/actions";
+import { useSession } from "next-auth/react";
 
 interface FavoriteButtonProps {
   isFavorite: boolean; // Czy element jest ulubiony
@@ -20,8 +21,10 @@ const FavoriteButton = ({
   userId,
 }: FavoriteButtonProps) => {
   const [favorite, setFavorite] = useState(isFavorite);
+  const { data: session } = useSession();
 
   const toggleFavorite = async () => {
+    if (!session?.user) return notifyInfo("Zaloguj się aby dodać do listy.");
     if (favorite) {
       await removeItemFromUserList(
         mediaData.id,

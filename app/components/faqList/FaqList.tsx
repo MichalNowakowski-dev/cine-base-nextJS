@@ -56,25 +56,25 @@ const FaqList = () => {
           {faqData
             .slice(0, Math.ceil(faqData.length / 2))
             .map((item, index) => (
-              <Accordion
-                key={index}
-                number={"0" + (index + 1)}
-                title={item.question}
-              >
-                {item.answer}
-              </Accordion>
+              <li key={index}>
+                <Accordion number={"0" + (index + 1)} title={item.question}>
+                  {item.answer}
+                </Accordion>
+              </li>
             ))}
         </ul>
 
         <ul>
           {faqData.slice(Math.ceil(faqData.length / 2)).map((item, index) => (
-            <Accordion
-              key={index + Math.ceil(faqData.length / 2)}
-              number={"0" + (index + Math.ceil(faqData.length / 2) + 1)}
-              title={item.question}
-            >
-              {item.answer}
-            </Accordion>
+            <li key={index}>
+              <Accordion
+                key={index + Math.ceil(faqData.length / 2)}
+                number={"0" + (index + Math.ceil(faqData.length / 2) + 1)}
+                title={item.question}
+              >
+                {item.answer}
+              </Accordion>
+            </li>
           ))}
         </ul>
       </div>

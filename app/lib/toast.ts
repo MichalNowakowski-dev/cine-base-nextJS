@@ -1,19 +1,29 @@
 // lib/toast.ts
 
-import { toast } from "react-toastify";
+import { Id, toast, ToastOptions } from "react-toastify";
+let toastId: Id;
 
-export const notifySuccess = (message: string) => {
-  toast.success(message, {
-    theme: "dark",
-    autoClose: 3000,
-    position: "bottom-right",
-  });
+const toastOptions: ToastOptions = {
+  theme: "dark",
+  autoClose: 3000,
+  position: "bottom-right",
+  onClose: () => {
+    toastId = "";
+  },
 };
 
+export const notifySuccess = (message: string) => {
+  if (!toast.isActive(toastId)) {
+    toastId = toast.success(message, toastOptions);
+  }
+};
+export const notifyInfo = (message: string) => {
+  if (!toast.isActive(toastId)) {
+    toastId = toast.info(message, toastOptions);
+  }
+};
 export const notifyError = (message: string) => {
-  toast.error(message, {
-    theme: "dark",
-    autoClose: 3000,
-    position: "bottom-right",
-  });
+  if (!toast.isActive(toastId)) {
+    toastId = toast.error(message, toastOptions);
+  }
 };

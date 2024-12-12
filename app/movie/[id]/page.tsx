@@ -29,10 +29,10 @@ import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
 import { auth } from "@/app/auth";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
 import { styles } from "@/app/styles";
-import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaBtn";
 import SwiperList from "@/app/components/Swiper/SwiperList";
 import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
 import SwiperVideo from "@/app/components/Swiper/SwiperVideo";
+import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaButton";
 
 export default async function Page({
   params,
@@ -119,37 +119,40 @@ export default async function Page({
                   Gdzie jeszcze można zobaczyć:
                 </h3>
                 <ul className="flex gap-3">
-                  {providers.results?.PL?.flatrate?.map(
-                    (item: { provider_id: number; logo_path: string }) => (
-                      <li key={item.provider_id}>
-                        <Image
-                          className="rounded-md"
-                          height={40}
-                          width={40}
-                          alt="provider logo"
-                          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
-                        />
-                      </li>
-                    )
-                  )}
+                  {providers.results?.PL?.flatrate &&
+                    providers.results.PL.flatrate.map(
+                      (item: { provider_id: number; logo_path: string }) => (
+                        <li key={item.provider_id}>
+                          <Image
+                            className="rounded-md"
+                            height={40}
+                            width={40}
+                            alt="provider logo"
+                            src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
+                          />
+                        </li>
+                      )
+                    )}
+                  {}
                 </ul>
               </div>
               <div>
                 <h3 className="text-secondary mb-3">Gdzie można wypożyczyć:</h3>
                 <ul className="flex gap-3">
-                  {providers.results?.PL?.rent?.map(
-                    (item: { logo_path: string; provider_id: number }) => (
-                      <li key={item.provider_id}>
-                        <Image
-                          className="rounded-md"
-                          height={40}
-                          width={40}
-                          alt="provider logo"
-                          src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
-                        />
-                      </li>
-                    )
-                  )}
+                  {providers.results?.PL?.rent &&
+                    providers.results.PL.rent.map(
+                      (item: { logo_path: string; provider_id: number }) => (
+                        <li key={item.provider_id}>
+                          <Image
+                            className="rounded-md"
+                            height={40}
+                            width={40}
+                            alt="provider logo"
+                            src={`${process.env.NEXT_PUBLIC_IMAGES_URL}${LogoSize.SMALL}${item.logo_path}`}
+                          />
+                        </li>
+                      )
+                    )}
                 </ul>
               </div>
             </>
@@ -173,14 +176,15 @@ export default async function Page({
               <PiTranslate size={20} /> Dostępne języki
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails?.spoken_languages?.map((lang: { name: string }) => (
-                <li
-                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                  key={lang.name}
-                >
-                  {lang.name}
-                </li>
-              ))}
+              {movieDetails?.spoken_languages &&
+                movieDetails.spoken_languages.map((lang: { name: string }) => (
+                  <li
+                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                    key={lang.name}
+                  >
+                    {lang.name}
+                  </li>
+                ))}
             </ul>
           </section>
           <section className="mb-5">
@@ -189,21 +193,23 @@ export default async function Page({
               <FaRegStar size={20} /> Oceny
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetailsFromOmdb.Ratings.map(
-                (rating: { Source: string; Value: string }) => (
-                  <li
-                    className="p-2 bg-background rounded-md border border-zinc-700"
-                    key={rating.Source}
-                  >
-                    <p>
-                      {rating.Source.includes("Internet")
-                        ? "IMDb"
-                        : rating.Source}
-                    </p>
-                    <p className="text-primary">{rating.Value}</p>
-                  </li>
-                )
-              )}
+              {movieDetailsFromOmdb.Ratings &&
+                movieDetailsFromOmdb.Ratings.map(
+                  (rating: { Source: string; Value: string }) => (
+                    <li
+                      className="p-2 bg-background rounded-md border border-zinc-700"
+                      key={rating.Source}
+                    >
+                      <p>
+                        {rating.Source.includes("Internet")
+                          ? "IMDb"
+                          : rating.Source}
+                      </p>
+                      <p className="text-primary">{rating.Value}</p>
+                    </li>
+                  )
+                )}
+              {}
             </ul>
           </section>
           <section className="mb-5">
@@ -212,14 +218,15 @@ export default async function Page({
               <HiOutlineSquares2X2 size={20} /> Gatunek
             </p>
             <ul className="flex gap-2 flex-wrap">
-              {movieDetails?.genres?.map((genre: Genre) => (
-                <li
-                  className="px-2 py-1 bg-background rounded-md border border-zinc-700"
-                  key={genre.id}
-                >
-                  {genre.name}
-                </li>
-              ))}
+              {movieDetails?.genres &&
+                movieDetails?.genres?.map((genre: Genre) => (
+                  <li
+                    className="px-2 py-1 bg-background rounded-md border border-zinc-700"
+                    key={genre.id}
+                  >
+                    {genre.name}
+                  </li>
+                ))}
             </ul>
           </section>
           <section className="mb-5">
@@ -228,34 +235,35 @@ export default async function Page({
               <PiFilmScript size={20} /> Reżyseria
             </p>
             <ul>
-              {movieDetailsFromOmdb.Director.split(", ").map(
-                (director: string) => (
-                  <li
-                    key={director}
-                    className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
-                  >
-                    <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
-                      <Image
-                        alt="Script person profile"
-                        src={
-                          director
-                            ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
-                                ProfileSize.MEDIUM
-                              }${getPersonImagePathFromList(
-                                director,
-                                mediaMembers.crew
-                              )}`
-                            : NoProfilePicture
-                        }
-                        fill
-                        className="object-cover rounded-md"
-                        sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
-                      />
-                    </div>
-                    <p className="flex items-center">{director}</p>
-                  </li>
-                )
-              )}
+              {movieDetailsFromOmdb.Director &&
+                movieDetailsFromOmdb.Director.split(", ").map(
+                  (director: string) => (
+                    <li
+                      key={director}
+                      className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
+                    >
+                      <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
+                        <Image
+                          alt="Script person profile"
+                          src={
+                            director
+                              ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                                  ProfileSize.MEDIUM
+                                }${getPersonImagePathFromList(
+                                  director,
+                                  mediaMembers.crew
+                                )}`
+                              : NoProfilePicture
+                          }
+                          fill
+                          className="object-cover rounded-md"
+                          sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
+                        />
+                      </div>
+                      <p className="flex items-center">{director}</p>
+                    </li>
+                  )
+                )}
             </ul>
           </section>
           <section className="mb-5">
@@ -264,32 +272,38 @@ export default async function Page({
               <FaScroll size={20} /> Scenariusz
             </p>
             <ul>
-              {movieDetailsFromOmdb.Writer.split(", ").map((writer: string) => (
-                <li
-                  key={writer}
-                  className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
-                >
-                  <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
-                    <Image
-                      alt="Script person profile"
-                      src={
-                        getPersonImagePathFromList(writer, mediaMembers.crew)
-                          ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
-                              ProfileSize.MEDIUM
-                            }${getPersonImagePathFromList(
+              {movieDetailsFromOmdb.Writer &&
+                movieDetailsFromOmdb.Writer.split(", ").map(
+                  (writer: string) => (
+                    <li
+                      key={writer}
+                      className="bg-background rounded-md border border-zinc-700 flex gap-2 p-3 "
+                    >
+                      <div className="relative h-16 w-16 md:h-20 md:w-20 aspect-square ">
+                        <Image
+                          alt="Script person profile"
+                          src={
+                            getPersonImagePathFromList(
                               writer,
                               mediaMembers.crew
-                            )}`
-                          : NoProfilePicture
-                      }
-                      fill
-                      className="object-cover rounded-md"
-                      sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
-                    />
-                  </div>
-                  <p className="flex items-center">{writer}</p>
-                </li>
-              ))}
+                            )
+                              ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${
+                                  ProfileSize.MEDIUM
+                                }${getPersonImagePathFromList(
+                                  writer,
+                                  mediaMembers.crew
+                                )}`
+                              : NoProfilePicture
+                          }
+                          fill
+                          className="object-cover rounded-md"
+                          sizes="(max-width: 768px) 70px, (max-width: 1200px) 100px, 120px"
+                        />
+                      </div>
+                      <p className="flex items-center">{writer}</p>
+                    </li>
+                  )
+                )}
             </ul>
           </section>
         </div>
@@ -320,20 +334,25 @@ export default async function Page({
         <div className="p-7 bg-backgroundLight rounded-md md:col-span-full border border-borderPrimary">
           <h3 className="text-secondary mb-4">Tła</h3>
           <ul className="flex flex-wrap gap-2">
-            {imagesList.backdrops
-              .slice(0, 16)
-              .map(
-                (img: { file_path: string; height: number; width: number }) => (
-                  <li className=" hover:cursor-pointer" key={img.file_path}>
-                    <ImageModal
-                      altText="backdrop image"
-                      imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
-                      height={img.height}
-                      width={img.width}
-                    />
-                  </li>
-                )
-              )}
+            {imagesList.backdrops &&
+              imagesList.backdrops
+                .slice(0, 16)
+                .map(
+                  (img: {
+                    file_path: string;
+                    height: number;
+                    width: number;
+                  }) => (
+                    <li className=" hover:cursor-pointer" key={img.file_path}>
+                      <ImageModal
+                        altText="backdrop image"
+                        imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${BackdropSize.LARGE}${img.file_path}`}
+                        height={img.height}
+                        width={img.width}
+                      />
+                    </li>
+                  )
+                )}
           </ul>
         </div>
       </section>

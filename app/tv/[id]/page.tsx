@@ -3,9 +3,7 @@ import {
   fetchSeriesByTitlefromOMDB,
   fetchMediaData,
 } from "@/app/lib/api/tmdbApi";
-
 import NoProfilePicture from "@/public/no-profile-img.png";
-
 import Image from "next/image";
 import { CiCalendar } from "react-icons/ci";
 import { PiTranslate } from "react-icons/pi";
@@ -21,7 +19,6 @@ import ImageModal from "@/app/components/imageModal/ImageModal";
 import FreeTrialCta from "@/app/components/ui/freeTrialCta/FreeTrialCta";
 import { BackdropSize, LogoSize, ProfileSize } from "@/app/types/types";
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
-import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaBtn";
 import AddToWatchlistButton from "@/app/components/ui/addToWatchBtn/AddToWatchlistButton";
 import FavoriteButton from "@/app/components/ui/addToFavBtn/AddToFavoriteBtn";
 import { fetchUserMediaStatus } from "@/app/lib/api/userApi";
@@ -31,6 +28,7 @@ import SwiperPeople from "@/app/components/Swiper/SwiperPeople";
 import SwiperVideo from "@/app/components/Swiper/SwiperVideo";
 import SwiperList from "@/app/components/Swiper/SwiperList";
 import { v4 as uuid } from "uuid";
+import RateMediaButton from "@/app/components/ui/rateMediaBtn/RateMediaButton";
 
 export default async function Page({
   params,

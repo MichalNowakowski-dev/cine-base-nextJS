@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-
 import { MediaItem, MediaType } from "@/app/types/types";
 import { IoMdAdd } from "react-icons/io";
 import { addToWatch, removeItemFromUserList } from "@/app/lib/actions";
-import { notifySuccess } from "@/app/lib/toast";
+import { notifyInfo, notifySuccess } from "@/app/lib/toast";
+import { useSession } from "next-auth/react";
 
 interface WatchlistButtonProps {
   isInWatchlist: boolean;
@@ -21,8 +21,10 @@ const AddToWatchlistButton = ({
   userId,
 }: WatchlistButtonProps) => {
   const [inWatchList, setInWatchlist] = useState(isInWatchlist);
+  const { data: session } = useSession();
 
   const toggleWatchList = async () => {
+    if (!session?.user) return notifyInfo("Zaloguj się aby dodać do listy.");
     if (inWatchList) {
       await removeItemFromUserList(mediaData.id, userId, mediaType, "toWatch");
       notifySuccess("Usunięto z listy do obejrzenia.");
@@ -30,7 +32,7 @@ const AddToWatchlistButton = ({
     } else {
       await addToWatch(mediaType, mediaData, userId);
 
-      notifySuccess("Dodano do obejrzenia.");
+      notifySuccess("Dodano do listy: Do obejrzenia.");
       setInWatchlist(true);
     }
   };

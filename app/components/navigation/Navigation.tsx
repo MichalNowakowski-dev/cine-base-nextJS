@@ -60,7 +60,11 @@ export default function Navigation() {
       } `}
     >
       <div className=" mx-auto flex justify-between items-center w-full px-4 relative">
-        <Link href={"/"} className={navigationStyles.logo}>
+        <Link
+          href={"/"}
+          className={navigationStyles.logo}
+          aria-label="Strona główna"
+        >
           <Image src={Logo} alt="CineBase Logo" />
         </Link>
 
@@ -71,7 +75,7 @@ export default function Navigation() {
                 key={label}
                 className={navigationStyles.navItem(pathname === href)}
               >
-                <Link className="px-3 py-2" href={href}>
+                <Link className="px-3 py-2" href={href} aria-label={label}>
                   {label}
                 </Link>
               </li>
@@ -105,22 +109,28 @@ export default function Navigation() {
                     pathname === href
                   )}`}
                 >
-                  <Link href={href}>{label}</Link>
+                  <Link aria-label={label} href={href}>
+                    {label}
+                  </Link>
                 </li>
               ))}
               <li
                 className={` ${navigationStyles.mobileNavItem(
                   pathname === "/sign-in"
-                )} bg-red-600 xs:hidden `}
+                )} bg-red-700 xs:hidden `}
               >
-                <Link href={"/sign-in"}>Zaloguj się</Link>
+                <Link aria-label="Zaloguj się" href={"/sign-in"}>
+                  Zaloguj się
+                </Link>
               </li>
               <li
                 className={` ${navigationStyles.mobileNavItem(
                   pathname === "/sign-up"
-                )}bg-blue-500 xs:hidden`}
+                )}bg-blue-700 xs:hidden`}
               >
-                <Link href={"/sign-up"}>Dołącz do nas</Link>
+                <Link aria-label="Zarejestruj się" href={"/sign-up"}>
+                  Dołącz do nas
+                </Link>
               </li>
             </ul>
           </div>
@@ -128,6 +138,7 @@ export default function Navigation() {
 
         <div className="flex items-center gap-5">
           <Link
+            aria-label="Wyszukaj"
             href={"/search?type=query"}
             className="p-2 flex gap-2 items-center bg-transparent  
              rounded-full hover:bg-white "

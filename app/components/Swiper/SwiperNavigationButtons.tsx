@@ -8,14 +8,22 @@ export default function SwiperNavigationButtons({
 }) {
   return (
     <div className="hidden w-max lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary">
-      <button id={`prev-${swiperId}`} className="custom-prev">
+      <button
+        aria-label="Przewiń listę w lewo"
+        id={`prev-${swiperId}`}
+        className="custom-prev"
+      >
         <FaArrowLeft />
       </button>
       <div
         id={`pagination-${swiperId}`}
         className="custom-pagination h-full items-center flex gap-x-[2px] "
       ></div>
-      <button id={`next-${swiperId}`} className="custom-next">
+      <button
+        aria-label="Przewiń listę w prawo"
+        id={`next-${swiperId}`}
+        className="custom-next"
+      >
         <FaArrowRight />
       </button>
     </div>

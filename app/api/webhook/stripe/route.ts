@@ -42,7 +42,6 @@ export async function POST(req: NextRequest) {
           );
         }
 
-        // Znajdź użytkownika na podstawie adresu email
         const user = await prisma.user.findUnique({
           where: { email },
         });
@@ -51,10 +50,6 @@ export async function POST(req: NextRequest) {
           console.error("User not found for email:", email);
           break;
         }
-
-        // Dodaj nową subskrypcję do bazy danych
-
-        console.log(session.metadata);
 
         const planId = parseInt(session.metadata?.planId || "0", 10);
         const interval = session.metadata?.interval;
@@ -78,7 +73,6 @@ export async function POST(req: NextRequest) {
         console.log(`Subscription created for user ID: ${user.id}`);
         break;
       }
-
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
         const stripeSubscriptionId = subscription.id;
@@ -86,7 +80,7 @@ export async function POST(req: NextRequest) {
         await prisma.subscription.updateMany({
           where: { stripeSubscriptionId },
           data: {
-            status: "canceled", // Ustawienie statusu na "canceled"
+            status: "canceled",
           },
         });
 
