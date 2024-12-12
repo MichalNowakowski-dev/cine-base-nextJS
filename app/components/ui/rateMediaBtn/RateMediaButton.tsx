@@ -55,7 +55,7 @@ const RateMediaButton = ({
       </button>
 
       {showRatingOptions && (
-        <div className="absolute top-full mt-2 bg-[#1a1a1a] border border-zinc-700 rounded-md shadow-md p-3 flex space-x-2 z-50">
+        <div className="absolute top-full mt-2 bg-[#1a1a1a] border border-zinc-700 rounded-md shadow-md p-3 flex space-x-2 z-30">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ratingOption) => (
             <button
               key={ratingOption}

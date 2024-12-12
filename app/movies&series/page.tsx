@@ -9,8 +9,9 @@ import Tabs from "./Tabs";
 import PageContainer from "../components/ui/pageContainer/PageContainer";
 import SwiperList from "../components/Swiper/SwiperList";
 import { v4 as uuid } from "uuid";
-import { fetchUserMediaStatus } from "../lib/api/userApi";
+
 import { auth } from "../auth";
+import { fetchUserMediaStatus } from "../lib/api/userApi";
 export default async function Page({
   searchParams,
 }: {
@@ -45,7 +46,7 @@ export default async function Page({
         userListsStatus={userListsStatus}
       />
       <Tabs />
-      <div className="relative  mb-16">
+      <div className="relative mb-16">
         <span className="hidden lg:inline px-5 py-2 bg-primary rounded-lg absolute top-0 left-20 -translate-x-1/2 -translate-y-1/2">
           Filmy
         </span>

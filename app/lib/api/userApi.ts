@@ -81,19 +81,6 @@ export const getUserRating = async (
   return userRating ? userRating.rating : null;
 };
 
-export const fetchUserMediaStatus = async (
-  mediaId: number,
-  userId: number,
-  mediaType: MediaType
-) => {
-  const [favoriteStatus, watchlistStatus, ratingStatus] = await Promise.all([
-    getFavoriteStatus(mediaId, userId, mediaType),
-    getWatchlistStatus(mediaId, userId, mediaType),
-    getUserRating(mediaId, userId, mediaType),
-  ]);
-
-  return { favoriteStatus, watchlistStatus, ratingStatus };
-};
 export const ensureMediaExists = async (
   mediaData: MediaItem,
   mediaType: MediaType
@@ -364,4 +351,17 @@ export const getUserSubscriptionInfo = async (userId: number) => {
   });
 
   return userSubscription;
+};
+export const fetchUserMediaStatus = async (
+  mediaId: number,
+  userId: number,
+  mediaType: MediaType
+) => {
+  const [favoriteStatus, watchlistStatus, ratingStatus] = await Promise.all([
+    getFavoriteStatus(mediaId, userId, mediaType),
+    getWatchlistStatus(mediaId, userId, mediaType),
+    getUserRating(mediaId, userId, mediaType),
+  ]);
+
+  return { favoriteStatus, watchlistStatus, ratingStatus };
 };

@@ -62,7 +62,7 @@ const SwiperList = ({
                 width={185}
                 height={320}
                 quality={100}
-                className="aspect-[2/3] rounded-lg transition-transform duration-300 ease-in-out group-hover:blur-sm"
+                className="aspect-[2/3] object-cover rounded-lg transition-transform duration-300 ease-in-out group-hover:blur-sm"
                 src={
                   item.poster_path
                     ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${PosterSize.MEDIUM}${item.poster_path}`
