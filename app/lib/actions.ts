@@ -323,6 +323,16 @@ export async function registerUser(_prevState: unknown, data: FormData) {
   };
 
   try {
+    const existingUser = await prisma.user.findFirst({
+      where: { email: registerFormData.email as string },
+    });
+
+    if (existingUser)
+      return {
+        success: false,
+        message: "Konto o podanym adresie e-mail już istnieje",
+      };
+
     const validatedData = registerSchema.parse(registerFormData);
     const hashedPassword = await saltAndHashPassword(validatedData.password);
     await prisma.user.create({

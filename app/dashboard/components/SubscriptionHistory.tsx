@@ -13,8 +13,6 @@ export default function SubscriptionHistory({
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  console.log(subscriptionHistoryList);
-
   return (
     <div className="w-full  mx-auto">
       <h2 className="text-2xl font-bold mb-4">Historia Subskrypcji</h2>

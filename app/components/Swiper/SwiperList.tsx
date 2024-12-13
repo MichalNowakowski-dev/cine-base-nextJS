@@ -12,6 +12,7 @@ import "./swiper.css";
 import { useRef } from "react";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
 import MediaRoundedRating from "../ui/mediaRoundedRating/MediaRoundedRating";
+import { v4 as uuid } from "uuid";
 
 const SwiperList = ({
   mediaList,
@@ -53,7 +54,7 @@ const SwiperList = ({
         }}
       >
         {mediaList.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={uuid()}>
             <Link
               href={`/${mediaType || item.media_type}/${item.id}`}
               className="relative inline-block group "

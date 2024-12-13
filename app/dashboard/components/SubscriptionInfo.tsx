@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaChevronRight } from "react-icons/fa";
 import CancelSubscriptionModal from "./CancelSubscriptionModal";
 
-const SubscriptionCard = async () => {
+const SubscriptionInfo = async () => {
   const session = await auth();
   const userSubscriptionInfo = await getUserSubscriptionInfo(
     Number(session?.user.id)
@@ -27,7 +27,7 @@ const SubscriptionCard = async () => {
         )} dni.`;
 
   return (
-    <div className=" text-white ">
+    <div className=" text-white mb-10">
       <div className=" bg-backgroundDashboardCard  border-b border-white">
         <p className="text-sm uppercase text-black bg-white/70 rounded-tl-lg rounded-tr-lg pl-4">
           Bieżący plan
@@ -95,4 +95,4 @@ const SubscriptionCard = async () => {
   );
 };
 
-export default SubscriptionCard;
+export default SubscriptionInfo;

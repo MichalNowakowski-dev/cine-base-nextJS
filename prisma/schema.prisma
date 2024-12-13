@@ -41,6 +41,8 @@ model Plan {
   yearlyPrice   Float
   monthlyPaymentLink String
   yearlyPaymentLink String
+  trialMonthlyPaymentLink String  @default("link")
+  trialYearlyPaymentLink String @default("link")
   monthlyPriceId String
   yearlyPriceId String
   content       String
@@ -68,6 +70,7 @@ model Subscription {
   status           String    // Status subskrypcji, np. 'active', 'expired'
   isPaid           Boolean   // Czy subskrypcja jest opłacona?
   trialPeriod      Boolean   // Czy subskrypcja jest w okresie próbnym?
+  trialPeriodEnd    DateTime?
   createdAt        DateTime  @default(now()) // Data utworzenia subskrypcji
   updatedAt        DateTime  @updatedAt       // Data ostatniej aktualizacji subskrypcji
   

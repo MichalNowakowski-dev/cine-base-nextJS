@@ -24,7 +24,7 @@ const MediaGenreList = ({ mediaList, mediaType }: GenresListProps) => {
       {mediaList.map((mediaItem) => (
         <li
           key={uuid()}
-          className="bg-zinc-800 text-white p-4 rounded-lg hover:shadow-lg hover:shadow-white hover:cursor-pointer transition-shadow"
+          className=" text-white p-4 rounded-lg hover:scale-105  hover:cursor-pointer transition-transform"
         >
           <Link
             href={`/${mediaType}/${mediaItem.id}`}

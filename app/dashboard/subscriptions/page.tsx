@@ -1,5 +1,5 @@
 import { auth } from "@/app/auth";
-import SubscriptionCard from "../components/SubscriptionCard";
+import SubscriptionInfo from "../components/SubscriptionInfo";
 import { redirect } from "next/navigation";
 import SubscriptionHistory from "../components/SubscriptionHistory";
 import { getUserSubscriptionHistory } from "@/app/lib/api/userApi";
@@ -17,8 +17,8 @@ const Subscriptions = async () => {
       <h2 className="text-2xl font-semibold mb-4">
         Twoja aktualna subskrypcja
       </h2>
-      <SubscriptionCard />
-      <div className="my-6"></div>
+      <SubscriptionInfo />
+
       <SubscriptionHistory subscriptionHistoryList={userSubscriptionHistory} />
     </div>
   );

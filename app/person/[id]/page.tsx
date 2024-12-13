@@ -7,7 +7,6 @@ import {
 import Image from "next/image";
 
 import { CiCalendar } from "react-icons/ci";
-
 import { GiHastyGrave } from "react-icons/gi";
 import { calculateAge } from "@/app/lib/utils";
 import { v4 as uuid } from "uuid";
@@ -126,7 +125,7 @@ export default async function Page({
               .slice(0, 16)
               .map(
                 (img: { file_path: string; height: number; width: number }) => (
-                  <li className=" hover:cursor-pointer" key={img.file_path}>
+                  <li className=" hover:cursor-pointer" key={uuid()}>
                     <ImageModal
                       altText="backdrop image"
                       imageUrl={`${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.XLARGE}${img.file_path}`}

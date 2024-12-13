@@ -11,6 +11,7 @@ import "swiper/css/pagination";
 import "./swiper.css";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
 import { PiPlayCircleThin } from "react-icons/pi";
+import { v4 as uuid } from "uuid";
 
 const SwiperVideo = ({
   videoList,
@@ -58,7 +59,7 @@ const SwiperVideo = ({
           const thumbnailSrc = `https://img.youtube.com/vi/${video.key}/mqdefault.jpg`;
 
           return (
-            <SwiperSlide key={video.id}>
+            <SwiperSlide key={uuid()}>
               <div
                 onClick={() => openModal(video.key)}
                 className="cursor-pointer relative"

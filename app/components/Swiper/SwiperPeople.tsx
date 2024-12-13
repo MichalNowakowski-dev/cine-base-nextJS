@@ -11,6 +11,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./swiper.css";
+import { v4 as uuid } from "uuid";
 
 const SwiperPeople = ({
   personList,
@@ -52,7 +53,7 @@ const SwiperPeople = ({
         }}
       >
         {personList.map((person) => (
-          <SwiperSlide key={person.id}>
+          <SwiperSlide key={uuid()}>
             <Link href={`/person/${person.id}`}>
               <div className="relative block group">
                 <Image

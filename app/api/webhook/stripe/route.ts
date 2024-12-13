@@ -96,6 +96,26 @@ export async function POST(req: NextRequest) {
         console.log(`Subscription created for user ID: ${user.id}`);
         break;
       }
+      case "customer.subscription.created": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const stripeSubscriptionId = subscription.id;
+
+        if (subscription.trial_end) {
+          await prisma.subscription.updateMany({
+            where: { stripeSubscriptionId },
+            data: {
+              trialPeriod: true,
+              trialPeriodEnd: new Date(subscription.trial_end * 1000),
+            },
+          });
+
+          console.log(
+            `Subscription canceled, but plan is up till the end od subscription: ${stripeSubscriptionId}`
+          );
+        }
+
+        break;
+      }
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
         const stripeSubscriptionId = subscription.id;

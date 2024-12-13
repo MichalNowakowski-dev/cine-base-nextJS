@@ -15,14 +15,20 @@ import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
 import IntervalToggle from "./IntervalToggle";
+import { redirect } from "next/navigation";
 
 export default async function SubscriptionSummary({
   searchParams,
 }: {
   searchParams: Promise<{ id: string; priceCycle: string; trial: string }>;
 }) {
-  const { id, priceCycle } = await searchParams;
+  const { id, priceCycle, trial } = await searchParams;
   const session = await auth();
+
+  if (!session) {
+    // Przekierowanie do strony logowania z zachowaniem aktualnej ścieżki
+    redirect(`/sign-in`);
+  }
 
   const getPlanInfo = async (planId: number) => {
     const plan = await prisma.plan.findUnique({ where: { id: planId } });
@@ -30,12 +36,20 @@ export default async function SubscriptionSummary({
   };
 
   const selectedPlan = await getPlanInfo(Number(id));
-
-  const paymentUrl = `${
-    priceCycle === "month"
-      ? selectedPlan?.monthlyPaymentLink
-      : selectedPlan?.yearlyPaymentLink
-  }?prefilled_email=${session?.user.email}`;
+  let paymentUrl: string = "";
+  if (trial) {
+    paymentUrl = `${
+      priceCycle === "month"
+        ? selectedPlan?.trialMonthlyPaymentLink
+        : selectedPlan?.trialYearlyPaymentLink
+    }?prefilled_email=${session?.user.email}`;
+  } else {
+    paymentUrl = `${
+      priceCycle === "month"
+        ? selectedPlan?.monthlyPaymentLink
+        : selectedPlan?.yearlyPaymentLink
+    }?prefilled_email=${session?.user.email}`;
+  }
 
   if (!selectedPlan) {
     return (
@@ -107,7 +121,7 @@ export default async function SubscriptionSummary({
         <div className="border border-borderPrimary p-6 rounded-lg shadow-md bg-black/80">
           {/* Informacje o planie */}
           <h2 className="text-2xl font-semibold mb-4 text-center">
-            Typ planu: {selectedPlan.name}
+            {`Typ planu: ${selectedPlan.name} ${trial && "- okres próbny"}`}
           </h2>
 
           <div className="mb-4 flex justify-between items-center">
