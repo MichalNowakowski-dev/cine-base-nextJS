@@ -1,7 +1,7 @@
 import { prisma } from "@/app/prisma";
 import MediaList from "../components/MediaList";
 import { auth } from "@/app/auth";
-import { getLists } from "@/app/lib/api/userApi";
+import { getUserLists } from "@/app/lib/actions/media/mediaActions";
 import Accordion from "@/app/components/ui/accordion/Accordion";
 import { redirect } from "next/navigation";
 
@@ -49,7 +49,7 @@ const Lists = async () => {
     favoriteShows = [],
     toWatchMovies = [],
     toWatchShows = [],
-  ] = (await getLists(userLists)) || [];
+  ] = (await getUserLists(userLists)) || [];
 
   return (
     <div className="p-0 sm:p-6  text-white min-h-screen">

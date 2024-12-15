@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
 import { prisma } from "@/app/prisma";
 import UpdateSession from "@/app/components/updateSession/UpdateSession";
-import { getUserName } from "@/app/lib/api/userApi";
+import { getUserName } from "@/app/lib/actions/user/userActions";
 import AvatarPicker from "../components/AvatarPicker";
 
 const Profile = async () => {

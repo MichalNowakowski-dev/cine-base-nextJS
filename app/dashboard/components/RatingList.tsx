@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import { notifySuccess } from "@/app/lib/toast";
-import { removeItemFromUserList } from "@/app/lib/actions";
+import { removeItemFromUserList } from "@/app/lib/actions/media/mediaActions";
 import Accordion from "@/app/components/ui/accordion/Accordion";
 import { MdDelete } from "react-icons/md";
 

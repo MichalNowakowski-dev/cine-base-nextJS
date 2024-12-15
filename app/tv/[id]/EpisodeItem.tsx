@@ -1,12 +1,10 @@
-"use client";
-
 import React from "react";
 import { PiPlayCircleThin } from "react-icons/pi";
 import { formatRuntime } from "../../lib/utils";
 import Image from "next/image";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 import { Episode, StillSize } from "../../types/types";
 
 type EpisodeItemProps = {
@@ -14,8 +12,6 @@ type EpisodeItemProps = {
 };
 
 export default function EpisodeItem({ episode }: EpisodeItemProps) {
-  const pathname = usePathname();
-
   return (
     <li
       className="bg-background p-6 flex flex-col lg:flex-row gap-4 rounded-lg w-full lg:rounded-none border-secondary lg:border-t lg:bg-transparent"
@@ -40,7 +36,7 @@ export default function EpisodeItem({ episode }: EpisodeItemProps) {
           )}
 
           <Link
-            href={`${pathname}/episode/${episode.id}`}
+            href={`/mediaPlay`}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center h-10 w-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-black/60"
           >
             <PiPlayCircleThin className="text-red-500 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />

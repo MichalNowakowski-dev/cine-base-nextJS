@@ -25,7 +25,7 @@ export default async function SearchResults({
 }: {
   searchParams: SearchParamsProps;
 }) {
-  const mediaType = searchParams.mediaType || "movie";
+  const mediaType = searchParams.mediaType;
   const page = Number(searchParams.page) || 1;
   const query = searchParams.query || "";
   const type = searchParams.type || "query";
@@ -53,12 +53,12 @@ export default async function SearchResults({
     renderResults = filtersResults.results;
   }
 
-  if (renderResults.length < 1) return;
+  if (!renderResults || renderResults.length < 1) return;
   return (
     <div className="flex flex-col items-center">
       <ul className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {renderResults.map((result: SearchItem) => (
-          <SearchResult key={result.id} result={result} />
+          <SearchResult key={result.id} result={result} mediaType={mediaType} />
         ))}
       </ul>
       <Pagination

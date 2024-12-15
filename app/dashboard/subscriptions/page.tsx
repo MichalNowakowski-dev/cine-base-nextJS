@@ -2,7 +2,7 @@ import { auth } from "@/app/auth";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import { redirect } from "next/navigation";
 import SubscriptionHistory from "../components/SubscriptionHistory";
-import { getUserSubscriptionHistory } from "@/app/lib/api/userApi";
+import { getUserSubscriptionHistory } from "@/app/lib/actions/user/userActions";
 
 const Subscriptions = async () => {
   const session = await auth();

@@ -34,12 +34,10 @@ const ImageModal = ({
 
   return (
     <div>
-      {/* Miniaturka obrazu */}
-
       <Image
         src={imageUrl}
         alt={altText}
-        className="cursor-pointer w-32 md:w-40 object-cover rounded-lg shadow-lg aspect-video"
+        className="cursor-pointer object-cover rounded-lg shadow-lg aspect-video"
         onClick={openModal}
         width={width}
         height={height}

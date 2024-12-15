@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
-import { changeUserName } from "@/app/lib/actions";
+import { changeUserName } from "@/app/lib/actions/user/userActions";
 import Spinner from "@/app/components/ui/spinner/Spinner";
 
 const NameForm = () => {

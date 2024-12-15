@@ -143,7 +143,7 @@ export default function Navigation() {
             className="p-2 flex gap-2 items-center bg-transparent  
              rounded-full hover:bg-white "
           >
-            <GoSearch size={25} fill="gray" />
+            <GoSearch size={30} fill="gray" />
           </Link>
 
           <UserAccountNav />

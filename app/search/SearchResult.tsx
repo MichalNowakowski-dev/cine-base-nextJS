@@ -4,16 +4,22 @@ import NoPosterImg from "@/public/no-poster-img.webp";
 import NoProfileImg from "@/public/no-profile-img.png";
 import { PosterSize, SearchItem } from "../types/types";
 
-const SearchResult = ({ result }: { result: SearchItem }) => {
+const SearchResult = ({
+  result,
+  mediaType,
+}: {
+  result: SearchItem;
+  mediaType: string;
+}) => {
   const isPerson = result.media_type === "person";
   const imagePath = isPerson ? result.profile_path : result.poster_path;
 
   const placeholderImg = isPerson ? NoProfileImg : NoPosterImg;
-  const { id, name, title, media_type, release_date, first_air_date } = result;
+  const { id, name, title, release_date, first_air_date, media_type } = result;
 
   return (
     <li className=" text-white p-4 rounded-lg hover:scale-105 hover:cursor-pointer transition-transform duration-100">
-      <Link href={`/${media_type}/${id}`}>
+      <Link href={`/${mediaType || media_type}/${id}`}>
         <Image
           src={
             imagePath

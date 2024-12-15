@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/app/prisma";
 import verifyUser from "./lib/verifyUser";
 import Credentials from "next-auth/providers/credentials";
-import { getUserByEmail } from "./lib/api/userApi";
+import { getUserByEmail } from "./lib/actions/user/userActions";
 
 // Define the User interface using optional chaining for avatarUrl
 
@@ -101,19 +101,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       });
 
       if (user && user.subscriptions.length > 0) {
-        const activeSubscription = user.subscriptions[0]; // Bierzemy aktywną subskrypcję
+        const activeSubscription = user.subscriptions[0];
         session.user.planId = activeSubscription.planId;
         session.user.subscriptionStart = activeSubscription.subscriptionStart;
         session.user.subscriptionEnd = activeSubscription.subscriptionEnd;
         session.user.subscriptionStatus = activeSubscription.status;
-        session.user.plan = activeSubscription.plan; // Plan subskrypcji
+        session.user.plan = activeSubscription.plan;
       }
 
       return session;
     },
     async signIn({ user, account }) {
-      // if (account?.provider !== "credentials") return true;
-
       const existingUser = await getUserByEmail(user.email as string);
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified && account?.provider === "credentials")
@@ -129,7 +127,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               name: user.name,
               firstName: user.name?.split(" ")[0],
               lastName: user.name?.split(" ")[1],
-              // Inne dane użytkownika
             },
           });
         }
@@ -159,6 +156,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
         }
       }
+
       return true;
     },
   },

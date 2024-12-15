@@ -205,7 +205,6 @@ export type PlanDetails = {
   yearlyPrice: number;
 };
 
-// Typ subskrypcji z relacją do planu
 export type UserSubscription = {
   id: number;
   stripeSubscriptionId: string | null;
@@ -214,10 +213,45 @@ export type UserSubscription = {
   subscriptionStart: Date;
   subscriptionEnd: Date;
   interval: string;
-  status: string; // np. 'active', 'expired'
+  status: string;
   isPaid: boolean;
   trialPeriod: boolean;
   createdAt: Date;
   updatedAt: Date;
-  plan: PlanDetails; // Włączenie szczegółów planu
+  plan: PlanDetails;
+};
+
+export type userInfoProps = {
+  favoriteMovies?: UserRatingMovieItem[];
+  favoriteShows?: UserRatingShowItem[];
+  toWatchMovies?: UserRatingMovieItem[];
+  toWatchShows?: UserRatingShowItem[];
+};
+
+export type MediaOmdbItem = {
+  Title: string;
+  Year: string;
+  Rated?: string;
+  Released?: string;
+  Runtime?: string;
+  Genre?: string;
+  Director?: string;
+  Writer?: string;
+  Actors?: string;
+  Plot?: string;
+  Language?: string;
+  Country?: string;
+  Awards?: string;
+  Poster?: string;
+  Ratings?: Array<{ Source: string; Value: string }>;
+  Metascore?: string;
+  imdbRating?: string;
+  imdbVotes?: string;
+  imdbID: string;
+  Type: "movie" | "series" | "episode";
+  DVD?: string;
+  BoxOffice?: string;
+  Production?: string;
+  Website?: string;
+  Response: "True" | "False";
 };

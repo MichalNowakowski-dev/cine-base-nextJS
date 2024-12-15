@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { sendSupportMessage } from "../lib/actions";
+import { sendSupportMessage } from "../lib/actions/support/supportActions";
 
 export default function SupportForm() {
   const [state, formAction, isPending] = useActionState(

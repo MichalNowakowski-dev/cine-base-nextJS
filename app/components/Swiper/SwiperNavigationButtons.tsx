@@ -7,7 +7,7 @@ export default function SwiperNavigationButtons({
   swiperId: string;
 }) {
   return (
-    <div className="hidden w-max lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-center gap-3 border border-borderPrimary">
+    <div className="hidden min-w-48 w-max lg:flex px-4 py-2 bg-backgroundFooter rounded-md items-center justify-between gap-3 border border-borderPrimary">
       <button
         aria-label="Przewiń listę w lewo"
         id={`prev-${swiperId}`}
@@ -17,7 +17,7 @@ export default function SwiperNavigationButtons({
       </button>
       <div
         id={`pagination-${swiperId}`}
-        className="custom-pagination h-full items-center flex gap-x-[2px] "
+        className="custom-pagination h-full items-center justify-center flex gap-x-[2px] "
       ></div>
       <button
         aria-label="Przewiń listę w prawo"

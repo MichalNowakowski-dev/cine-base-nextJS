@@ -1,6 +1,6 @@
 import { auth } from "@/app/auth";
 import RatingList from "../components/RatingList";
-import { getUserRatingLists } from "@/app/lib/api/userApi";
+import { getUserRatingLists } from "@/app/lib/actions/media/mediaActions";
 
 import { redirect } from "next/navigation";
 

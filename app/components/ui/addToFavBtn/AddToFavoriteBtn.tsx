@@ -4,7 +4,10 @@ import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MediaItem, MediaType } from "@/app/types/types";
 import { notifyInfo, notifySuccess } from "@/app/lib/toast";
-import { addFavorite, removeItemFromUserList } from "@/app/lib/actions";
+import {
+  addFavorite,
+  removeItemFromUserList,
+} from "@/app/lib/actions/media/mediaActions";
 import { useSession } from "next-auth/react";
 
 interface FavoriteButtonProps {

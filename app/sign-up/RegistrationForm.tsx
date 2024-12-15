@@ -1,9 +1,10 @@
 "use client";
 import { useActionState } from "react";
-import { registerUser } from "../lib/actions";
+import { registerUser } from "../lib/actions/user/userActions";
 import Spinner from "../components/ui/spinner/Spinner";
 
 import Message from "../components/ui/message/Message";
+import { FormStyles } from "../styles";
 
 export default function RegistrationForm() {
   const [state, registerAction, isPending] = useActionState(registerUser, null);
@@ -25,7 +26,7 @@ export default function RegistrationForm() {
             name="firstName"
             placeholder="Imię"
             id="firstName"
-            className="w-full px-4 py-2 rounded-md bg-black/70 md:bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            className={FormStyles.inputText}
           />
           {state?.errors?.firstName && (
             <p className="text-red-500 text-sm">{state.errors.firstName}</p>
@@ -41,7 +42,7 @@ export default function RegistrationForm() {
             placeholder="Nazwisko"
             id="lastName"
             name="lastName"
-            className="w-full px-4 py-2 rounded-md bg-black/70 md:bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            className={FormStyles.inputText}
           />
           {state?.errors?.lastName && (
             <p className="text-red-500 text-sm">{state.errors.lastName}</p>
@@ -59,7 +60,7 @@ export default function RegistrationForm() {
           id="email"
           name="email"
           placeholder="xxx@example.com"
-          className="w-full px-4 py-2 rounded-md bg-black/70 md:bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+          className={FormStyles.inputText}
         />
         {state?.errors?.email && (
           <p className="text-red-500 text-sm">{state.errors.email}</p>
@@ -76,7 +77,7 @@ export default function RegistrationForm() {
           placeholder="Hasło"
           id="password"
           name="password"
-          className="w-full px-4 py-2 rounded-md bg-black/70 md:bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-indigo-500 outline-none col-span-2"
+          className={FormStyles.inputText}
         />
         {state?.errors?.password && (
           <p className="text-red-500 text-sm">{state.errors.password}</p>
@@ -91,7 +92,7 @@ export default function RegistrationForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="px-8 py-3 bg-blue-500 hover:bg-blue-700 w-full text-white rounded-lg hover:bg-primary-dark transition-all flex items-center gap-4 justify-center tracking-wider uppercase"
+        className={FormStyles.submitButton}
       >
         {isPending ? "Trwa rejestracja" : "Zarejestruj"}
         {isPending && <Spinner size={20} />}

@@ -11,7 +11,7 @@ import SwiperList from "../components/Swiper/SwiperList";
 import { v4 as uuid } from "uuid";
 
 import { auth } from "../auth";
-import { fetchUserMediaStatus } from "../lib/api/userApi";
+import { getUserMediaStatus } from "../lib/actions/media/mediaActions";
 export default async function Page({
   searchParams,
 }: {
@@ -31,12 +31,11 @@ export default async function Page({
     trendingSeries,
   } = await fetchMoviesAndSeriesData();
 
-  const userListsStatus = await Promise.all([
-    fetchUserMediaStatus(headerList[0].id, Number(session?.user?.id), "movie"),
-    fetchUserMediaStatus(headerList[1].id, Number(session?.user?.id), "movie"),
-    fetchUserMediaStatus(headerList[2].id, Number(session?.user?.id), "movie"),
-    fetchUserMediaStatus(headerList[3].id, Number(session?.user?.id), "movie"),
-  ]);
+  const userListsStatus = await Promise.all(
+    headerList.map((_: unknown, i: number) =>
+      getUserMediaStatus(headerList[i].id, Number(session?.user?.id), "movie")
+    )
+  );
 
   return (
     <PageContainer className="flex flex-col gap-5">

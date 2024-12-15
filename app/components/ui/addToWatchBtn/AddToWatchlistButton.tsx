@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { MediaItem, MediaType } from "@/app/types/types";
 import { IoMdAdd } from "react-icons/io";
-import { addToWatch, removeItemFromUserList } from "@/app/lib/actions";
+import {
+  addToWatch,
+  removeItemFromUserList,
+} from "@/app/lib/actions/media/mediaActions";
 import { notifyInfo, notifySuccess } from "@/app/lib/toast";
 import { useSession } from "next-auth/react";
 

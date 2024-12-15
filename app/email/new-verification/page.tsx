@@ -1,5 +1,5 @@
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
-import { getVerificationTokenByToken } from "@/app/lib/api/userApi";
+import { getVerificationTokenByToken } from "@/app/lib/actions/auth/authActions";
 import { prisma } from "@/app/prisma";
 import VerifyEmailSuccess from "./VerifyEmail";
 

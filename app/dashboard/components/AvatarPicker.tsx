@@ -3,37 +3,34 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { notifySuccess } from "@/app//lib/toast";
+import { notifyError, notifySuccess } from "@/app//lib/toast";
 import Spinner from "@/app/components/ui/spinner/Spinner";
+import { saveAvatar } from "@/app/lib/actions/user/userActions";
 
 const AvatarPicker = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null); // Przechowuje wybrany awatar
-  const [isChanging, setIsChaging] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+  const [isChanging, setIsChanging] = useState(false);
   const { update } = useSession();
 
   const handleAvatarSelect = (avatar: string) => {
-    setSelectedAvatar(avatar); // Ustawia wybrany awatar
+    setSelectedAvatar(avatar);
   };
 
-  const handleAvatarSubmit = async () => {
+  const handleSaveAvatart = async () => {
     if (selectedAvatar) {
-      setIsChaging(true);
-      const saveAvatar = await fetch("/api/user/saveAvatar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ imagePath: selectedAvatar }),
-      });
-
-      await update({ user: { image: selectedAvatar } });
-
-      if (saveAvatar.ok) {
+      try {
+        setIsChanging(true);
+        await saveAvatar(selectedAvatar);
+        await update({ user: { image: selectedAvatar } });
         notifySuccess("Avatar zmieniony pomyślnie !");
+      } catch (error) {
+        console.error(error);
+        notifyError("Nie udało się zmienić avataru !");
+      } finally {
         setSelectedAvatar(null);
+        setIsChanging(false);
       }
     }
-    setIsChaging(false);
   };
 
   const avatarPath = (avatarNumber: number) => {
@@ -83,7 +80,7 @@ const AvatarPicker = () => {
               className="w-24 h-24 object-cover rounded-full border-4 border-blue-500 mt-4"
             />
             <button
-              onClick={handleAvatarSubmit}
+              onClick={handleSaveAvatart}
               disabled={isChanging}
               className={`mt-4 px-6 py-2 rounded bg-blue-600 text-white font-medium flex items-center gap-3 ${
                 isChanging

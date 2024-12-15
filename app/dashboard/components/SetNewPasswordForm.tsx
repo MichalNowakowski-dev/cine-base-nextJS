@@ -2,31 +2,50 @@
 import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { changeUserPassword } from "@/app/lib/actions";
+import { setUserPassword } from "@/app/lib/actions/user/userActions";
 import Spinner from "@/app/components/ui/spinner/Spinner";
 
-const PasswordForm = ({ hasPassword }: { hasPassword: boolean }) => {
+const SetNewPasswordForm = () => {
   const router = useRouter();
 
-  const [state, formAction, isPending] = useActionState(
-    changeUserPassword,
-    null
-  );
+  const [state, formAction, isPending] = useActionState(setUserPassword, null);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isNewOrConfirmPasswordVisible, setIsNewOrConfirmPasswordVisible] =
-    useState(false);
 
   return (
     <form action={formAction} className="space-y-4 w-full max-w-[500px]">
       <div>
-        <label className="block text-sm">
-          {hasPassword ? "Obecne haslo*" : "Nowe hasło"}
-        </label>
+        <label className="block text-sm">Obecne haslo*</label>
         <div className="relative">
           <input
             type={isPasswordVisible ? "text" : "password"} // Dynamiczny typ
-            name={hasPassword ? "currentPassword" : "password"}
-            defaultValue={state?.fields?.currentPassword as string}
+            name="password"
+            defaultValue={state?.fields?.password as string}
+            className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsPasswordVisible((prev) => !prev);
+            }}
+            type="button"
+            className="absolute top-1/2 right-3 -translate-y-1/2"
+          >
+            {isPasswordVisible ? (
+              <BsEyeSlashFill size={20} className="text-zinc-200" />
+            ) : (
+              <BsEyeFill size={20} />
+            )}
+          </button>
+        </div>
+        {<p className="text-red-600">{state?.errors?.password as string}</p>}
+      </div>
+      <div>
+        <label className="block text-sm">Powtórz hasło*</label>
+        <div className="relative">
+          <input
+            type={isPasswordVisible ? "text" : "password"} // Dynamiczny typ
+            name="confirmPassword"
+            defaultValue={state?.fields?.confirmPassword as string}
             className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
           />
           <button
@@ -46,37 +65,9 @@ const PasswordForm = ({ hasPassword }: { hasPassword: boolean }) => {
         </div>
         {
           <p className="text-red-600">
-            {state?.errors?.currentPassword as string}
+            {state?.errors?.confirmPassword as string}
           </p>
         }
-      </div>
-      <div>
-        <label className="block text-sm">
-          {hasPassword ? "Nowe hasło*" : "Powtórz hasło"}
-        </label>
-        <div className="relative">
-          <input
-            type={isNewOrConfirmPasswordVisible ? "text" : "password"} // Dynamiczny typ
-            name={hasPassword ? "newPassword" : "confirmPassword"}
-            defaultValue={state?.fields?.newPassword as string}
-            className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsNewOrConfirmPasswordVisible((prev) => !prev);
-            }}
-            type="button"
-            className="absolute top-1/2 right-3 -translate-y-1/2"
-          >
-            {isNewOrConfirmPasswordVisible ? (
-              <BsEyeSlashFill size={20} className="text-zinc-200" />
-            ) : (
-              <BsEyeFill size={20} />
-            )}
-          </button>
-        </div>
-        {<p className="text-red-600">{state?.errors?.newPassword as string}</p>}
       </div>
       {state?.message && (
         <p
@@ -94,7 +85,7 @@ const PasswordForm = ({ hasPassword }: { hasPassword: boolean }) => {
             isPending ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700"
           }`}
         >
-          {isPending ? "Zmiana hasła..." : "Zatwierdź"}
+          {isPending ? "Zapisywanie..." : "Zatwierdź"}
           {isPending && <Spinner size={20} />}
         </button>
         <button
@@ -109,4 +100,4 @@ const PasswordForm = ({ hasPassword }: { hasPassword: boolean }) => {
   );
 };
 
-export default PasswordForm;
+export default SetNewPasswordForm;

@@ -1,20 +1,6 @@
-import { MutableRefObject } from "react";
 import bcrypt from "bcryptjs";
 import { MediaPerson } from "../types/types";
 import { getSeasonDetails } from "./api/tmdbApi";
-
-export const moveMediaList = (
-  direction: string,
-  ref: MutableRefObject<HTMLUListElement | null>
-) => {
-  if (ref.current) {
-    if (direction === "left") {
-      ref.current.scrollLeft -= ref.current.offsetWidth;
-    } else {
-      ref.current.scrollLeft += ref.current.offsetWidth;
-    }
-  }
-};
 
 export function formatRuntime(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -59,17 +45,13 @@ export function removeSpaces(str: string) {
 }
 
 function compareNames(name1: string, name2: string): boolean {
-  // Normalizacja nazw (usuwanie cudzysłowów i konwersja do małych liter)
   const normalize = (name: string) =>
     name.toLowerCase().replace(/['"]/g, "").trim();
 
   const words1 = new Set(normalize(name1).split(" "));
   const words2 = new Set(normalize(name2).split(" "));
 
-  // Sprawdzenie, czy wszystkie główne komponenty (imię i nazwisko) są wspólne
   const commonWords = [...words1].filter((word) => words2.has(word));
-
-  // Jeśli co najmniej 2 elementy są wspólne, można uznać, że to ta sama osoba
   return commonWords.length >= 2;
 }
 

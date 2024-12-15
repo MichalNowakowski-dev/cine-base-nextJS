@@ -2,7 +2,7 @@
 
 import Modal from "@/app/components/ui/modal/Modal";
 import { useState } from "react";
-import { cancelSubscription } from "@/app/lib/actions";
+import { cancelSubscription } from "@/app/lib/actions/user/userActions";
 export default function CancelSubscriptionModal({
   stripeSubscriptionId,
 }: {

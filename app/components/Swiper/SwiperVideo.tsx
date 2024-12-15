@@ -17,22 +17,28 @@ const SwiperVideo = ({
   videoList,
   listLabel,
   swiperId,
+  labelClassName,
 }: {
   videoList: { id: string; key: string; name: string }[];
   listLabel: string;
   swiperId: string;
+  labelClassName?: string;
 }) => {
   const [selectedVideoKey, setSelectedVideoKey] = useState<string | null>(null);
   const swiperRef = useRef<null>(null);
+
+  const maxSlidesPerView = 4;
 
   const openModal = (videoKey: string) => setSelectedVideoKey(videoKey);
   const closeModal = () => setSelectedVideoKey(null);
 
   return (
     <div className="relative">
-      <header className="flex justify-between items-center mb-6">
-        <h3 className="text-h3 ">{listLabel}</h3>
-        <SwiperNavigationButtons swiperId={swiperId} />
+      <header className="flex justify-between items-center mb-2">
+        <h3 className={`text-h3 ${labelClassName}`}>{listLabel}</h3>
+        {videoList.length > maxSlidesPerView && (
+          <SwiperNavigationButtons swiperId={swiperId} />
+        )}
       </header>
       <Swiper
         ref={swiperRef}
@@ -48,8 +54,8 @@ const SwiperVideo = ({
         spaceBetween={20}
         className="my-swiper"
         breakpoints={{
-          320: { slidesPerView: 2, slidesPerGroup: 2 },
-          480: { slidesPerView: 3, slidesPerGroup: 3 },
+          320: { slidesPerView: 1, slidesPerGroup: 1 },
+          480: { slidesPerView: 2, slidesPerGroup: 2 },
           640: { slidesPerView: 3, slidesPerGroup: 3 },
           768: { slidesPerView: 4, slidesPerGroup: 4 },
           1080: { slidesPerView: 4, slidesPerGroup: 4 },
@@ -67,11 +73,11 @@ const SwiperVideo = ({
                 <Image
                   src={thumbnailSrc}
                   alt={`${video.name} thumbnail`}
-                  className="rounded-md aspect-video"
+                  className="rounded-md aspect-video "
                   height={180}
                   width={320}
                 />
-                <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full rounded-md cursor-pointer hover:bg-black/40 transition-all duration-300 ease-linear group ">
+                <div className="hidden absolute lg:flex items-center justify-center top-0 left-0 h-full w-full rounded-md cursor-pointer hover:bg-black/40 transition-all duration-300 ease-linear group ">
                   <PiPlayCircleThin
                     size={"50%"}
                     className="transition-all duration-300 ease-linear group-hover:rotate-[360deg] group-hover:text-red-700"

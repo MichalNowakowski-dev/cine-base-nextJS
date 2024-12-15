@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 bg-black/60 flex justify-center items-center z-50 `}
+      className={`absolute inset-0 bg-black/60 flex justify-center items-center z-50 `}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -23,7 +23,7 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-xl font-bold text-gray-600"
+          className="absolute top-2 right-2 text-xl font-bold text-red-600"
         >
           ×
         </button>

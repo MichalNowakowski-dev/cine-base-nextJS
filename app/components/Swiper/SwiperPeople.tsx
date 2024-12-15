@@ -17,19 +17,24 @@ const SwiperPeople = ({
   personList,
   listLabel,
   swiperId,
+  labelClassName,
 }: {
   personList: MediaPerson[];
   listLabel: string;
   swiperId: string;
+  labelClassName?: string;
 }) => {
   const swiperRef = useRef<null>(null);
-  console.log(personList);
+
+  const maxSlidesPerView = 6;
 
   return (
     <div className="relative">
-      <header className="flex justify-between items-center mb-6">
-        <h3 className="text-h3">{listLabel}</h3>
-        <SwiperNavigationButtons swiperId={swiperId} />
+      <header className="flex justify-between items-center mb-2">
+        <h3 className={`text-h3 ${labelClassName}`}>{listLabel}</h3>
+        {personList.length > maxSlidesPerView && (
+          <SwiperNavigationButtons swiperId={swiperId} />
+        )}
       </header>
       <Swiper
         ref={swiperRef}

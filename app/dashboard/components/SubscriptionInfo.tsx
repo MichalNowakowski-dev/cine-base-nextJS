@@ -1,5 +1,5 @@
 import { auth } from "@/app/auth";
-import { getUserSubscriptionInfo } from "@/app/lib/api/userApi";
+import { getUserSubscriptionInfo } from "@/app/lib/actions/user/userActions";
 import Link from "next/link";
 import { FaChevronRight } from "react-icons/fa";
 import CancelSubscriptionModal from "./CancelSubscriptionModal";

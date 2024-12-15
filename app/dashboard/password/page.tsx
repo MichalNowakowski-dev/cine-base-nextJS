@@ -1,7 +1,8 @@
 import { auth } from "@/app/auth";
-import PasswordForm from "../components/PasswordForm";
+import ChangePasswordForm from "../components/ChangePasswordForm";
+import SetNewPasswordForm from "../components/SetNewPasswordForm";
 import { redirect } from "next/navigation";
-import { getUserPassword } from "@/app/lib/api/userApi";
+import { getUserPassword } from "@/app/lib/actions/user/userActions";
 
 const Password = async () => {
   const session = await auth();
@@ -11,9 +12,9 @@ const Password = async () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <h2 className="text-2xl font-semibold mb-4">
-        {hasPassword ? "Zmień " : "Ustaw "} hasło
+        {hasPassword ? "Zmień " : "Stwórz "} hasło
       </h2>
-      <PasswordForm hasPassword={hasPassword ? true : false} />
+      {hasPassword ? <ChangePasswordForm /> : <SetNewPasswordForm />}
     </div>
   );
 };

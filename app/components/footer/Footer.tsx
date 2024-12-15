@@ -7,6 +7,7 @@ const footerLinks = [
   { name: "Strona główna", url: "/" },
   { name: "Plany subskrypcji", url: "/plans" },
   { name: "Napisz do nas", url: "/support" },
+  { name: "Polityka prywatności", url: "/privacy-policy" },
 ];
 
 const footerSocials = [
@@ -68,6 +69,7 @@ const Footer = ({ background }: { background?: string }) => {
           <li key={social.name} className="flex items-center justify-center">
             <Link
               href={social.url}
+              target="_blank"
               aria-label={social.ariaLabel}
               className="text-gray-200 p-3 bg-gray-700 rounded-full text-lg transition-transform duration-150 hover:scale-110"
             >

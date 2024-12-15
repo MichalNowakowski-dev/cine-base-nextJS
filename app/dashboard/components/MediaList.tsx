@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { removeItemFromUserList } from "@/app/lib/actions";
+import { removeItemFromUserList } from "@/app/lib/actions/media/mediaActions";
 import { MediaItemPrisma, PosterSize } from "@/app/types/types";
 import { notifySuccess } from "@/app/lib/toast";
 import { MdDelete } from "react-icons/md";

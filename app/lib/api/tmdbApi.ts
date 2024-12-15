@@ -1,97 +1,68 @@
 import { Genre, MediaCategory, MediaType, TimeWindow } from "../../types/types";
 
-export const fetchResultsByQuery = async (query: string, page?: number) => {
+const TMDB_BASE_URL = `${process.env.NEXT_PUBLIC_TMDB_URL}`;
+const OMDB_BASE_URL = `${process.env.NEXT_PUBLIC_OMDB_URL}`;
+const TMDB_API_KEY = `api_key=${process.env.TMDB_API_KEY}`;
+const OMDB_API_KEY = `apikey=${process.env.OMDB_API_KEY}`;
+
+const fetchFromTMDB = async (endpoint: string) => {
+  const url = `${TMDB_BASE_URL}${endpoint}${
+    endpoint.includes("?") ? "&" : "?"
+  }${TMDB_API_KEY}`;
   try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/search/multi?query=${query}&page=${
-        page || 1
-      }&language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    if (!resp.ok) {
-      throw new Error("Failed to fetch search results.");
-    }
+    const resp = await fetch(url);
 
     return resp.json();
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to fetch query results.");
+    throw new Error(`Failed to fetch data from ${endpoint}`);
   }
+};
+const fetchFromOMDB = async (endpoint: string) => {
+  const url = `${OMDB_BASE_URL}${endpoint}${
+    endpoint.includes("?") ? "&" : "?"
+  }${OMDB_API_KEY}`;
+  try {
+    const resp = await fetch(url);
+
+    return resp.json();
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch data from ${endpoint}`);
+  }
+};
+
+export const fetchResultsByQuery = async (query: string, page?: number) => {
+  return fetchFromTMDB(
+    `/3/search/multi?query=${query}&page=${page || 1}&language=pl`
+  );
 };
 export const fetchPersonById = async (id: number) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch person details.`);
-  }
+  return fetchFromTMDB(`/3/person/${id}?language=pl`);
 };
 export const fetchPersonCredits = async (id: number) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}/combined_credits?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch person credits.`);
-  }
+  return fetchFromTMDB(`/3/person/${id}/combined_credits?language=pl`);
 };
 export const fetchPersonImages = async (id: number) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/person/${id}/images?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch person credits.`);
-  }
+  return fetchFromTMDB(`/3/person/${id}/images?language=pl`);
 };
 export const fetchMediaList = async (
   mediaType: MediaType,
   category: MediaCategory,
   page?: number
 ) => {
-  try {
-    const resp = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_DB_URL
-      }/3/${mediaType}/${category}?language=pl&page=${page || 1}&api_key=${
-        process.env.TMDB_API_KEY
-      }`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${category} ${mediaType} list.`);
-  }
+  return fetchFromTMDB(
+    `/3/${mediaType}/${category}?language=pl&page=${page || 1}`
+  );
 };
 export const fetchTrendingList = async (
   mediaType: MediaType,
   timeWindow: TimeWindow,
   page?: number
 ) => {
-  try {
-    const resp = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_DB_URL
-      }/3/trending/${mediaType}/${timeWindow}?language=pl&page=${
-        page || 1
-      }&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch trending ${mediaType} list.`);
-  }
+  return fetchFromTMDB(
+    `/3/trending/${mediaType}/${timeWindow}?language=pl&page=${page || 1}`
+  );
 };
 
 export const fetchSearchListByFilters = async (
@@ -100,10 +71,8 @@ export const fetchSearchListByFilters = async (
   page?: number,
   sortBy?: string
 ) => {
-  try {
-    const url = `${
-      process.env.NEXT_PUBLIC_DB_URL
-    }/3/discover/${mediaType}?include_adult=true&${
+  return fetchFromTMDB(
+    `/3/discover/${mediaType}?include_adult=true&${
       mediaType === "tv" ? "include_null_first_air_dates=false&" : ""
     }include_video=false&language=pl&page=${page || 1}&sort_by=${
       sortBy ? sortBy : "popularity.desc"
@@ -137,233 +106,98 @@ export const fetchSearchListByFilters = async (
       query.has("productionCountry")
         ? `&with_original_language=${query.get("productionCountry")}`
         : ""
-    }&api_key=${process.env.TMDB_API_KEY}`;
-
-    console.log(url);
-
-    const resp = await fetch(url);
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie list by filters.`);
-  }
+    }`
+  );
 };
 
 export const fetchMovieListByGenre = async (
   genreId: string,
   page: number = 1
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=${page}&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie list by genre.`);
-  }
+  return fetchFromTMDB(
+    `/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
+  );
 };
 export const fetchSeriesListByGenre = async (
   genreId: string,
   page: number = 1
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie list by genre.`);
-  }
+  return fetchFromTMDB(
+    `/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
+  );
 };
 
 export const fetchMediaByID = async (mediaId: string, mediaType: MediaType) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType}.`);
-  }
+  return fetchFromTMDB(`/3/${mediaType}/${mediaId}?language=pl`);
 };
+
 export const fetchMovieByIDfromOMDB = async (imdbId: string) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_OMDB_URL}/?i=${imdbId}&apikey=${process.env.OMDB_API_key}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie details from OMDB.`);
-  }
+  return fetchFromOMDB(`/?i=${imdbId}`);
 };
+
 export const fetchSeriesByTitlefromOMDB = async (title: string) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_OMDB_URL}/?t=${title}&apikey=${process.env.OMDB_API_key}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie details from OMDB.`);
-  }
+  return fetchFromOMDB(`/?t=${title}`);
 };
+
 export const getSeasonDetails = async (
   seriesID: number,
   seasonNumber: number
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/tv/${seriesID}/season/${seasonNumber}?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch movie details from OMDB.`);
-  }
+  return fetchFromTMDB(`/3/tv/${seriesID}/season/${seasonNumber}?language=pl`);
 };
 
 export const fetchGenresList = async (): Promise<[Genre[], Genre[]]> => {
-  try {
-    const respMovies = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/genre/movie/list?api_key=${process.env.TMDB_API_KEY}&language=pl`
-    );
-    const respTv = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/genre/tv/list?api_key=${process.env.TMDB_API_KEY}&language=pl`
-    );
-    const genresMovies = await respMovies.json();
-    const genresTV = await respTv.json();
-
-    return [genresMovies.genres, genresTV.genres];
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch genres lists.`);
-  }
+  const genresMovies = await fetchFromTMDB(`/3/genre/movie/list?language=pl`);
+  const genresTV = await fetchFromTMDB(`/3/genre/tv/list?language=pl`);
+  return [genresMovies.genres, genresTV.genres];
 };
 
 export const fetchMediaCast = async (mediaId: string, mediaType: MediaType) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/credits?language=pl&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = response.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} cast.`);
-  }
+  return fetchFromTMDB(`/3/${mediaType}/${mediaId}/credits?language=pl`);
 };
 
 export const fetchRecommendationsList = async (
   mediaId: string,
   mediaType: MediaType
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/recommendations?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} cast.`);
-  }
+  return fetchFromTMDB(
+    `/3/${mediaType}/${mediaId}/recommendations?language=pl&page=1`
+  );
 };
+
 export const fetchUserRecommendationList = async (
   genres: Genre[],
   mediaType: MediaType
 ) => {
-  try {
-    const resp = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_DB_URL
-      }/3/discover/${mediaType}?language=pl&page=1&with_genres=${genres.join(
-        ","
-      )}&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} cast.`);
-  }
+  return fetchFromTMDB(
+    `/3/discover/${mediaType}?language=pl&page=1&with_genres=${genres.join(
+      ","
+    )}`
+  );
 };
+
 export const fetchSimilarList = async (
   mediaId: string,
   mediaType: MediaType
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/similar?language=pl&page=1&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} cast.`);
-  }
+  return fetchFromTMDB(`/3/${mediaType}/${mediaId}/similar?language=pl&page=1`);
 };
+
 export const fetchVideosList = async (
   mediaId: string,
   mediaType: MediaType
 ) => {
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/videos?language=en-US&api_key=${process.env.TMDB_API_KEY}`
-    );
-    const data = await resp.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} cast.`);
-  }
+  return fetchFromTMDB(`/3/${mediaType}/${mediaId}/videos?language=en-US`);
 };
 
 export const fetchImages = async (mediaId: string, mediaType: MediaType) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${mediaId}/images?include_image_language=en&api_key=${process.env.TMDB_API_KEY}`
-    );
-
-    return response.json();
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} images.`);
-  }
+  return fetchFromTMDB(
+    `/3/${mediaType}/${mediaId}/images?include_image_language=en`
+  );
 };
 
 export const fetchProviders = async (id: string, mediaType: MediaType) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DB_URL}/3/${mediaType}/${id}/watch/providers?api_key=${process.env.TMDB_API_KEY}`
-    );
-
-    if (response.ok) {
-      return response.json();
-    }
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Failed to fetch ${mediaType} providers.`);
-  }
+  return fetchFromTMDB(`/3/${mediaType}/${id}/watch/providers`);
 };
 
 export async function fetchMediaData(id: string, type: MediaType) {

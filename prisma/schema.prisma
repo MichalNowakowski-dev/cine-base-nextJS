@@ -86,7 +86,7 @@ model FavoriteMovie {
   userId  Int
   movieId Int
   movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  user    User  @relation(fields: [userId], references: [id])
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model FavoriteShow {
@@ -94,7 +94,7 @@ model FavoriteShow {
   userId Int
   showId Int
   show   Show @relation(fields: [showId], references: [id], onDelete: Cascade)
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ToWatchMovie {
@@ -102,7 +102,7 @@ model ToWatchMovie {
   userId  Int
   movieId Int
   movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  user    User  @relation(fields: [userId], references: [id])
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ToWatchShow {
@@ -110,7 +110,7 @@ model ToWatchShow {
   userId Int
   showId Int
   show   Show @relation(fields: [showId], references: [id], onDelete: Cascade)
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model MovieRating {
@@ -118,7 +118,7 @@ model MovieRating {
   userId   Int
   movieId  Int
   rating   Float
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
@@ -130,7 +130,7 @@ model ShowRating {
   userId   Int
   showId   Int
   rating   Float
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   show     Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 

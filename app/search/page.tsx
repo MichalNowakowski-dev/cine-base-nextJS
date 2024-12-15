@@ -29,15 +29,14 @@ export default async function SearchPage(props: {
       <div className="flex flex-col items-center justify-center gap-10">
         <div className="flex flex-col justify-between items-center gap-10 w-full max-w-screen-md">
           <div className="flex justify-center items-center gap-2">
-            <span>Wyszukaj po frazie</span>
+            <span>Wyszukaj po frazie lub filtrach</span>
             <SearchToggle />
-            <span>Wyszukaj po filtrach</span>
           </div>
         </div>
 
         {isFiltersOn ? <AdvancedSearch /> : <SearchBar />}
         {query && !isFiltersOn && (
-          <h1 className="text-xl font-bold">
+          <h1 id="scrollToElement" className="text-xl font-bold">
             Wyniki wyszukiwania dla: {`"${query}"`}
           </h1>
         )}

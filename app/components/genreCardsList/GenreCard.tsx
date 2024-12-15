@@ -20,7 +20,7 @@ export default function GenreCard({
   const { id, name, images } = genre;
 
   return (
-    <li className="bg-backgroundLight rounded-lg p-3 border border-transparent  hover:border-zinc-400 xs:w-max">
+    <div className="bg-backgroundLight rounded-lg p-3 border border-transparent  hover:border-zinc-400 xs:w-max">
       <Link href={`/genre?media=${mediaType}&name=${name}&id=${id}&page=1`}>
         <ul className="grid grid-cols-2 w-full gap-1 mb-2 relative">
           {images.map((path: string) => (
@@ -42,6 +42,6 @@ export default function GenreCard({
           <FaArrowRight size={20} />
         </div>
       </Link>
-    </li>
+    </div>
   );
 }
