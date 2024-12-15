@@ -10,11 +10,13 @@ const SetNewPasswordForm = () => {
 
   const [state, formAction, isPending] = useActionState(setUserPassword, null);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
   return (
     <form action={formAction} className="space-y-4 w-full max-w-[500px]">
       <div>
-        <label className="block text-sm">Obecne haslo*</label>
+        <label className="block text-sm">Nowe haslo*</label>
         <div className="relative">
           <input
             type={isPasswordVisible ? "text" : "password"} // Dynamiczny typ
@@ -43,7 +45,7 @@ const SetNewPasswordForm = () => {
         <label className="block text-sm">Powtórz hasło*</label>
         <div className="relative">
           <input
-            type={isPasswordVisible ? "text" : "password"} // Dynamiczny typ
+            type={isConfirmPasswordVisible ? "text" : "password"} // Dynamiczny typ
             name="confirmPassword"
             defaultValue={state?.fields?.confirmPassword as string}
             className="mt-1 p-2 pr-10 w-full bg-backgroundDashboardCard text-white rounded"
@@ -51,12 +53,12 @@ const SetNewPasswordForm = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              setIsPasswordVisible((prev) => !prev);
+              setIsConfirmPasswordVisible((prev) => !prev);
             }}
             type="button"
             className="absolute top-1/2 right-3 -translate-y-1/2"
           >
-            {isPasswordVisible ? (
+            {isConfirmPasswordVisible ? (
               <BsEyeSlashFill size={20} className="text-zinc-200" />
             ) : (
               <BsEyeFill size={20} />

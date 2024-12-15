@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { type Session } from "next-auth";
 
-export default function UserAccountNav() {
-  const { data: session } = useSession();
-
+export default function UserAccountNav({
+  session,
+}: {
+  session: Session | null;
+}) {
   return (
     <>
       {!session ? (
@@ -32,20 +34,20 @@ export default function UserAccountNav() {
       ) : (
         <Link
           href={"/dashboard"}
-          className={`flex items-center justify-center border-2 border-transparent p-1 lg:hover:border-white  rounded-full`}
+          className={`flex items-center justify-center border-2 border-transparent p-1 lg:hover:border-white w-16  rounded-full`}
           aria-label="Zarządzaj swoim kontem"
         >
           {
             <Image
-              className="rounded-full aspect-square"
+              className="rounded-full aspect-square object-cover"
               alt="user avatar"
               src={
                 session?.user?.image
                   ? (session.user.image as string)
                   : "/placeholders/no-profile-img.png"
               }
-              width={50}
-              height={50}
+              width={330}
+              height={406}
             />
           }
         </Link>

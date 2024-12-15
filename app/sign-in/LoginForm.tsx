@@ -1,12 +1,14 @@
 "use client";
 import Spinner from "../components/ui/spinner/Spinner";
 import { loginUser } from "../lib/actions/user/userActions";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import Message from "../components/ui/message/Message";
 import { FormStyles } from "../styles";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(loginUser, null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <form
@@ -33,15 +35,30 @@ export default function LoginForm() {
           <label htmlFor="password" className="block text-sm mb-1">
             Hasło
           </label>
-          <input
-            autoComplete="password"
-            type="password"
-            defaultValue={state?.fields?.password as string}
-            name="password"
-            id="password"
-            className={FormStyles.inputText}
-            placeholder="Wpisz swoje hasło"
-          />
+          <div className="relative">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              name="password"
+              defaultValue={state?.fields?.password as string}
+              className={FormStyles.inputText}
+              placeholder="Wpisz swoje hasło"
+              id="password"
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPasswordVisible((prev) => !prev);
+              }}
+              type="button"
+              className="absolute top-1/2 right-3 -translate-y-1/2"
+            >
+              {isPasswordVisible ? (
+                <BsEyeSlashFill size={20} className="text-zinc-200" />
+              ) : (
+                <BsEyeFill size={20} />
+              )}
+            </button>
+          </div>
         </div>
       </div>
       {state?.success && state?.message && (

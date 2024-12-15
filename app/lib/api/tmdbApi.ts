@@ -72,7 +72,7 @@ export const fetchSearchListByFilters = async (
   sortBy?: string
 ) => {
   return fetchFromTMDB(
-    `/3/discover/${mediaType}?include_adult=true&${
+    `/3/discover/${mediaType}?include_adult=false&${
       mediaType === "tv" ? "include_null_first_air_dates=false&" : ""
     }include_video=false&language=pl&page=${page || 1}&sort_by=${
       sortBy ? sortBy : "popularity.desc"
@@ -115,7 +115,7 @@ export const fetchMovieListByGenre = async (
   page: number = 1
 ) => {
   return fetchFromTMDB(
-    `/3/discover/movie?language=pl&include_adult=true&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
+    `/3/discover/movie?language=pl&include_adult=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
   );
 };
 export const fetchSeriesListByGenre = async (
@@ -123,7 +123,7 @@ export const fetchSeriesListByGenre = async (
   page: number = 1
 ) => {
   return fetchFromTMDB(
-    `/3/discover/tv?language=pl&include_adult=true&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
+    `/3/discover/tv?language=pl&include_adult=false&include_null_first_air_dates=false&sort_by=popularity.desc&with_genres=${genreId}&page=${page}`
   );
 };
 

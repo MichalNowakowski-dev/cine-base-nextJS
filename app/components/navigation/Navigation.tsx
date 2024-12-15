@@ -9,16 +9,16 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "./navigationData";
-
 import UserAccountNav from "./UserAccountNav";
 import { navigationStyles } from "@/app/styles";
+import { useSession } from "next-auth/react";
 
 export default function Navigation() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileNavDisplayed, setIsMobileNavDisplayed] = useState(true);
   const lastScrollY = useRef(0);
-
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   function toggleNav() {
     setIsMobileNavOpen((prev) => !prev);
@@ -70,6 +70,7 @@ export default function Navigation() {
 
         <ul className={navigationStyles.desktopNav}>
           {navLinks.map(({ label, href }) => {
+            if (label === "Panel" && !session) return;
             return (
               <li
                 key={label}
@@ -146,7 +147,7 @@ export default function Navigation() {
             <GoSearch size={30} fill="gray" />
           </Link>
 
-          <UserAccountNav />
+          <UserAccountNav session={session} />
 
           <button onClick={toggleNav} className={navigationStyles.mobileButton}>
             {isMobileNavOpen ? (

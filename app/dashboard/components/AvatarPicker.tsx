@@ -22,10 +22,10 @@ const AvatarPicker = () => {
         setIsChanging(true);
         await saveAvatar(selectedAvatar);
         await update({ user: { image: selectedAvatar } });
-        notifySuccess("Avatar zmieniony pomyślnie !");
+        notifySuccess("Avatar zmieniony pomyślnie");
       } catch (error) {
         console.error(error);
-        notifyError("Nie udało się zmienić avataru !");
+        notifyError("Nie udało się zmienić avataru");
       } finally {
         setSelectedAvatar(null);
         setIsChanging(false);
@@ -38,14 +38,14 @@ const AvatarPicker = () => {
   };
 
   return (
-    <div className="flex items-center justify-between ">
+    <div className="flex flex-col md:flex-row items-center gap-4 justify-center md:justify-between ">
       <div>
         <h2 className="text-xl font-semibold text-gray-700 mb-3">
           Dostępne avatary
         </h2>
 
         {/* Sekcja wyświetlania dostępnych awatarów */}
-        <div className="grid grid-cols-5 gap-4">
+        <div className="flex flex-wrap xs:grid grid-cols-5 gap-4">
           {Array.from({ length: 10 }).map((avatar, index) => (
             <button
               key={index}

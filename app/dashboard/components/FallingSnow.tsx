@@ -16,7 +16,7 @@ const generateStars = (count: number) => {
   return stars;
 };
 
-export default function FallingStars({ count = 30 }: { count?: number }) {
+export default function FallingSnow({ count = 30 }: { count?: number }) {
   const [stars, setStars] = useState<
     { id: number; left: string; delay: string; duration: string }[]
   >([]);

@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { sendSupportMessage } from "../lib/actions/support/supportActions";
+import Message from "../components/ui/message/Message";
 
 export default function SupportForm() {
   const [state, formAction, isPending] = useActionState(
@@ -145,10 +146,8 @@ export default function SupportForm() {
         </div>
       </div>
 
-      {state?.success ? (
-        <p className={`text-green-500 mt-4 `}>{state.message}</p>
-      ) : (
-        <p className={`text-red-500 mt-4 `}>{state?.message}</p>
+      {state?.success && (
+        <Message success={state?.success}>{state.message}</Message>
       )}
     </form>
   );

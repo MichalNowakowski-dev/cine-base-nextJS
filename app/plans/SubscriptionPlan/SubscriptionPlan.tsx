@@ -19,7 +19,7 @@ export default function SubscriptionPlan({
 
   return (
     <div className="flex flex-wrap gap-8 justify-between items-center mb-8">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-5">
         <header>
           <h2 className="mb-3 text-h2 ">Wybierz odpowiedni plan</h2>
           <p className="text-sm text-secondary">
@@ -28,10 +28,10 @@ export default function SubscriptionPlan({
             się na nieprzerwaną rozrywkę!
           </p>
         </header>
-        <div className="flex p-2 bg-backgroundFooter rounded-lg">
+        <div className="flex  p-2 bg-backgroundFooter rounded-lg">
           <button
             onClick={() => setPriceCycle("month")}
-            className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
+            className={`px-4 py-2 bg-backgroundLight basis-1/2 rounded-md transition-all duration-300 ${
               priceCycle === "month" ? "bg-background " : " bg-transparent"
             }`}
           >
@@ -39,7 +39,7 @@ export default function SubscriptionPlan({
           </button>
           <button
             onClick={() => setPriceCycle("year")}
-            className={`px-4 py-2 bg-backgroundLight rounded-md transition-all duration-300 ${
+            className={`px-4 py-2 bg-backgroundLight basis-1/2 rounded-md transition-all duration-300 ${
               priceCycle === "year" ? "bg-background " : " bg-transparent"
             }`}
           >
@@ -48,7 +48,7 @@ export default function SubscriptionPlan({
         </div>
       </div>
 
-      <ul className="flex flex-col gap-5 md:flex-row">
+      <ul className="flex flex-col gap-5  max-w-full md:flex-row md:justify-between overflow-hidden">
         {renderPlanOptions(plansData)}
       </ul>
     </div>

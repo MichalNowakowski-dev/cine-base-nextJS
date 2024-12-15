@@ -17,7 +17,7 @@ export default function SubscriptionPlanCard({
     "text-center content-center hover:scale-105 transition-all duration-150  px-6 py-4 border-[#262626] border rounded-md";
 
   return (
-    <li className="p-4 bg-backgroundLight border  border-[#262626] rounded-md basis-1/3">
+    <li className="p-4 bg-backgroundLight border border-[#262626] rounded-md basis-1/3 md:basis-[30%]">
       <header className="flex flex-wrap gap-4 mb-5">
         <h3 className="text-h3">{plan.name}</h3>
         <p>{plan.description}</p>

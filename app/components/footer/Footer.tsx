@@ -44,9 +44,9 @@ const Footer = ({ background }: { background?: string }) => {
         background ? background : ""
       }`}
     >
-      <ul className="flex justify-between w-[clamp(15rem,80%,500px)] mb-4">
+      <ul className="flex justify-between w-full max-w-screen-xl mb-4 px-4 flex-wrap">
         {footerLinks.map((link) => (
-          <li key={link.name}>
+          <li key={link.name} className="p-4">
             <Link
               href={link.url}
               className="flex items-center justify-center text-white font-semibold font-secondary text-sm hover:text-blue-400"

@@ -37,9 +37,11 @@ const Accordion = ({ number, title, children, className }: AccordionProps) => {
         onClick={toggleAccordion}
       >
         <div className="flex items-center">
-          <span className="bg-backgroundLight rounded-lg w-12 h-12 flex items-center justify-center mr-3">
-            {number}
-          </span>
+          {number && (
+            <span className="bg-backgroundLight rounded-lg w-12 h-12 flex items-center justify-center mr-3">
+              {number}
+            </span>
+          )}
 
           <h3 className="font-normal text-lg">{title}</h3>
         </div>

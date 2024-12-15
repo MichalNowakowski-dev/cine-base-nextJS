@@ -29,7 +29,7 @@ const Profile = async () => {
   }
 
   return (
-    <div>
+    <div className="mb-10">
       <UpdateSession />
       <h2 className="text-2xl font-semibold mb-4">Konto</h2>
       <section className="mb-10">

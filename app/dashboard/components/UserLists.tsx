@@ -1,4 +1,5 @@
 import { prisma } from "@/app/prisma";
+import { FormStyles } from "@/app/styles";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -39,28 +40,27 @@ export default async function UserLists({ session }: { session: Session }) {
     userInfo;
 
   return (
-    <div className="bg-backgroundDashboardCard  p-6 rounded-lg shadow-md">
+    <div className="bg-backgroundDashboardCard text-gray-300 p-6 rounded-lg flex flex-col gap-5 shadow-md">
       <h2 className="text-xl font-semibold text-white">Twoje listy</h2>
-      <p className="text-gray-300 mt-2">
-        Ulubione filmy:{" "}
-        <span className="font-bold">{favoriteMovies.length}</span>
-      </p>
-      <p className="text-gray-300 mt-2">
-        Ulubione seriale:{" "}
-        <span className="font-bold">{favoriteShows.length}</span>
-      </p>
-      <p className="text-gray-300 mt-2">
-        Filmy do obejrzenia:{" "}
-        <span className="font-bold">{toWatchMovies.length}</span>
-      </p>
-      <p className="text-gray-300 mt-2">
-        Seriale do obejrzenia:{" "}
-        <span className="font-bold">{toWatchShows.length}</span>
-      </p>
-      <Link
-        href={"/dashboard/lists"}
-        className=" block w-max mt-4 p-2 bg-purple-600 text-white rounded"
-      >
+      <div>
+        <p>
+          Ulubione filmy:{" "}
+          <span className="font-bold">{favoriteMovies.length}</span>
+        </p>
+        <p>
+          Ulubione seriale:{" "}
+          <span className="font-bold">{favoriteShows.length}</span>
+        </p>
+        <p>
+          Filmy do obejrzenia:{" "}
+          <span className="font-bold">{toWatchMovies.length}</span>
+        </p>
+        <p>
+          Seriale do obejrzenia:{" "}
+          <span className="font-bold">{toWatchShows.length}</span>
+        </p>
+      </div>
+      <Link href={"/dashboard/lists"} className={FormStyles.submitButton}>
         Pokaż listy
       </Link>
     </div>

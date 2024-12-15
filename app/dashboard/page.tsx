@@ -11,7 +11,7 @@ const DashboardPage = async () => {
   if (!session?.user) return redirect("/sign-in");
 
   return (
-    <div>
+    <div className="mb-10">
       <UpdateSession />
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
         <Welcome
