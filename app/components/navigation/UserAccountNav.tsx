@@ -42,7 +42,7 @@ export default function UserAccountNav() {
               src={
                 session?.user?.image
                   ? (session.user.image as string)
-                  : "/no-profile-img.png"
+                  : "/placeholders/no-profile-img.png"
               }
               width={50}
               height={50}

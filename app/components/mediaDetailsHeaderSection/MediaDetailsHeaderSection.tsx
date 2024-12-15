@@ -41,7 +41,7 @@ export default async function MediaDetailsHeaderSection({
         <Image
           className="absolute aspect-video top-0 left-0 rounded-md -z-10 h-full"
           alt="movie image"
-          src={"/backgroundPlaceholder.webp"}
+          src={"/backgrounds/backgroundPlaceholder.webp"}
           priority
           width={1280}
           height={720}

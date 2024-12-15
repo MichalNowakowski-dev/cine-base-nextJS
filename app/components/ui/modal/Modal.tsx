@@ -15,11 +15,11 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
   return (
     <div
       onClick={onClose}
-      className={`absolute inset-0 bg-black/60 flex justify-center items-center z-50 `}
+      className={`fixed top-0 left-0 bg-black/60 flex justify-center items-center w-screen h-screen z-50 `}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-backgroundFooter p-6 rounded-lg relative w-full max-w-5xl ${className}`}
+        className={`bg-black p-6 rounded-lg relative w-full max-w-5xl ${className}`}
       >
         <button
           onClick={onClose}

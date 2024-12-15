@@ -1,5 +1,4 @@
 import Image from "next/image";
-import HeaderImgDesktop from "@/public/HeroImageCineBase.png";
 import DeviceCardsList from "./components/deviceList/DeviceCardsList";
 import FaqList from "./components/faqList/FaqList";
 import FreeTrialCta from "./components/ui/freeTrialCta/FreeTrialCta";
@@ -11,13 +10,17 @@ import CookieConsent from "./components/cookiesPopup/cookiesPopup";
 
 export default async function Home() {
   const plans = await prisma.plan.findMany();
+
   return (
     <>
       <header className="h-[70vh] w-full relative flex flex-col items-center justify-center mb-5 after:content-[''] after:absolute after:inset-0 after:bg-fade-to-dark">
         <Image
           className=" object-cover w-full h-full absolute top-0 left-0 -z-10"
-          src={HeaderImgDesktop}
+          src={"/backgrounds/HeroImageCineBase.png"}
           alt="Hero image"
+          width={1920}
+          height={1080}
+          sizes="100vw"
           priority
         />
         <section className="flex items-center h-full ">

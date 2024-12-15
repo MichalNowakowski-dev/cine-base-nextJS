@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import NoPosterImg from "@/public/no-poster-img.webp";
-import NoProfileImg from "@/public/no-profile-img.png";
+import NoPosterImg from "@/public/placeholders/no-poster-img.webp";
+import NoProfileImg from "@/public/placeholders/no-profile-img.png";
 import { PosterSize, SearchItem } from "../types/types";
 
 const SearchResult = ({

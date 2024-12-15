@@ -10,7 +10,7 @@ import {
 
 import Link from "next/link";
 import Image from "next/image";
-import bg from "@/public/summaryBg-lg.jpg";
+
 import PageContainer from "@/app/components/ui/pageContainer/PageContainer";
 import { prisma } from "@/app/prisma";
 import { auth } from "@/app/auth";
@@ -26,7 +26,6 @@ export default async function SubscriptionSummary({
   const session = await auth();
 
   if (!session) {
-    // Przekierowanie do strony logowania z zachowaniem aktualnej ścieżki
     redirect(`/sign-in`);
   }
 
@@ -113,7 +112,9 @@ export default async function SubscriptionSummary({
       <Image
         className="absolute top-0 left-0 w-full h-full object-cover -z-10 "
         alt="Background image cinema"
-        src={bg}
+        src={"/backgrounds/summaryBg.jpg"}
+        width={1920}
+        height={1080}
         quality={100}
       />
 
@@ -121,7 +122,7 @@ export default async function SubscriptionSummary({
         <div className="border border-borderPrimary p-6 rounded-lg shadow-md bg-black/80">
           {/* Informacje o planie */}
           <h2 className="text-2xl font-semibold mb-4 text-center">
-            {`Typ planu: ${selectedPlan.name} ${trial && "- okres próbny"}`}
+            {`Typ planu: ${selectedPlan.name} ${trial ? "- okres próbny" : ""}`}
           </h2>
 
           <div className="mb-4 flex justify-between items-center">

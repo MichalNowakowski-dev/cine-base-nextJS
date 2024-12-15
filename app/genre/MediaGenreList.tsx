@@ -20,7 +20,7 @@ interface GenresListProps {
 
 const MediaGenreList = ({ mediaList, mediaType }: GenresListProps) => {
   return (
-    <ul className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {mediaList.map((mediaItem) => (
         <li
           key={uuid()}
@@ -40,6 +40,7 @@ const MediaGenreList = ({ mediaList, mediaType }: GenresListProps) => {
                 width={500}
                 height={750}
                 quality={100}
+                priority
                 alt={mediaItem.title || mediaItem.name || "Media Poster"}
                 className="rounded-md mb-2 aspect-[2/3]"
               />

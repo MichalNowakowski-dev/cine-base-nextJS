@@ -70,7 +70,7 @@ const SwiperPeople = ({
                   src={
                     person.profile_path
                       ? `${process.env.NEXT_PUBLIC_IMAGES_URL}${ProfileSize.MEDIUM}${person.profile_path}`
-                      : "/no-profile-img.png"
+                      : "/placeholders/no-profile-img.png"
                   }
                 />
                 <div className="absolute rounded-full inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

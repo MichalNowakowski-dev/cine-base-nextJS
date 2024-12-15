@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { getPersonImagePathFromList } from "@/app/lib/utils";
 import { MediaPerson, ProfileSize } from "@/app/types/types";
-import NoProfilePicture from "@/public/no-profile-img.png";
+import NoProfilePicture from "@/public/placeholders/no-profile-img.png";
 
 export default function ContributorList({
   persons,

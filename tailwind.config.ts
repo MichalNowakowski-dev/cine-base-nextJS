@@ -34,9 +34,9 @@ const config: Config = {
           "linear-gradient(180deg, rgba(0,0,0,1) 30%, rgba(255,255,255,0) 100%)",
         "fadeout-bottom":
           "linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, #1A1A1A 100%)",
-        notFoundBg: "url('/notFoundBg.png')",
-        mediaPlayBg: "url('/mediaPlayBg.jpg')",
-        signupBg: "url('/signUpBackground.jpg')",
+
+        mediaPlayBg: "url('/backgrounds/mediaPlayBg.png')",
+        signupBg: "url('/backgrounds/signUpBackground.jpg')",
       },
       colors: {
         background: "var(--background)",
