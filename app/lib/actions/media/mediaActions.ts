@@ -35,6 +35,7 @@ export async function ensureMediaExists(
         },
       });
       console.log("Swtorzony obiekt filmu");
+      return true;
     } else {
       // Utwórz rekord serialu
       await prisma.show.create({
@@ -47,6 +48,7 @@ export async function ensureMediaExists(
         },
       });
       console.log("Swtorzony obiekt serialu");
+      return true;
     }
   }
 }

@@ -138,7 +138,7 @@ model ShowRating {
 }
 
 model Movie {
-  id          Int             @id
+  id          Int             @id @default(autoincrement())
   title       String
   overview    String
   releaseDate DateTime

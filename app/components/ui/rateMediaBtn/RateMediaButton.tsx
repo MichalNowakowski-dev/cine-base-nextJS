@@ -51,26 +51,24 @@ const RateMediaButton = ({
   }, [showRatingOptions]);
 
   const handleRatingChange = async (newRating: number) => {
-    console.log(newRating);
-
     await setNewRating(mediaType, mediaData, userId, newRating);
     setRated(true);
     setShowRatingOptions(false);
     notifySuccess("Pomyślnie dodano ocenę");
   };
 
-  // const handleRatingDelete = async () => {
-  //   try {
-  //     await removeItemFromUserList(mediaData.id, userId, mediaType, "ratings");
-  //     setRated(false);
-  //     notifySuccess("Ocena usunięta pomyślnie");
-  //   } catch (error) {
-  //     console.error(error);
-  //     notifyError("Błąd podczas usuwania oceny");
-  //   } finally {
-  //     setShowRatingOptions(false);
-  //   }
-  // };
+  const handleRatingDelete = async () => {
+    try {
+      await removeItemFromUserList(mediaData.id, userId, mediaType, "ratings");
+      setRated(false);
+      notifySuccess("Ocena usunięta pomyślnie");
+    } catch (error) {
+      console.error(error);
+      notifyError("Błąd podczas usuwania oceny");
+    } finally {
+      setShowRatingOptions(false);
+    }
+  };
 
   return (
     <div className="inline-block">
@@ -90,6 +88,7 @@ const RateMediaButton = ({
         <RatingModal
           isOpen={showRatingOptions}
           currentRating={rating || 0}
+          onDelete={handleRatingDelete}
           onClose={() => setShowRatingOptions(false)}
           onRatingSubmit={handleRatingChange}
         />

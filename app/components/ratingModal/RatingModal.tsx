@@ -5,12 +5,14 @@ import Modal from "../ui/modal/Modal";
 interface RatingModalProps {
   isOpen: boolean;
   currentRating: number;
+  onDelete: () => Promise<void>;
   onClose: () => void;
   onRatingSubmit: (rating: number) => Promise<void>;
 }
 
 const RatingModal = ({
   isOpen,
+  onDelete,
   onClose,
   onRatingSubmit,
   currentRating,
@@ -74,18 +76,25 @@ const RatingModal = ({
             ? `Oceniłeś na ${rating} ${rating === 1 ? "gwiazdkę" : "gwiazdek"}`
             : "Kliknij na gwiazdy, aby ocenić"}
         </p>
-        <div className="mt-6 flex gap-4">
+        <div className="mt-6 flex items-center gap-4">
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition-all"
+            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-all"
           >
             Anuluj
           </button>
           <button
             onClick={handleSubmit}
-            className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition-all"
+            className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all"
           >
             Zatwierdź
+          </button>
+          <p>Lub</p>
+          <button
+            onClick={onDelete}
+            className="px-6 py-2 bg-primary text-white rounded-md hover:bg-red-900 transition-all"
+          >
+            Usuń
           </button>
         </div>
       </div>

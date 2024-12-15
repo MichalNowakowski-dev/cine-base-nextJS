@@ -125,7 +125,7 @@ export default async function Page({
           {mediaRecommendationsList.results.length > 0 && (
             <section className=" basis-1/3">
               <SwiperList
-                mediaType="movie"
+                mediaType="tv"
                 mediaList={mediaRecommendationsList.results}
                 listLabel="Rekomendacje"
                 swiperId={uuid()}

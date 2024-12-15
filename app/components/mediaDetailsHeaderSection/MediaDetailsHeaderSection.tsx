@@ -62,21 +62,21 @@ export default async function MediaDetailsHeaderSection({
           <RateMediaButton
             isRated={Boolean(ratingStatus)}
             mediaData={mediaDetails}
-            mediaType="tv"
+            mediaType={mediaType}
             rating={ratingStatus as number}
             userId={Number(session?.user.id)}
           />
           <AddToWatchlistButton
             isInWatchlist={watchlistStatus}
             mediaData={mediaDetails}
-            mediaType="tv"
+            mediaType={mediaType}
             userId={Number(session?.user.id)}
           />
           <FavoriteButton
             isFavorite={favoriteStatus}
             userId={Number(session?.user.id)}
             mediaData={mediaDetails}
-            mediaType="tv"
+            mediaType={mediaType}
           />
         </div>
       </div>
