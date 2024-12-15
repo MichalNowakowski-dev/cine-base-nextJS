@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../footer/Footer";
 
 export default function PageContainer({
   children,
@@ -8,12 +9,15 @@ export default function PageContainer({
   className?: string;
 }) {
   return (
-    <main
-      className={`min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl ${
-        className && className
-      }`}
-    >
-      {children}
-    </main>
+    <>
+      <main
+        className={`min-h-screen mx-auto pt-24 md:pt-28 px-4 max-w-screen-xl ${
+          className && className
+        }`}
+      >
+        {children}
+      </main>
+      <Footer />
+    </>
   );
 }

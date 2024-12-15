@@ -3,7 +3,6 @@ import { SessionProvider } from "next-auth/react";
 import { Roboto, Montserrat, Oswald } from "next/font/google";
 import Navigation from "./components/navigation/Navigation";
 import "./globals.css";
-import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -46,7 +45,6 @@ export default async function RootLayout({
           <Navigation />
           <ToastContainer theme="dark" autoClose={3000} />
           {children}
-          <Footer />
         </SessionProvider>
       </body>
     </html>

@@ -7,6 +7,8 @@ import CtaLink from "./components/ui/ctaLink/CtaLink";
 import { prisma } from "./prisma";
 import GenreCardsContainer from "./components/genreCardsList/GenreCardsContainer";
 import CookieConsent from "./components/cookiesPopup/cookiesPopup";
+import { homeStyles } from "./styles";
+import Footer from "./components/footer/Footer";
 
 export default async function Home() {
   const plans = await prisma.plan.findMany();
@@ -25,16 +27,8 @@ export default async function Home() {
         />
         <section className="flex items-center h-full ">
           <div className="text-center z-10 flex flex-col justify-center items-center gap-4">
-            <h1
-              className="text-5xl uppercase tracking-wider text-center 
-           [text-shadow:0_0_10px_rgba(102,204,255,0.8),0_0_20px_rgba(102,204,255,0.6),0_0_30px_rgba(102,204,255,0.4)]"
-            >
-              CineBase
-            </h1>
-            <p
-              className="text-lg bg-gradient-to-r from-blue-300 via-pink-300 to-purple-400 
-           text-transparent bg-clip-text w-2/3  mb-5"
-            >
+            <h1 className={homeStyles.headingHome}>CineBase</h1>
+            <p className={homeStyles.headingSupport}>
               CineBase to najlepsze doświadczenie streamingowe do oglądania
               ulubionych filmów i programów na żądanie, w dowolnym czasie i
               miejscu
@@ -102,6 +96,7 @@ export default async function Home() {
         </section>
         <CookieConsent />
       </main>
+      <Footer />
     </>
   );
 }

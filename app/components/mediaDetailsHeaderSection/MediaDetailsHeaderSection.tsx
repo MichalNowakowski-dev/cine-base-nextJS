@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { styles } from "@/app/styles";
+import { homeStyles } from "@/app/styles";
 import { BackdropSize, MediaItem } from "@/app/types/types";
 import CtaLink from "../ui/ctaLink/CtaLink";
 import RateMediaButton from "../ui/rateMediaBtn/RateMediaButton";
@@ -26,7 +26,7 @@ export default async function MediaDetailsHeaderSection({
 
   const isMovie = mediaType === "movie";
   return (
-    <header className={styles.headerSection}>
+    <header className={homeStyles.headerSection}>
       {mediaDetails.backdrop_path ? (
         <Image
           className="absolute object-cover top-0 left-0 rounded-md -z-10 h-full"

@@ -33,7 +33,7 @@ export default function Providers({
         >
           <button
             type="submit"
-            className="w-full flex items-center justify-center py-2 bg-black/70 md:bg-gray-700 hover:bg-gray-600 border border-secondary text-white rounded-full shadow-md transition duration-300"
+            className="w-full flex items-center justify-center py-2 bg-black/70 hover:bg-white/10 border border-secondary text-white rounded-full shadow-md transition duration-300"
           >
             <Image
               src={`/icons/${provider.id}.svg`}

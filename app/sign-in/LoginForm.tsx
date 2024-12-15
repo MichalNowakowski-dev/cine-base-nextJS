@@ -11,11 +11,7 @@ export default function LoginForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
-    <form
-      noValidate
-      className="space-y-4 md:space-y-8 w-full"
-      action={formAction}
-    >
+    <form noValidate className="space-y-8 w-full " action={formAction}>
       <div className="space-y-4">
         <div className="space-y-2">
           <label htmlFor="email" className="block text-sm mb-1">

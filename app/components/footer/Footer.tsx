@@ -40,7 +40,7 @@ const footerSocials = [
 const Footer = ({ background }: { background?: string }) => {
   return (
     <footer
-      className={`flex flex-col items-center justify-between w-full min-h-[25vh] py-8 ${
+      className={`flex flex-col items-center justify-between w-screen min-h-[25vh] py-8 ${
         background ? background : ""
       }`}
     >
@@ -78,7 +78,7 @@ const Footer = ({ background }: { background?: string }) => {
           </li>
         ))}
       </ul>
-      <p className="text-sm text-center py-4 border-t border-gray-600 w-full max-w-screen-xl">
+      <p className="text-sm text-center py-4 border-t border-gray-600 w-full">
         &copy;2024 CineBase, All Rights Reserved
       </p>
     </footer>

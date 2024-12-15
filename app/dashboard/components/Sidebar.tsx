@@ -11,7 +11,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen  text-gray-200 rounded-lg relative z-10 max-w-screen-xl mx-auto">
+    <div className="flex flex-col md:justify-center md:flex-row  text-gray-200 rounded-lg relative z-10 max-w-screen-xl mx-auto">
       <aside className="w-full md:w-1/4 p-6 md:min-h-screen">
         <h2 className="hidden md:block text-xl font-semibold mb-6 text-center md:text-left">
           Panel użytkownika
