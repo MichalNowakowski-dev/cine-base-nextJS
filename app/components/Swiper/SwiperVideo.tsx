@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { Navigation, Pagination } from "swiper/modules";
+import { FreeMode, Navigation, Pagination } from "swiper/modules";
 import { useRef, useState } from "react";
 import VideoModal from "../videoModal/videoModal";
 import "swiper/css";
@@ -46,16 +46,16 @@ const SwiperVideo = ({
           nextEl: `#next-${swiperId}`,
           prevEl: `#prev-${swiperId}`,
         }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, FreeMode]}
         pagination={{
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
+        freeMode={true}
         spaceBetween={20}
         className="my-swiper"
         breakpoints={{
-          320: { slidesPerView: 1, slidesPerGroup: 1 },
-          480: { slidesPerView: 2, slidesPerGroup: 2 },
+          320: { slidesPerView: 1.5, slidesPerGroup: 1.5 },
           640: { slidesPerView: 3, slidesPerGroup: 3 },
           768: { slidesPerView: 4, slidesPerGroup: 4 },
           1080: { slidesPerView: 4, slidesPerGroup: 4 },

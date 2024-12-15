@@ -1,11 +1,13 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination, FreeMode } from "swiper/modules";
 import { GenreWithImages, MediaType } from "../../types/types";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/free-mode";
+import "swiper/css/scrollbar";
 import "./swiper.css";
 import { useRef } from "react";
 import SwiperNavigationButtons from "./SwiperNavigationButtons";
@@ -36,7 +38,8 @@ const SwiperGenres = ({
           nextEl: `#next-${swiperId}`,
           prevEl: `#prev-${swiperId}`,
         }}
-        modules={[Navigation, Pagination]}
+        freeMode={true}
+        modules={[Navigation, Pagination, Autoplay, FreeMode]}
         pagination={{
           el: `#pagination-${swiperId}`,
           clickable: true,
@@ -44,10 +47,9 @@ const SwiperGenres = ({
         spaceBetween={30}
         className="my-swiper"
         breakpoints={{
-          320: { slidesPerView: 1, slidesPerGroup: 1 },
-          350: { slidesPerView: 2, slidesPerGroup: 2 },
+          320: { slidesPerView: 1.5, slidesPerGroup: 1.5 },
           768: { slidesPerView: 3, slidesPerGroup: 3 },
-          1080: { slidesPerView: 4, slidesPerGroup: 4 },
+          1024: { slidesPerView: 4, slidesPerGroup: 4 },
           1200: { slidesPerView: 5, slidesPerGroup: 5 },
         }}
       >

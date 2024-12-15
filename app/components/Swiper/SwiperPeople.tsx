@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { FreeMode, Navigation, Pagination } from "swiper/modules";
 import { MediaPerson, ProfileSize } from "../../types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,15 +42,16 @@ const SwiperPeople = ({
           nextEl: `#next-${swiperId}`,
           prevEl: `#prev-${swiperId}`,
         }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, FreeMode]}
         pagination={{
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
+        freeMode={true}
         className="my-swiper"
         spaceBetween={20}
         breakpoints={{
-          320: { slidesPerView: 2, slidesPerGroup: 2 },
+          320: { slidesPerView: 2.5, slidesPerGroup: 2.5 },
           480: { slidesPerView: 3, slidesPerGroup: 3 },
           640: { slidesPerView: 4, slidesPerGroup: 4 },
           768: { slidesPerView: 5, slidesPerGroup: 5 },

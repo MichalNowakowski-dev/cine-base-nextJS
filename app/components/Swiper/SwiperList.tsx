@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import { Navigation, Pagination } from "swiper/modules";
+import { FreeMode, Navigation, Pagination } from "swiper/modules";
 import { MediaType, PosterSize, type MediaItem } from "../../types/types";
 import Link from "next/link";
 import "swiper/css";
@@ -43,15 +43,16 @@ const SwiperList = ({
           nextEl: `#next-${swiperId}`,
           prevEl: `#prev-${swiperId}`,
         }}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, FreeMode]}
         pagination={{
           el: `#pagination-${swiperId}`,
           clickable: true,
         }}
+        freeMode={true}
         spaceBetween={18}
         className="my-swiper"
         breakpoints={{
-          320: { slidesPerView: 2, slidesPerGroup: 2 },
+          320: { slidesPerView: 2.5, slidesPerGroup: 2.5 },
           480: { slidesPerView: 3, slidesPerGroup: 3 },
           640: { slidesPerView: 3, slidesPerGroup: 3 },
           768: { slidesPerView: 4, slidesPerGroup: 4 },
