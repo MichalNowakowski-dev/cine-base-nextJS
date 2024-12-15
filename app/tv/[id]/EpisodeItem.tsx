@@ -14,7 +14,7 @@ type EpisodeItemProps = {
 export default function EpisodeItem({ episode }: EpisodeItemProps) {
   return (
     <li
-      className="bg-background p-6 flex flex-col lg:flex-row gap-4 rounded-lg w-full lg:rounded-none border-secondary lg:border-t lg:bg-transparent"
+      className="bg-background p-6 flex flex-col lg:flex-row gap-4 rounded-lg w-full lg:rounded-none border-secondary lg:border-b lg:bg-transparent"
       key={episode.id}
     >
       <div className="flex items-center justify-between gap-1 lg:gap-3 lg:flex-row-reverse lg:basis-1/2">
