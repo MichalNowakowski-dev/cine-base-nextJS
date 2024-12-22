@@ -56,6 +56,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
     maxAge: 3600,
   },
+  trustHost: true,
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       // Dodajemy `id` użytkownika do tokena JWT, jeśli istnieje
