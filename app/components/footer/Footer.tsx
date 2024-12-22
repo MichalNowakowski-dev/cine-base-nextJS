@@ -40,7 +40,7 @@ const footerSocials = [
 const Footer = ({ background }: { background?: string }) => {
   return (
     <footer
-      className={`flex flex-col items-center justify-between w-screen min-h-[25vh] py-8 ${
+      className={`flex flex-col items-center justify-between w-full min-h-[25vh] py-8 ${
         background ? background : ""
       }`}
     >
