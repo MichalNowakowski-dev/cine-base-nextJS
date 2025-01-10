@@ -38,6 +38,8 @@ export default function SeasonItem({
     }
   }, [isOpen]);
 
+  if (!seasonData) return null;
+
   const { id, name } = seasonData;
 
   return (
