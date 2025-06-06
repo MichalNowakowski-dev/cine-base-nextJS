@@ -84,17 +84,6 @@ export type DeviceCardType = {
   desc: string;
 };
 
-export type SeasonItemType = {
-  id: number;
-  air_date: string;
-  episode_count: number;
-  name: string;
-  overview: string;
-  poster_path: string;
-  season_number: number;
-  vote_average: number;
-};
-
 export type SubscriptionPlan = {
   id: number;
   popular: boolean;
@@ -116,8 +105,6 @@ export type SubscriptionPlan = {
   offlineView: boolean;
   familySharing: boolean;
 };
-
-export type SubscriptionPlanData = Record<string, SubscriptionPlan>;
 
 export type Genre = {
   id: number;

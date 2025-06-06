@@ -4,6 +4,7 @@ import { Roboto, Montserrat, Oswald } from "next/font/google";
 import Navigation from "./components/navigation/Navigation";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "react-toastify/dist/ReactToastify.css";
 
 const roboto = Roboto({
@@ -45,6 +46,7 @@ export default async function RootLayout({
           <Navigation />
           <ToastContainer theme="dark" autoClose={3000} />
           {children}
+          <SpeedInsights />
         </SessionProvider>
       </body>
     </html>
