@@ -141,8 +141,7 @@ export default function Navigation() {
           <Link
             aria-label="Wyszukaj"
             href={"/search?type=query"}
-            className="p-2 flex gap-2 items-center bg-transparent  
-             rounded-full hover:bg-white "
+            className="p-2 flex gap-2 items-center bg-transparent rounded-full hover:bg-white "
           >
             <GoSearch size={30} fill="gray" />
           </Link>

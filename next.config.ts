@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    reactCompiler: true,
+  },
   images: {
     minimumCacheTTL: 2678400, // 31 days
     remotePatterns: [
