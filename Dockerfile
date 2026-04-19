@@ -27,7 +27,7 @@ ENV NEXT_PUBLIC_FONTS_PRELOAD=false
 
 ENV TMDB_API_KEY=build_asdsadadade1341a426bf818cba0a18dd77
 ENV OMDB_API_KEY=build_asdsadadad5
-ENV POSTGRES_URL=postgresql://cinebase_user:polokpolok0@localhost:5432/cinebase_db
+ENV POSTGRES_URL=postgresql://cinebase_user:polokpolok0@kontener_db:5432/cinebase_db
 ENV NEXTAUTH_SECRET=zMdxjwd+build_asdsadadadQ3YIDl03FKBn4g4Ke/gq5KuTo0YQ=
 ENV NEXTAUTH_URL=https://cinebase.com.pl
 ENV STRIPE_WEBHOOK_SECRET=build_asdsadadad7f67nvFJkWkBeBM2HnC9mO4qnA83RLK
