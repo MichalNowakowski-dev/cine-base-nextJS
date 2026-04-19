@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  optimizeFonts: false,
   // ✅ Wyłącz lint i typecheck podczas buildu - przyspieszy znacznie
   eslint: {
     ignoreDuringBuilds: true,
