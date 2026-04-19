@@ -1,27 +1,35 @@
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
-import { Roboto, Montserrat, Oswald } from "next/font/google";
+import localFont from "next/font/local";
 import Navigation from "./components/navigation/Navigation";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "react-toastify/dist/ReactToastify.css";
 
-const roboto = Roboto({
-  weight: ["400", "100", "300", "500", "700"],
-  subsets: ["latin", "latin-ext"],
+const roboto = localFont({
+  src: [
+    { path: "../public/fonts/Roboto-Thin.ttf", weight: "100" },
+    { path: "../public/fonts/Roboto-Light.ttf", weight: "300" },
+    { path: "../public/fonts/Roboto-Regular.ttf", weight: "400" },
+    { path: "../public/fonts/Roboto-Medium.ttf", weight: "500" },
+    { path: "../public/fonts/Roboto-Bold.ttf", weight: "700" },
+  ],
   variable: "--font-roboto",
   display: "swap",
 });
-const oswald = Oswald({
-  weight: ["500", "700"],
-  subsets: ["latin", "latin-ext"],
+
+const oswald = localFont({
+  src: [
+    { path: "../public/fonts/Oswald-Medium.ttf", weight: "500" },
+    { path: "../public/fonts/Oswald-Bold.ttf", weight: "700" },
+  ],
   variable: "--font-oswald",
   display: "swap",
 });
-const montserrat = Montserrat({
-  weight: "700",
-  subsets: ["latin", "latin-ext"],
+
+const montserrat = localFont({
+  src: [{ path: "../public/fonts/Montserrat-Bold.ttf", weight: "700" }],
   variable: "--font-montserrat",
   display: "swap",
 });
