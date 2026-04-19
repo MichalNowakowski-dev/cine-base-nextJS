@@ -19,6 +19,10 @@ RUN npx prisma generate
 
 # Build Next.js app
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PUBLIC_FONTS_PRELOAD=false
+
+ENV STRIPE_SECRET_KEY=sk_placeholder_build_only
+ENV STRIPE_WEBHOOK_SECRET=whsec_placeholder_build_only
 RUN npm run build
 
 # Stage 3: Runner
